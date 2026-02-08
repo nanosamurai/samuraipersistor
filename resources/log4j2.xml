@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{ISO8601} %-5level %t %c - %msg%n"/>
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <!-- Default to INFO so tests have useful output without being spammy -->
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+    </Root>
+
+    <!-- Silence very noisy libs in tests/dev -->
+    <Logger name="org.apache.kafka" level="warn" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.testcontainers" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+  </Loggers>
+</Configuration>
