@@ -38,12 +38,25 @@ and the Kafka offset is committed (so the consumer group does not get stuck).
 * **Backpressure:** poll loop feeds a bounded queue; when full the consumer pauses partitions
 * **Commit safety:** KafkaConsumer is not thread-safe; offsets are committed **only from polling thread** (workers enqueue commit requests)
 
-## DB migrations ownership
+## DB migrations
 
-This repo does **not** own DB migrations.
+Migrations are managed in this repo using **Migratus** (raw SQL `.up.sql` / `.down.sql`).
 
-For now the canonical migrations live in `drsynth/migrations`.
-Running this service requires the shared DB schema to include the append-only transcript record changes (drsynth migration `0002_transcript_records_append_only`).
+Migration files live in:
+
+* `resources/migrations/*`
+
+### Run migrations
+
+```bash
+clojure -X:migrate :jdbc-url 'jdbc:postgresql://localhost:5432/drsynth' :username 'drsynth' :password 'drsynth'
+```
+
+### Rollback last migration
+
+```bash
+clojure -X:rollback :jdbc-url 'jdbc:postgresql://localhost:5432/drsynth' :username 'drsynth' :password 'drsynth'
+```
 
 ## Configuration
 
