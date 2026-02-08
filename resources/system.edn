@@ -1,0 +1,58 @@
+{:samuraipersistor/config
+ {:env :dev
+
+  ;; --- HTTP ---
+  :http {:host "0.0.0.0"
+         :port 8010}
+
+  ;; --- DB ---
+  ;; NOTE: 5432/9092 are the *real* shared infra defaults.
+  ;; For local dev/testing, prefer overriding to testcontainers ports.
+  :db {:jdbc-url "jdbc:postgresql://localhost:5432/drsynth"
+       :username "drsynth"
+       :password "drsynth"
+       :maximum-pool-size 10
+       ;; keep the pool stable under load
+       :minimum-idle 2
+       :connection-timeout-ms 5000}
+
+  ;; --- Kafka ---
+  :kafka {:bootstrap-servers "localhost:9092"
+          :client-id "samuraipersistor"
+          ;; refined consumer
+          :refined-consumer-group-id "samuraipersistor-refined"
+          ;; final consumer
+          :final-consumer-group-id "samuraipersistor-final"
+          :topics {:refined "transcripts.refined"
+                   :final "transcripts.final"
+                   ;; DLQ is optional; if nil, we log+commit.
+                   :dlq "transcripts.persistor.dlq"}
+          ;; poll tuning
+          :max-poll-records 200
+          :max-poll-interval-ms 300000
+          :session-timeout-ms 30000
+          ;; backpressure channels
+          :refined-buffer-size 2000
+          :final-buffer-size 200}}
+
+ ;; Optional alternative profile for local dev with Testcontainers.
+ ;; You can launch with:
+ ;;   clojure -M -e "(require 'samuraipersistor.system) (samuraipersistor.system/start! (merge (samuraipersistor.system/read-system-config) {:samuraipersistor/config (assoc-in (:samuraipersistor/config (samuraipersistor.system/read-system-config)) [:db :jdbc-url] \"jdbc:postgresql://localhost:15432/drsynth\")}))"
+ ;; But in practice you’ll typically run tests only (which start their own containers).
+
+ ;; --- Integrant components ---
+
+ :samuraipersistor/db
+ {:config #ig/ref :samuraipersistor/config}
+
+ :samuraipersistor/http-server
+ {:config #ig/ref :samuraipersistor/config
+  :db     #ig/ref :samuraipersistor/db}
+
+ :samuraipersistor/refined-consumer
+ {:config #ig/ref :samuraipersistor/config
+  :db     #ig/ref :samuraipersistor/db}
+
+ :samuraipersistor/final-consumer
+ {:config #ig/ref :samuraipersistor/config
+  :db     #ig/ref :samuraipersistor/db}}
