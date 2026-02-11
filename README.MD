@@ -62,12 +62,40 @@ clojure -X:rollback :jdbc-url 'jdbc:postgresql://localhost:5432/drsynth' :userna
 
 System config is in `resources/system.edn`.
 
+For k8s/Docker deployments, configuration can be overridden via environment variables
+prefixed with `SP_` (see table below).
+
 Defaults currently point to the **real shared infra ports**:
 
 * Postgres: `localhost:5432`
 * Kafka: `localhost:9092`
 
 For local development and tests, prefer **Testcontainers** (see tests below) and avoid touching shared infra.
+
+### Environment variables
+
+| Area | Variable | Purpose | Default (from `resources/system.edn`) |
+| --- | --- | --- | --- |
+| HTTP | `SP_HTTP_HOST` | HTTP bind host | `0.0.0.0` |
+| HTTP | `SP_HTTP_PORT` | HTTP bind port | `8010` |
+| DB | `SP_DB_JDBC_URL` | JDBC URL | `jdbc:postgresql://localhost:5432/drsynth` |
+| DB | `SP_DB_USERNAME` | DB user | `drsynth` |
+| DB | `SP_DB_PASSWORD` | DB password | `drsynth` |
+| DB | `SP_DB_MAX_POOL_SIZE` | Hikari max pool size | `10` |
+| DB | `SP_DB_MIN_IDLE` | Hikari min idle | `2` |
+| DB | `SP_DB_CONN_TIMEOUT_MS` | Hikari connection timeout (ms) | `5000` |
+| Kafka | `SP_KAFKA_BOOTSTRAP_SERVERS` | Kafka bootstrap servers | `localhost:9092` |
+| Kafka | `SP_KAFKA_CLIENT_ID` | Kafka client id | `samuraipersistor` |
+| Kafka | `SP_KAFKA_REFINED_GROUP_ID` | Consumer group for refined | `samuraipersistor-refined` |
+| Kafka | `SP_KAFKA_FINAL_GROUP_ID` | Consumer group for final | `samuraipersistor-final` |
+| Kafka | `SP_KAFKA_TOPIC_REFINED` | Refined topic | `transcripts.refined` |
+| Kafka | `SP_KAFKA_TOPIC_FINAL` | Final topic | `transcripts.final` |
+| Kafka | `SP_KAFKA_TOPIC_DLQ` | DLQ topic (optional) | `transcripts.persistor.dlq` |
+| Kafka | `SP_KAFKA_MAX_POLL_RECORDS` | Max poll records | `200` |
+| Kafka | `SP_KAFKA_MAX_POLL_INTERVAL_MS` | Max poll interval (ms) | `300000` |
+| Kafka | `SP_KAFKA_SESSION_TIMEOUT_MS` | Session timeout (ms) | `30000` |
+| Kafka | `SP_KAFKA_REFINED_BUFFER_SIZE` | Refined queue size | `2000` |
+| Kafka | `SP_KAFKA_FINAL_BUFFER_SIZE` | Final queue size | `200` |
 
 ## Running
 
@@ -76,6 +104,31 @@ Start the service (HTTP + Kafka consumers):
 ```bash
 clojure -M:run
 ```
+
+## Docker / k8s
+
+### Build image
+
+```bash
+docker build -t samuraipersistor:local .
+```
+
+### Run image (example)
+
+```bash
+docker run --rm -p 8010:8010 \
+  -e SP_DB_JDBC_URL=jdbc:postgresql://host.docker.internal:5432/drsynth \
+  -e SP_DB_USERNAME=drsynth \
+  -e SP_DB_PASSWORD=drsynth \
+  -e SP_KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092 \
+  samuraipersistor:local
+```
+
+### k8s notes
+
+- Configure secrets via env vars (see table above).
+- Health endpoints for probes: `GET /health` and `GET /ready`.
+- Do not expose health endpoints publicly; restrict at the platform level.
 
 Health endpoints:
 
