@@ -1,0 +1,14 @@
+.git
+.idea
+.cpcache
+.clj-kondo
+.calva
+.lsp
+target
+test
+test-resources
+dev
+*.log
+Dockerfile
+docker-compose.yml
+README.MD
