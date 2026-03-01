@@ -3,6 +3,7 @@
             [org.corfield.logging4j2 :as log]
             [samuraipersistor.kafka.consumer-loop :as loop]
             [samuraipersistor.kafka.common :as kcommon]
+            [samuraipersistor.otel.traceparent :as tp]
             [samuraipersistor.persist :as persist])
   (:import (java.nio ByteBuffer)
            (java.util.concurrent LinkedBlockingQueue)
@@ -62,23 +63,24 @@
                                processed (transient [])]
                            (doseq [^ConsumerRecord rec records]
                              (try
-                               (let [ev (parse-refined (.value rec))
-                                     res (persist/insert-refined!
-                                           (:ds db)
-                                           ev
-                                           {:window-length nil
-                                            ;; TODO: carry from worker via headers later.
-                                            :model "whisperx"
-                                            :source "whisperx_worker"
-                                            :event-created-at-ns nil})]
-                                 (when (= res :missing-session)
-                                   (when dlq-producer
-                                     (kcommon/send-dlq!
-                                       dlq-producer
-                                       dlq-topic
-                                       (.getSessionId ev)
-                                       (record->dlq-payload rec ev "missing_session"))))
-                                 (conj! processed rec))
+                               (tp/with-record-trace rec
+                                 (let [ev (parse-refined (.value rec))
+                                       res (persist/insert-refined!
+                                             (:ds db)
+                                             ev
+                                             {:window-length nil
+                                              ;; TODO: carry from worker via headers later.
+                                              :model "whisperx"
+                                              :source "whisperx_worker"
+                                              :event-created-at-ns nil})]
+                                   (when (= res :missing-session)
+                                     (when dlq-producer
+                                       (kcommon/send-dlq!
+                                         dlq-producer
+                                         dlq-topic
+                                         (.getSessionId ev)
+                                         (record->dlq-payload rec ev "missing_session"))))
+                                   (conj! processed rec)))
                                (catch Throwable t
                                  (log/error t "Failed to persist refined event" {:topic (.topic rec)
                                                                                  :partition (.partition rec)

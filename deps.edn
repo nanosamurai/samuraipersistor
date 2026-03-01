@@ -33,6 +33,12 @@
   ;; --- UUID ---
   com.github.f4b6a3/uuid-creator    {:mvn/version "6.1.0"}
 
+  ;; --- OpenTelemetry API (manual context bridging) ---
+  ;; Needed to explicitly bind a Kafka `traceparent` context when processing
+  ;; records on worker threads (LinkedBlockingQueue handoff).
+  ;; Keep version aligned with the Java agent SDK where possible.
+  io.opentelemetry/opentelemetry-api {:mvn/version "1.45.0"}
+
   ;; --- Kafka (Java client) ---
   org.apache.kafka/kafka-clients    {:mvn/version "4.1.1"}
 
