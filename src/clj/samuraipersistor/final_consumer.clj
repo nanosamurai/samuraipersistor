@@ -3,6 +3,7 @@
             [org.corfield.logging4j2 :as log]
             [samuraipersistor.kafka.consumer-loop :as loop]
             [samuraipersistor.kafka.common :as kcommon]
+            [samuraipersistor.otel.traceparent :as tp]
             [samuraipersistor.persist :as persist])
   (:import (java.util.concurrent LinkedBlockingQueue)
            (org.apache.kafka.clients.consumer ConsumerRecord)
@@ -58,22 +59,23 @@
                                processed (transient [])]
                            (doseq [^ConsumerRecord rec records]
                              (try
-                               (let [ev (parse-final (.value rec))
-                                     res (persist/insert-final!
-                                           (:ds db)
-                                           ev
-                                           {:source "finalizer_worker"
-                                            :model "whisperx"
-                                            :event-created-at-ns (when (pos? (.getCreatedAtNs ev))
-                                                                  (.getCreatedAtNs ev))})]
-                                 (when (= res :missing-session)
-                                   (when dlq-producer
-                                     (kcommon/send-dlq!
-                                       dlq-producer
-                                       dlq-topic
-                                       (.getSessionId ev)
-                                       (record->dlq-payload rec ev "missing_session"))))
-                                 (conj! processed rec))
+                               (tp/with-record-trace rec
+                                 (let [ev (parse-final (.value rec))
+                                       res (persist/insert-final!
+                                             (:ds db)
+                                             ev
+                                             {:source "finalizer_worker"
+                                              :model "whisperx"
+                                              :event-created-at-ns (when (pos? (.getCreatedAtNs ev))
+                                                                    (.getCreatedAtNs ev))})]
+                                   (when (= res :missing-session)
+                                     (when dlq-producer
+                                       (kcommon/send-dlq!
+                                         dlq-producer
+                                         dlq-topic
+                                         (.getSessionId ev)
+                                         (record->dlq-payload rec ev "missing_session"))))
+                                   (conj! processed rec)))
                                (catch Throwable t
                                  (log/error t "Failed to persist final transcript" {:topic (.topic rec)
                                                                                     :partition (.partition rec)
