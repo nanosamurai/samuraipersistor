@@ -1,9 +1,9 @@
 # samuraipersistor
 
-Kafka → Postgres persistence service for drsynth transcript events.
+Kafka → Postgres persistence service for nanosamurai's transcript events.
 
 This service is intended to replace direct DB persistence currently implemented inside
-Python workers (`whisperx_worker`, `finalizer_worker`) in the `drsynth` monorepo.
+Python workers (`whisperx_worker`, `finalizer_worker`) in the `xamurai` monorepo (formerly 'drsynth').
 
 ## Responsibilities
 
