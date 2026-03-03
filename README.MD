@@ -161,6 +161,17 @@ Run all tests:
 clojure -X:test
 ```
 
+## CI
+
+This repo uses **GitHub Actions** for CI. The PR gate runs:
+
+```bash
+clojure -T:build compile-java
+clojure -X:test
+```
+
+Note: The test suite requires **Docker** (Testcontainers).
+
 ## Observability
 The BFF supports OTEL integration and tracing - for more information see https://github.com/mikub/xamurai/blob/master/docs/local-k8s-observability.md (locally usually `%USERPROFILE%\PycharmProjects\xamurai\docs\local-k8s-observability.md`)
 
