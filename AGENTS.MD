@@ -3,9 +3,9 @@
 This repository is a **Clojure microservice** whose responsibility is to persist
 speech-to-text transcription events into a **shared Postgres DB**.
 
-It is intended to replace DB persistence currently implemented inside individual
+It has replaced DB persistence implemented inside individual
 transcription workers (e.g. `whisperx_worker`, `finalizer_worker`) in the Python
-`drsynth` monorepo.
+`xamurai` monorepo.
 
 ## 1) Service responsibilities
 
@@ -97,3 +97,12 @@ commit requests.
 * Config (DB creds, Kafka auth) via environment variables / secrets.
 * TLS for Postgres and Kafka in production.
 * Health endpoints should be network-restricted at the platform level.
+
+--- Other Rules / Best Practices
+- You are usually being run from CLINE IDE plugin, which limits you to the given working repository. If you want to execute commands (i.e. run executables, make git commands) in other folders / repositories, the only way you can do so is via powershell `Set-Location`
+    - e.g. `powershell -NoProfile -Command "Set-Location 'C:\Users\miros\IdeaProjects\samuraipersistor'; clojure -M -e '(println :ok)'"`
+- All changes should be documented accordingly in the relevant .MD docs; before claiming task is coplete, always check docs for gaps as well as for a stale or no longer correct information and fix that
+- For any task, create a dedicated branch (named imperatively) from master (unless told otherwise) and as you progress make small(er) atomic commits named imperatively
+- For a task to be completed, there should be no security risks or concerns, always assess task's completion also from the security standpoint and highlight any risks.
+- NEVER EXPOSE PORTS on local LAN for testing, always use localhost or 127.0.0.1
+- Xamurai used to be called "drsynth", so do not be confused if you do see this name somewhere. That name however is legacy and you should always use xamurai when naming things related to xamurai stack- alternatively, you can also use nanosamurai if the name refers to the whole solution and not just the subset of voice-to-text services
