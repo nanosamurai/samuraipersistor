@@ -5,7 +5,15 @@ Kafka → Postgres persistence service for nanosamurai's transcript events.
 This service is intended to replace direct DB persistence currently implemented inside
 Python workers (`whisperx_worker`, `finalizer_worker`) in the `xamurai` monorepo (formerly 'drsynth').
 
-## Responsibilities
+## About Nanosamur.ai
+Nanosamurai solution currently consists of
+- **SamuraiBFF** - the BFF for the solution (https://github.com/mikub/samuraibff ; locally usually at `%USERPROFILE%\IdeaProjects\samuraibff`),
+- **xamurai** (https://github.com/mikub/xamurai ; locally usually at `%USERPROFILE%\PycharmProjects\xamurai`) services connected via Kafka/gRPC
+    - xamurai is a monorepo that contains multiple Speach-to-text and speaker diarization services for Nanosamur.ai solution - they provide both real-time transcription as well as near-real-time refinement.
+- **samuraipersistor** (this repo)
+---
+
+## Responsibilities of samuraipersistor
 
 ### Consumes (Kafka)
 
@@ -153,8 +161,12 @@ Run all tests:
 clojure -X:test
 ```
 
+## Observability
+The BFF supports OTEL integration and tracing - for more information see https://github.com/mikub/xamurai/blob/master/docs/local-k8s-observability.md (locally usually `%USERPROFILE%\PycharmProjects\xamurai\docs\local-k8s-observability.md`)
+
 ## Notes / known follow-ups
 
 * Add Kafka Testcontainers tests (produce protobuf events, assert DB writes + commits).
 * Carry `window_length`, `model`, `source` via Kafka headers (or a future envelope message).
 * Consider adding de-duplication using a unique `(topic, partition, offset)` key in DB.
+
