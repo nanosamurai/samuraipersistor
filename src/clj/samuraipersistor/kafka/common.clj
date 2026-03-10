@@ -7,17 +7,31 @@
 
 (def ^:private json-mapper (j/object-mapper {:encode-key-fn name}))
 
+(defn- producer-config
+  "Build a Kafka producer config map.
+
+  Inputs:
+  - {:keys [bootstrap-servers client-id security-protocol]}
+
+  Returns: map of string keys to string values suitable for KafkaProducer." 
+  [{:keys [bootstrap-servers client-id security-protocol]}]
+  {"bootstrap.servers" bootstrap-servers
+   "client.id" (or client-id "samuraipersistor")
+   ;; TLS / security
+   ;; For MSK TLS-only (port 9094), set to "SSL".
+   "security.protocol" (or security-protocol "PLAINTEXT")
+   "acks" "all"
+   "compression.type" "zstd"
+   "linger.ms" "5"
+   "batch.size" "131072"
+   "key.serializer" "org.apache.kafka.common.serialization.ByteArraySerializer"
+   "value.serializer" "org.apache.kafka.common.serialization.ByteArraySerializer"})
+
 (defn ->producer
-  [{:keys [bootstrap-servers client-id]}]
-  (KafkaProducer.
-    {"bootstrap.servers" bootstrap-servers
-     "client.id" (or client-id "samuraipersistor")
-     "acks" "all"
-     "compression.type" "zstd"
-     "linger.ms" "5"
-     "batch.size" "131072"
-     "key.serializer" "org.apache.kafka.common.serialization.ByteArraySerializer"
-     "value.serializer" "org.apache.kafka.common.serialization.ByteArraySerializer"}))
+  [{:keys [bootstrap-servers client-id security-protocol]}]
+  (KafkaProducer. (producer-config {:bootstrap-servers bootstrap-servers
+                                   :client-id client-id
+                                   :security-protocol security-protocol})))
 
 (defn send-dlq!
   "Send a DLQ payload as JSON.
