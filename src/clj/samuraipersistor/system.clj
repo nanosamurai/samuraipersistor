@@ -39,6 +39,11 @@
                       :connection-timeout-ms (env-value "SP_DB_CONN_TIMEOUT_MS" parse-long)}
                  :kafka {:bootstrap-servers (env-value "SP_KAFKA_BOOTSTRAP_SERVERS")
                          :client-id (env-value "SP_KAFKA_CLIENT_ID")
+                         ;; TLS / security
+                         ;; Primary: SP_ prefixed env vars.
+                         ;; Fallback: generic KAFKA_* vars emitted by some Helm charts.
+                         :security-protocol (or (env-value "SP_KAFKA_SECURITY_PROTOCOL")
+                                                (env-value "KAFKA_SECURITY_PROTOCOL"))
                          :refined-consumer-group-id (env-value "SP_KAFKA_REFINED_GROUP_ID")
                          :final-consumer-group-id (env-value "SP_KAFKA_FINAL_GROUP_ID")
                          :topics {:refined (env-value "SP_KAFKA_TOPIC_REFINED")

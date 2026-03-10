@@ -12,10 +12,13 @@
            (samuraibff.proto RefinedEvent)))
 
 (defn- consumer-config
-  [{:keys [bootstrap-servers client-id refined-consumer-group-id max-poll-records max-poll-interval-ms session-timeout-ms]}]
+  [{:keys [bootstrap-servers client-id refined-consumer-group-id max-poll-records max-poll-interval-ms session-timeout-ms security-protocol]}]
   {"bootstrap.servers" bootstrap-servers
    "client.id" (or client-id "samuraipersistor")
    "group.id" refined-consumer-group-id
+   ;; TLS / security
+   ;; For MSK TLS-only (port 9094), set to "SSL".
+   "security.protocol" (or security-protocol "PLAINTEXT")
    "enable.auto.commit" "false"
    "auto.offset.reset" "earliest"
    "max.poll.records" (str (or max-poll-records 200))
