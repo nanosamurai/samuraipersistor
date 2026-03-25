@@ -4,7 +4,7 @@
             [org.corfield.logging4j2 :as log]
             [jsonista.core :as j])
   (:import (java.util UUID)
-           (samuraibff.proto RefinedEvent SessionTranscript SessionTranscriptSegment)))
+           (samuraibff.proto RefinedEvent SessionTranscript SessionTranscriptSegment WordAlignment)))
 
 (def ^:private json-writer
   (j/object-mapper {:encode-key-fn name}))
@@ -98,10 +98,17 @@
         :missing-session)
       (let [{:keys [id tenant_id user_id]} row
             segments (map (fn [^SessionTranscriptSegment s]
-                            {:start_s (.getStartS s)
-                             :end_s (.getEndS s)
-                             :text (.getText s)
-                             :speaker (.getSpeaker s)})
+                            (let [words (map (fn [^WordAlignment w]
+                                               {:start_s (.getStartS w)
+                                                :end_s (.getEndS w)
+                                                :text (.getText w)})
+                                             (.getWordsList s))
+                                  base {:start_s (.getStartS s)
+                                        :end_s (.getEndS s)
+                                        :text (.getText s)
+                                        :speaker (.getSpeaker s)}]
+                              (cond-> base
+                                (seq words) (assoc :words words))))
                           (.getSegmentsList ev))
             segments-json (j/write-value-as-string segments json-writer)
             recording-id (UUID/randomUUID)
