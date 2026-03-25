@@ -30,6 +30,9 @@ Persists into the shared `drsynth` schema tables:
 * `recordings`
 * `session_transcripts` (append-only transcript records)
 
+`SessionTranscript.segments` persisted into `session_transcripts.segments` may optionally include word-level timing
+information under `segments[].words[]` (when produced by the xamurai finalizer).
+
 ### Optional DLQ (Kafka)
 
 If persistence cannot proceed (most importantly: missing `sessions.session_key`), the event is sent to:

@@ -80,54 +80,42 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014stream.proto\"\345\001\n\nAudioChunk\022\035\n\nsession" +
-      "_id\030\001 \001(\tR\tsessionId\022\020\n\003seq\030\002 \001(\004R\003seq\022\023" +
-      "\n\005t0_ns\030\003 \001(\003R\004t0Ns\022\037\n\013sample_rate\030\004 \001(\r" +
-      "R\nsampleRate\022\031\n\010pcm16_le\030\005 \001(\014R\007pcm16Le\022" +
-      "\022\n\004lang\030\006 \001(\tR\004lang\022$\n\016bff_origin_uri\030\007 " +
-      "\001(\tR\014bffOriginUri\022\033\n\ttenant_id\030\010 \001(\tR\010te" +
-      "nantId\"\267\001\n\010AsrEvent\022\035\n\nsession_id\030\001 \001(\tR" +
-      "\tsessionId\022\027\n\007start_s\030\002 \001(\001R\006startS\022\023\n\005e" +
-      "nd_s\030\003 \001(\001R\004endS\022\022\n\004text\030\004 \001(\tR\004text\022\034\n\004" +
-      "type\030\005 \001(\0162\010.AsrTypeR\004type\022\022\n\004lang\030\006 \001(\t" +
-      "R\004lang\022\030\n\007speaker\030\007 \001(\tR\007speaker\"\222\001\n\tDia" +
-      "rEvent\022\035\n\nsession_id\030\001 \001(\tR\tsessionId\022\027\n" +
-      "\007start_s\030\002 \001(\001R\006startS\022\023\n\005end_s\030\003 \001(\001R\004e" +
-      "ndS\022\030\n\007speaker\030\004 \001(\tR\007speaker\022\036\n\nconfide" +
-      "nce\030\005 \001(\002R\nconfidence\"\207\002\n\014RefinedEvent\022\035" +
-      "\n\nsession_id\030\001 \001(\tR\tsessionId\022\027\n\007start_s" +
-      "\030\002 \001(\001R\006startS\022\023\n\005end_s\030\003 \001(\001R\004endS\022\022\n\004t" +
-      "ext\030\004 \001(\tR\004text\022\030\n\007speaker\030\005 \001(\tR\007speake" +
-      "r\022%\n\016supersedes_seq\030\006 \003(\004R\rsupersedesSeq" +
-      "\022\022\n\004lang\030\007 \001(\tR\004lang\022$\n\016bff_origin_uri\030\010" +
-      " \001(\tR\014bffOriginUri\022\033\n\ttenant_id\030\t \001(\tR\010t" +
-      "enantId\"\354\001\n\021RecordingFinished\022\035\n\nsession" +
-      "_id\030\001 \001(\tR\tsessionId\022#\n\rrecording_url\030\002 " +
-      "\001(\tR\014recordingUrl\022\035\n\nduration_s\030\003 \001(\001R\td" +
-      "urationS\022\037\n\013sample_rate\030\004 \001(\005R\nsampleRat" +
-      "e\022\022\n\004lang\030\005 \001(\tR\004lang\022\033\n\ttenant_id\030\006 \001(\t" +
-      "R\010tenantId\022\"\n\rcreated_at_ns\030\007 \001(\003R\013creat" +
-      "edAtNs\"Q\n\rWordAlignment\022\027\n\007start_s\030\001 \001(\001" +
-      "R\006startS\022\023\n\005end_s\030\002 \001(\001R\004endS\022\022\n\004text\030\003 " +
-      "\001(\tR\004text\"\301\001\n\nFinalEvent\022\035\n\nsession_id\030\001" +
-      " \001(\tR\tsessionId\022\027\n\007start_s\030\002 \001(\001R\006startS" +
-      "\022\023\n\005end_s\030\003 \001(\001R\004endS\022\022\n\004text\030\004 \001(\tR\004tex" +
-      "t\022\030\n\007speaker\030\005 \001(\tR\007speaker\022\022\n\004lang\030\006 \001(" +
-      "\tR\004lang\022$\n\005words\030\007 \003(\0132\016.WordAlignmentR\005" +
-      "words\"v\n\030SessionTranscriptSegment\022\027\n\007sta" +
-      "rt_s\030\001 \001(\001R\006startS\022\023\n\005end_s\030\002 \001(\001R\004endS\022" +
-      "\022\n\004text\030\003 \001(\tR\004text\022\030\n\007speaker\030\004 \001(\tR\007sp" +
-      "eaker\"\237\002\n\021SessionTranscript\022\035\n\nsession_i" +
-      "d\030\001 \001(\tR\tsessionId\022#\n\rrecording_url\030\002 \001(" +
-      "\tR\014recordingUrl\022\022\n\004lang\030\003 \001(\tR\004lang\022\035\n\nd" +
-      "uration_s\030\004 \001(\002R\tdurationS\0225\n\010segments\030\005" +
-      " \003(\0132\031.SessionTranscriptSegmentR\010segment" +
-      "s\022\033\n\tfull_text\030\006 \001(\tR\010fullText\022\033\n\ttenant" +
-      "_id\030\007 \001(\tR\010tenantId\022\"\n\rcreated_at_ns\030\010 \001" +
-      "(\004R\013createdAtNs*!\n\007AsrType\022\013\n\007PARTIAL\020\000\022" +
-      "\t\n\005FINAL\020\00123\n\013RealtimeASR\022$\n\006Stream\022\013.Au" +
-      "dioChunk\032\t.AsrEvent(\0010\001B!\n\020samuraibff.pr" +
-      "otoB\013StreamProtoP\001b\006proto3"
+      "\n\014stream.proto\"\234\001\n\nAudioChunk\022\022\n\nsession" +
+      "_id\030\001 \001(\t\022\013\n\003seq\030\002 \001(\004\022\r\n\005t0_ns\030\003 \001(\003\022\023\n" +
+      "\013sample_rate\030\004 \001(\r\022\020\n\010pcm16_le\030\005 \001(\014\022\014\n\004" +
+      "lang\030\006 \001(\t\022\026\n\016bff_origin_uri\030\007 \001(\t\022\021\n\tte" +
+      "nant_id\030\010 \001(\t\"\203\001\n\010AsrEvent\022\022\n\nsession_id" +
+      "\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n\005end_s\030\003 \001(\001\022\014" +
+      "\n\004text\030\004 \001(\t\022\026\n\004type\030\005 \001(\0162\010.AsrType\022\014\n\004" +
+      "lang\030\006 \001(\t\022\017\n\007speaker\030\007 \001(\t\"d\n\tDiarEvent" +
+      "\022\022\n\nsession_id\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n" +
+      "\005end_s\030\003 \001(\001\022\017\n\007speaker\030\004 \001(\t\022\022\n\nconfide" +
+      "nce\030\005 \001(\002\"\262\001\n\014RefinedEvent\022\022\n\nsession_id" +
+      "\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n\005end_s\030\003 \001(\001\022\014" +
+      "\n\004text\030\004 \001(\t\022\017\n\007speaker\030\005 \001(\t\022\026\n\016superse" +
+      "des_seq\030\006 \003(\004\022\014\n\004lang\030\007 \001(\t\022\026\n\016bff_origi" +
+      "n_uri\030\010 \001(\t\022\021\n\ttenant_id\030\t \001(\t\"\237\001\n\021Recor" +
+      "dingFinished\022\022\n\nsession_id\030\001 \001(\t\022\025\n\rreco" +
+      "rding_url\030\002 \001(\t\022\022\n\nduration_s\030\003 \001(\001\022\023\n\013s" +
+      "ample_rate\030\004 \001(\005\022\014\n\004lang\030\005 \001(\t\022\021\n\ttenant" +
+      "_id\030\006 \001(\t\022\025\n\rcreated_at_ns\030\007 \001(\003\"=\n\rWord" +
+      "Alignment\022\017\n\007start_s\030\001 \001(\001\022\r\n\005end_s\030\002 \001(" +
+      "\001\022\014\n\004text\030\003 \001(\t\"\214\001\n\nFinalEvent\022\022\n\nsessio" +
+      "n_id\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n\005end_s\030\003 \001" +
+      "(\001\022\014\n\004text\030\004 \001(\t\022\017\n\007speaker\030\005 \001(\t\022\014\n\004lan" +
+      "g\030\006 \001(\t\022\035\n\005words\030\007 \003(\0132\016.WordAlignment\"x" +
+      "\n\030SessionTranscriptSegment\022\017\n\007start_s\030\001 " +
+      "\001(\001\022\r\n\005end_s\030\002 \001(\001\022\014\n\004text\030\003 \001(\t\022\017\n\007spea" +
+      "ker\030\004 \001(\t\022\035\n\005words\030\005 \003(\0132\016.WordAlignment" +
+      "\"\312\001\n\021SessionTranscript\022\022\n\nsession_id\030\001 \001" +
+      "(\t\022\025\n\rrecording_url\030\002 \001(\t\022\014\n\004lang\030\003 \001(\t\022" +
+      "\022\n\nduration_s\030\004 \001(\002\022+\n\010segments\030\005 \003(\0132\031." +
+      "SessionTranscriptSegment\022\021\n\tfull_text\030\006 " +
+      "\001(\t\022\021\n\ttenant_id\030\007 \001(\t\022\025\n\rcreated_at_ns\030" +
+      "\010 \001(\004*!\n\007AsrType\022\013\n\007PARTIAL\020\000\022\t\n\005FINAL\020\001" +
+      "23\n\013RealtimeASR\022$\n\006Stream\022\013.AudioChunk\032\t" +
+      ".AsrEvent(\0010\001B!\n\020samuraibff.protoB\013Strea" +
+      "mProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -180,7 +168,7 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     internal_static_SessionTranscriptSegment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SessionTranscriptSegment_descriptor,
-        new java.lang.String[] { "StartS", "EndS", "Text", "Speaker", });
+        new java.lang.String[] { "StartS", "EndS", "Text", "Speaker", "Words", });
     internal_static_SessionTranscript_descriptor =
       getDescriptor().getMessageType(8);
     internal_static_SessionTranscript_fieldAccessorTable = new

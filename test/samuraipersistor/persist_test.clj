@@ -4,7 +4,7 @@
             [samuraipersistor.persist :as persist]
             [samuraipersistor.testcontainers :as tc]
             [org.corfield.logging4j2 :as log])
-  (:import (samuraibff.proto RefinedEvent SessionTranscript SessionTranscriptSegment)
+  (:import (samuraibff.proto RefinedEvent SessionTranscript SessionTranscriptSegment WordAlignment)
            (java.util UUID)))
 
 (defn- create-minimal-schema! [ds]
@@ -104,11 +104,17 @@
                 (is (= 1 n)))))
 
           (testing "final insert"
-            (let [seg (-> (SessionTranscriptSegment/newBuilder)
+            (let [word (-> (WordAlignment/newBuilder)
+                           (.setStartS 0.1)
+                           (.setEndS 0.2)
+                           (.setText "hello")
+                           (.build))
+                  seg (-> (SessionTranscriptSegment/newBuilder)
                           (.setStartS 0.0)
                           (.setEndS 3.0)
                           (.setText "hello")
                           (.setSpeaker "")
+                          (.addWords word)
                           (.build))
                   ev (-> (SessionTranscript/newBuilder)
                          (.setSessionId session-key)
@@ -127,7 +133,14 @@
                             :event-created-at-ns 2})))
               (let [n (-> (jdbc/execute-one! ds ["SELECT count(*) AS n FROM session_transcripts WHERE type='final'"])
                           :n)]
-                (is (= 1 n))))))
+                (is (= 1 n)))
+
+              (let [row (jdbc/execute-one! ds
+                                          [(str "SELECT segments #>> '{0,words,0,text}' AS first_word_text, "
+                                                "jsonb_array_length(segments->0->'words') AS word_count "
+                                                "FROM session_transcripts WHERE type='final' ORDER BY created_at DESC LIMIT 1")])]
+                (is (= "hello" (:first_word_text row)))
+                (is (= 1 (:word_count row)))))))
 
         (finally
           (log/info "Stopping Postgres testcontainer")
