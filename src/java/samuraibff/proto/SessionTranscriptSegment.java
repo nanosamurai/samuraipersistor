@@ -30,6 +30,7 @@ private static final long serialVersionUID = 0L;
   private SessionTranscriptSegment() {
     text_ = "";
     speaker_ = "";
+    words_ = java.util.Collections.emptyList();
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -48,7 +49,7 @@ private static final long serialVersionUID = 0L;
   public static final int START_S_FIELD_NUMBER = 1;
   private double startS_ = 0D;
   /**
-   * <code>double start_s = 1 [json_name = "startS"];</code>
+   * <code>double start_s = 1;</code>
    * @return The startS.
    */
   @java.lang.Override
@@ -59,7 +60,7 @@ private static final long serialVersionUID = 0L;
   public static final int END_S_FIELD_NUMBER = 2;
   private double endS_ = 0D;
   /**
-   * <code>double end_s = 2 [json_name = "endS"];</code>
+   * <code>double end_s = 2;</code>
    * @return The endS.
    */
   @java.lang.Override
@@ -71,7 +72,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
   /**
-   * <code>string text = 3 [json_name = "text"];</code>
+   * <code>string text = 3;</code>
    * @return The text.
    */
   @java.lang.Override
@@ -88,7 +89,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string text = 3 [json_name = "text"];</code>
+   * <code>string text = 3;</code>
    * @return The bytes for text.
    */
   @java.lang.Override
@@ -114,7 +115,7 @@ private static final long serialVersionUID = 0L;
    * optional, "" if unknown
    * </pre>
    *
-   * <code>string speaker = 4 [json_name = "speaker"];</code>
+   * <code>string speaker = 4;</code>
    * @return The speaker.
    */
   @java.lang.Override
@@ -135,7 +136,7 @@ private static final long serialVersionUID = 0L;
    * optional, "" if unknown
    * </pre>
    *
-   * <code>string speaker = 4 [json_name = "speaker"];</code>
+   * <code>string speaker = 4;</code>
    * @return The bytes for speaker.
    */
   @java.lang.Override
@@ -151,6 +152,77 @@ private static final long serialVersionUID = 0L;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int WORDS_FIELD_NUMBER = 5;
+  @SuppressWarnings("serial")
+  private java.util.List<samuraibff.proto.WordAlignment> words_;
+  /**
+   * <pre>
+   * Optional word-level alignment details as produced by the xamurai finalizer.
+   * If absent (older producers) or empty, consumers should treat the segment as
+   * having no word-level timing information.
+   * </pre>
+   *
+   * <code>repeated .WordAlignment words = 5;</code>
+   */
+  @java.lang.Override
+  public java.util.List<samuraibff.proto.WordAlignment> getWordsList() {
+    return words_;
+  }
+  /**
+   * <pre>
+   * Optional word-level alignment details as produced by the xamurai finalizer.
+   * If absent (older producers) or empty, consumers should treat the segment as
+   * having no word-level timing information.
+   * </pre>
+   *
+   * <code>repeated .WordAlignment words = 5;</code>
+   */
+  @java.lang.Override
+  public java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
+      getWordsOrBuilderList() {
+    return words_;
+  }
+  /**
+   * <pre>
+   * Optional word-level alignment details as produced by the xamurai finalizer.
+   * If absent (older producers) or empty, consumers should treat the segment as
+   * having no word-level timing information.
+   * </pre>
+   *
+   * <code>repeated .WordAlignment words = 5;</code>
+   */
+  @java.lang.Override
+  public int getWordsCount() {
+    return words_.size();
+  }
+  /**
+   * <pre>
+   * Optional word-level alignment details as produced by the xamurai finalizer.
+   * If absent (older producers) or empty, consumers should treat the segment as
+   * having no word-level timing information.
+   * </pre>
+   *
+   * <code>repeated .WordAlignment words = 5;</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.WordAlignment getWords(int index) {
+    return words_.get(index);
+  }
+  /**
+   * <pre>
+   * Optional word-level alignment details as produced by the xamurai finalizer.
+   * If absent (older producers) or empty, consumers should treat the segment as
+   * having no word-level timing information.
+   * </pre>
+   *
+   * <code>repeated .WordAlignment words = 5;</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
+      int index) {
+    return words_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -179,6 +251,9 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(speaker_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 4, speaker_);
     }
+    for (int i = 0; i < words_.size(); i++) {
+      output.writeMessage(5, words_.get(i));
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -201,6 +276,10 @@ private static final long serialVersionUID = 0L;
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(speaker_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(4, speaker_);
+    }
+    for (int i = 0; i < words_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(5, words_.get(i));
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -227,6 +306,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getText())) return false;
     if (!getSpeaker()
         .equals(other.getSpeaker())) return false;
+    if (!getWordsList()
+        .equals(other.getWordsList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -248,6 +329,10 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getText().hashCode();
     hash = (37 * hash) + SPEAKER_FIELD_NUMBER;
     hash = (53 * hash) + getSpeaker().hashCode();
+    if (getWordsCount() > 0) {
+      hash = (37 * hash) + WORDS_FIELD_NUMBER;
+      hash = (53 * hash) + getWordsList().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -383,6 +468,13 @@ private static final long serialVersionUID = 0L;
       endS_ = 0D;
       text_ = "";
       speaker_ = "";
+      if (wordsBuilder_ == null) {
+        words_ = java.util.Collections.emptyList();
+      } else {
+        words_ = null;
+        wordsBuilder_.clear();
+      }
+      bitField0_ = (bitField0_ & ~0x00000010);
       return this;
     }
 
@@ -409,9 +501,22 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public samuraibff.proto.SessionTranscriptSegment buildPartial() {
       samuraibff.proto.SessionTranscriptSegment result = new samuraibff.proto.SessionTranscriptSegment(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(samuraibff.proto.SessionTranscriptSegment result) {
+      if (wordsBuilder_ == null) {
+        if (((bitField0_ & 0x00000010) != 0)) {
+          words_ = java.util.Collections.unmodifiableList(words_);
+          bitField0_ = (bitField0_ & ~0x00000010);
+        }
+        result.words_ = words_;
+      } else {
+        result.words_ = wordsBuilder_.build();
+      }
     }
 
     private void buildPartial0(samuraibff.proto.SessionTranscriptSegment result) {
@@ -457,6 +562,32 @@ private static final long serialVersionUID = 0L;
         speaker_ = other.speaker_;
         bitField0_ |= 0x00000008;
         onChanged();
+      }
+      if (wordsBuilder_ == null) {
+        if (!other.words_.isEmpty()) {
+          if (words_.isEmpty()) {
+            words_ = other.words_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+          } else {
+            ensureWordsIsMutable();
+            words_.addAll(other.words_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.words_.isEmpty()) {
+          if (wordsBuilder_.isEmpty()) {
+            wordsBuilder_.dispose();
+            wordsBuilder_ = null;
+            words_ = other.words_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+            wordsBuilder_ = 
+              com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                 internalGetWordsFieldBuilder() : null;
+          } else {
+            wordsBuilder_.addAllMessages(other.words_);
+          }
+        }
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -504,6 +635,19 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000008;
               break;
             } // case 34
+            case 42: {
+              samuraibff.proto.WordAlignment m =
+                  input.readMessage(
+                      samuraibff.proto.WordAlignment.parser(),
+                      extensionRegistry);
+              if (wordsBuilder_ == null) {
+                ensureWordsIsMutable();
+                words_.add(m);
+              } else {
+                wordsBuilder_.addMessage(m);
+              }
+              break;
+            } // case 42
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -523,7 +667,7 @@ private static final long serialVersionUID = 0L;
 
     private double startS_ ;
     /**
-     * <code>double start_s = 1 [json_name = "startS"];</code>
+     * <code>double start_s = 1;</code>
      * @return The startS.
      */
     @java.lang.Override
@@ -531,7 +675,7 @@ private static final long serialVersionUID = 0L;
       return startS_;
     }
     /**
-     * <code>double start_s = 1 [json_name = "startS"];</code>
+     * <code>double start_s = 1;</code>
      * @param value The startS to set.
      * @return This builder for chaining.
      */
@@ -543,7 +687,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double start_s = 1 [json_name = "startS"];</code>
+     * <code>double start_s = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
@@ -555,7 +699,7 @@ private static final long serialVersionUID = 0L;
 
     private double endS_ ;
     /**
-     * <code>double end_s = 2 [json_name = "endS"];</code>
+     * <code>double end_s = 2;</code>
      * @return The endS.
      */
     @java.lang.Override
@@ -563,7 +707,7 @@ private static final long serialVersionUID = 0L;
       return endS_;
     }
     /**
-     * <code>double end_s = 2 [json_name = "endS"];</code>
+     * <code>double end_s = 2;</code>
      * @param value The endS to set.
      * @return This builder for chaining.
      */
@@ -575,7 +719,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double end_s = 2 [json_name = "endS"];</code>
+     * <code>double end_s = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
@@ -587,7 +731,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object text_ = "";
     /**
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @return The text.
      */
     public java.lang.String getText() {
@@ -603,7 +747,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @return The bytes for text.
      */
     public com.google.protobuf.ByteString
@@ -620,7 +764,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @param value The text to set.
      * @return This builder for chaining.
      */
@@ -633,7 +777,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearText() {
@@ -643,7 +787,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @param value The bytes for text to set.
      * @return This builder for chaining.
      */
@@ -663,7 +807,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4 [json_name = "speaker"];</code>
+     * <code>string speaker = 4;</code>
      * @return The speaker.
      */
     public java.lang.String getSpeaker() {
@@ -683,7 +827,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4 [json_name = "speaker"];</code>
+     * <code>string speaker = 4;</code>
      * @return The bytes for speaker.
      */
     public com.google.protobuf.ByteString
@@ -704,7 +848,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4 [json_name = "speaker"];</code>
+     * <code>string speaker = 4;</code>
      * @param value The speaker to set.
      * @return This builder for chaining.
      */
@@ -721,7 +865,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4 [json_name = "speaker"];</code>
+     * <code>string speaker = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearSpeaker() {
@@ -735,7 +879,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4 [json_name = "speaker"];</code>
+     * <code>string speaker = 4;</code>
      * @param value The bytes for speaker to set.
      * @return This builder for chaining.
      */
@@ -747,6 +891,354 @@ private static final long serialVersionUID = 0L;
       bitField0_ |= 0x00000008;
       onChanged();
       return this;
+    }
+
+    private java.util.List<samuraibff.proto.WordAlignment> words_ =
+      java.util.Collections.emptyList();
+    private void ensureWordsIsMutable() {
+      if (!((bitField0_ & 0x00000010) != 0)) {
+        words_ = new java.util.ArrayList<samuraibff.proto.WordAlignment>(words_);
+        bitField0_ |= 0x00000010;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.WordAlignment, samuraibff.proto.WordAlignment.Builder, samuraibff.proto.WordAlignmentOrBuilder> wordsBuilder_;
+
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public java.util.List<samuraibff.proto.WordAlignment> getWordsList() {
+      if (wordsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(words_);
+      } else {
+        return wordsBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public int getWordsCount() {
+      if (wordsBuilder_ == null) {
+        return words_.size();
+      } else {
+        return wordsBuilder_.getCount();
+      }
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public samuraibff.proto.WordAlignment getWords(int index) {
+      if (wordsBuilder_ == null) {
+        return words_.get(index);
+      } else {
+        return wordsBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder setWords(
+        int index, samuraibff.proto.WordAlignment value) {
+      if (wordsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureWordsIsMutable();
+        words_.set(index, value);
+        onChanged();
+      } else {
+        wordsBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder setWords(
+        int index, samuraibff.proto.WordAlignment.Builder builderForValue) {
+      if (wordsBuilder_ == null) {
+        ensureWordsIsMutable();
+        words_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        wordsBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder addWords(samuraibff.proto.WordAlignment value) {
+      if (wordsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureWordsIsMutable();
+        words_.add(value);
+        onChanged();
+      } else {
+        wordsBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder addWords(
+        int index, samuraibff.proto.WordAlignment value) {
+      if (wordsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureWordsIsMutable();
+        words_.add(index, value);
+        onChanged();
+      } else {
+        wordsBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder addWords(
+        samuraibff.proto.WordAlignment.Builder builderForValue) {
+      if (wordsBuilder_ == null) {
+        ensureWordsIsMutable();
+        words_.add(builderForValue.build());
+        onChanged();
+      } else {
+        wordsBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder addWords(
+        int index, samuraibff.proto.WordAlignment.Builder builderForValue) {
+      if (wordsBuilder_ == null) {
+        ensureWordsIsMutable();
+        words_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        wordsBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder addAllWords(
+        java.lang.Iterable<? extends samuraibff.proto.WordAlignment> values) {
+      if (wordsBuilder_ == null) {
+        ensureWordsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, words_);
+        onChanged();
+      } else {
+        wordsBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder clearWords() {
+      if (wordsBuilder_ == null) {
+        words_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        onChanged();
+      } else {
+        wordsBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public Builder removeWords(int index) {
+      if (wordsBuilder_ == null) {
+        ensureWordsIsMutable();
+        words_.remove(index);
+        onChanged();
+      } else {
+        wordsBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public samuraibff.proto.WordAlignment.Builder getWordsBuilder(
+        int index) {
+      return internalGetWordsFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
+        int index) {
+      if (wordsBuilder_ == null) {
+        return words_.get(index);  } else {
+        return wordsBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
+         getWordsOrBuilderList() {
+      if (wordsBuilder_ != null) {
+        return wordsBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(words_);
+      }
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public samuraibff.proto.WordAlignment.Builder addWordsBuilder() {
+      return internalGetWordsFieldBuilder().addBuilder(
+          samuraibff.proto.WordAlignment.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public samuraibff.proto.WordAlignment.Builder addWordsBuilder(
+        int index) {
+      return internalGetWordsFieldBuilder().addBuilder(
+          index, samuraibff.proto.WordAlignment.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * Optional word-level alignment details as produced by the xamurai finalizer.
+     * If absent (older producers) or empty, consumers should treat the segment as
+     * having no word-level timing information.
+     * </pre>
+     *
+     * <code>repeated .WordAlignment words = 5;</code>
+     */
+    public java.util.List<samuraibff.proto.WordAlignment.Builder> 
+         getWordsBuilderList() {
+      return internalGetWordsFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.WordAlignment, samuraibff.proto.WordAlignment.Builder, samuraibff.proto.WordAlignmentOrBuilder> 
+        internalGetWordsFieldBuilder() {
+      if (wordsBuilder_ == null) {
+        wordsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+            samuraibff.proto.WordAlignment, samuraibff.proto.WordAlignment.Builder, samuraibff.proto.WordAlignmentOrBuilder>(
+                words_,
+                ((bitField0_ & 0x00000010) != 0),
+                getParentForChildren(),
+                isClean());
+        words_ = null;
+      }
+      return wordsBuilder_;
     }
 
     // @@protoc_insertion_point(builder_scope:SessionTranscriptSegment)

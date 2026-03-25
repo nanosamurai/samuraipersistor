@@ -104,6 +104,11 @@ message SessionTranscriptSegment {
   double end_s   = 2;
   string text    = 3;
   string speaker = 4; // optional, "" if unknown
+
+  // Optional word-level alignment details as produced by the xamurai finalizer.
+  // If absent (older producers) or empty, consumers should treat the segment as
+  // having no word-level timing information.
+  repeated WordAlignment words = 5;
 }
 
 message SessionTranscript {
