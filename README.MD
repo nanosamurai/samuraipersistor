@@ -24,7 +24,9 @@ Optional audit lane:
 
 * `webhook.delivery_outcome` (JSON, emitted by `webhook-dispatcher`)
 
-Messages **must be keyed by `session_id`** (session business key / `sessions.session_key`).
+Transcript messages **must be keyed by `session_id`** (session business key / `sessions.session_key`).
+
+`webhook.delivery_outcome` messages are typically keyed by `webhook_id` (or `tenant_id`) depending on dispatcher configuration.
 
 ### Persists (Postgres)
 
@@ -38,6 +40,8 @@ Optional audit/reporting tables:
 
 * `webhook_delivery_outcomes` (append-only)
 * `webhook_delivery_latest` (one row per `(tenant_id, webhook_id)` for fast UI list views)
+
+Retention note (ops): `webhook_delivery_outcomes` can be high volume. Our target is **30 days** retention; implement cleanup via a DB job/cron (this repo does not schedule DB maintenance).
 
 `SessionTranscript.segments` persisted into `session_transcripts.segments` may optionally include word-level timing
 information under `segments[].words[]` (when produced by the xamurai finalizer).
