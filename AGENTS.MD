@@ -18,7 +18,48 @@ transcription workers (e.g. `whisperx_worker`, `finalizer_worker`) in the Python
 - before you claim any task is complete, run full set of test/integration tests
 - DO NOT EVER attempt to read or fetch the compiled js code (usually at resources/public/js/main.js ) - it is too big and your cotext will rot into oblivion
 - DO NOT EVER run `clojure -Spath` or similar command to list entire classpath, you would burn too many tokens and rot your context without any significant benefit
-- Remember that if you have issues formatting clojure, you should use the clojure mcp server running locally to validate any expression, test new functions etc. - or you can run clojure tool locally and execute also any code to see how it fares.
+- **IMPORTANT:** If you encounter unbalanced parentheses, brackets, or braces in any `.clj`, `.cljs`, `.cljc`, `.cljd`, or EDN-like file: Do NOT try to manually repair them by repeated editing. Run `clj-paren-repair <path>` on the affected file. After repair, re-read the file and continue.
+- DO NOT create huge namespaces. If a namespace has 1000 LoC, you are doing something wrong and are likely to run into issues. Break dow the namespace into smaller logical namespaces instead.
+- USE LOGGING FFS!!! Whenever you are doing something important from the business logic perspective, use log info and log what are you about to do, and then if you have done it successfully - for instance "Saving webhook data into database {***map with web hook data****}...."
+
+## Clojure / ClojureScript editing rules
+
+When editing `.clj`, `.cljs`, `.cljc`, or Hiccup/Reagent code:
+
+1. Never perform large freehand string replacements inside nested Hiccup vectors.
+2. Prefer structural tools (MCP / refactor / form-aware tools) over textual patching.
+3. For UI changes, rewrite the entire smallest enclosing form (usually the whole `let` binding, helper fn, or entire `[:div ...]` block), not an inline fragment.
+4. Before writing code, restate the exact target tree:
+    - parent form being changed
+    - new siblings to insert
+    - whether an existing node is replaced or preserved
+5. After edits, always run:
+    - clj-kondo on the changed file
+    - project formatter if available
+    - compile or tests for the touched namespace
+6. If lint/compile fails, do not continue feature work. First try `clj-paren-repair` and if that fails try to restore balanced, compiling code.
+7. In Hiccup, never insert a sibling form into:
+    - a props map
+    - a component invocation vector
+    - a keyword/value pair sequence
+8. When unsure, output the full enclosing form and verify delimiters before applying.
+
+### Clojure Parenthesis Repair
+The command `clj-paren-repair` is currently installed on your path.
+
+**IMPORTANT:** You SHOULD NOT try to manually repair parenthesis errors. If you encounter a file with unbalanced parentheses or delimiters, run the `clj-paren-repair` tool on that file instead of attempting to fix the delimiters yourself. IF the tool doesn't work report to the user that they need to fix the delimiter error.
+
+### `clj-paren-repair` Tool Behavior
+
+The `clj-paren-repair` tool exhibits the following behavior:
+
+*   **Delimiter Repair:** It successfully identifies and fixes common delimiter errors, such as unbalanced parentheses.
+*   **Code Formatting (`cljfmt`):** The tool automatically formats files using `cljfmt` whenever it processes them, regardless of whether a delimiter error was fixed or not.
+
+## Using clj-kondo (clojure/clojurescript linter)
+
+- Remember that you can run kondo even for clojurescript via `shadow-cljs run clj-kondo.main/main --lint src/cljs`
+- For clj linting, you can run it via clojure tools/deps like this: `clj -Sdeps '{:deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}}' -M -m clj-kondo.main --lint src/clj`
 
 # About Nanosamur.ai
 Nanosamurai solution currently consists of
