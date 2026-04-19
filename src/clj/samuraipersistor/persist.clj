@@ -3,7 +3,9 @@
             [next.jdbc.result-set :as rs]
             [org.corfield.logging4j2 :as log]
             [jsonista.core :as j])
-  (:import (java.util UUID)
+  (:import (java.sql Timestamp)
+           (java.time Instant)
+           (java.util UUID)
            (samuraibff.proto RefinedEvent SessionTranscript SessionTranscriptSegment WordAlignment)))
 
 (def ^:private json-writer
@@ -162,3 +164,111 @@
             tx
             ["UPDATE sessions SET status='finished', ended_at=now() WHERE id=?" id]))
         :ok))))
+
+(def ^:private webhook-error-detail-max-len
+  4096)
+
+(defn- truncate-error-detail [s]
+  (when s
+    (let [s (str s)]
+      (if (<= (count s) webhook-error-detail-max-len)
+        s
+        (subs s 0 webhook-error-detail-max-len)))))
+
+(defn insert-webhook-delivery-outcome!
+  "Persist a webhook dispatcher delivery outcome.
+
+  Inputs:
+  - ds: next.jdbc datasource
+  - outcome: map with keys:
+    {:dispatch-id uuid
+     :event-id string?
+     :event-type string
+     :tenant-id uuid
+     :session-id uuid?
+     :webhook-id string
+     :attempt-no int
+     :status string
+     :http-status int?
+     :error-code string?
+     :error-detail string?
+     :latency-ms long?
+     :created-at java.time.Instant
+     :kafka {:topic string :partition int :offset long}}
+
+  Behavior:
+  - append-only insert into `webhook_delivery_outcomes` (idempotent on (dispatch_id, attempt_no))
+  - upsert last status into `webhook_delivery_latest` (only if newer)
+
+  Returns:
+  - :ok (always, even when history row was a duplicate)
+  Throws on DB errors."
+  [ds {:keys [dispatch-id event-id event-type tenant-id session-id webhook-id attempt-no status
+              http-status error-code error-detail latency-ms created-at kafka]}]
+  (let [{:keys [topic partition offset]} kafka
+        created-at (or created-at (Instant/now))
+        error-detail (truncate-error-detail error-detail)
+        id (UUID/randomUUID)]
+    (jdbc/with-transaction [tx ds]
+      ;; History (append-only)
+      (jdbc/execute-one!
+        tx
+        (into
+          [(str "INSERT INTO webhook_delivery_outcomes\n"
+                "  (id, created_at, tenant_id, session_id, webhook_id, dispatch_id, event_id, event_type,\n"
+                "   attempt_no, status, http_status, error_code, error_detail, latency_ms,\n"
+                "   kafka_topic, kafka_partition, kafka_offset)\n"
+                "VALUES\n"
+                "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
+                "ON CONFLICT (dispatch_id, attempt_no) DO NOTHING")]
+          [id
+           (Timestamp/from created-at)
+           tenant-id
+           session-id
+           webhook-id
+           dispatch-id
+           event-id
+           event-type
+           (int attempt-no)
+           status
+           http-status
+           error-code
+           error-detail
+           (when latency-ms (long latency-ms))
+           topic
+           (when partition (int partition))
+           (when offset (long offset))]))
+
+      ;; Latest (fast list view) - update only if this outcome is newer.
+      (jdbc/execute-one!
+        tx
+        (into
+          [(str "INSERT INTO webhook_delivery_latest\n"
+                "  (tenant_id, webhook_id, last_created_at, last_status, last_http_status,\n"
+                "   last_error_code, last_error_detail, last_latency_ms, last_event_type,\n"
+                "   last_dispatch_id, last_attempt_no)\n"
+                "VALUES\n"
+                "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
+                "ON CONFLICT (tenant_id, webhook_id) DO UPDATE SET\n"
+                "  last_created_at=EXCLUDED.last_created_at,\n"
+                "  last_status=EXCLUDED.last_status,\n"
+                "  last_http_status=EXCLUDED.last_http_status,\n"
+                "  last_error_code=EXCLUDED.last_error_code,\n"
+                "  last_error_detail=EXCLUDED.last_error_detail,\n"
+                "  last_latency_ms=EXCLUDED.last_latency_ms,\n"
+                "  last_event_type=EXCLUDED.last_event_type,\n"
+                "  last_dispatch_id=EXCLUDED.last_dispatch_id,\n"
+                "  last_attempt_no=EXCLUDED.last_attempt_no\n"
+                "WHERE webhook_delivery_latest.last_created_at <= EXCLUDED.last_created_at")]
+          [tenant-id
+           webhook-id
+           (Timestamp/from created-at)
+           status
+           http-status
+           error-code
+           error-detail
+           (when latency-ms (long latency-ms))
+           event-type
+           dispatch-id
+           (int attempt-no)]))
+      :ok)))
