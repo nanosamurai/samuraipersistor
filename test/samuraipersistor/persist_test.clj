@@ -1,6 +1,7 @@
 (ns samuraipersistor.persist-test
   (:require [clojure.test :refer [deftest is testing]]
             [next.jdbc :as jdbc]
+            [next.jdbc.result-set :as rs]
             [samuraipersistor.persist :as persist]
             [samuraipersistor.testcontainers :as tc]
             [org.corfield.logging4j2 :as log])
@@ -247,7 +248,8 @@
                       ds
                       ["SELECT tenant_id, webhook_id, last_status, last_http_status, last_created_at
                         FROM webhook_delivery_latest WHERE tenant_id=? AND webhook_id=?"
-                       tenant-id "wh_1"])]
+                       tenant-id "wh_1"]
+                      {:builder-fn rs/as-unqualified-lower-maps})]
             (is (= (str tenant-id) (str (:tenant_id row))))
             (is (= "wh_1" (:webhook_id row)))
             (is (= "SUCCESS" (:last_status row)))
