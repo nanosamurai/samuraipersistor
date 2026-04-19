@@ -51,7 +51,7 @@
                     supersedes_seq bigint[],
                     event_created_at_ns bigint,
                     created_at timestamptz NOT NULL DEFAULT now()
-                  );"]))
+                  );"])
 
   (jdbc/execute! ds
                 ["CREATE TABLE IF NOT EXISTS webhook_delivery_outcomes (
