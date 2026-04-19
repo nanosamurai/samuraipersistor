@@ -33,7 +33,7 @@
 (defn- bytes->string ^String [^bytes b]
   (String. b StandardCharsets/UTF_8))
 
-(defn- parse-uuid [s]
+(defn- parse-uuid* [s]
   (when (and s (not (string/blank? (str s))))
     (UUID/fromString (str s))))
 
@@ -54,11 +54,11 @@
                  (keyword? status) (name status)
                  (string? status) status
                  :else (str status))]
-    {:dispatch-id (parse-uuid (:dispatch_id m))
+    {:dispatch-id (parse-uuid* (:dispatch_id m))
    :event-id (:event_id m)
    :event-type (:event_type m)
-   :tenant-id (parse-uuid (:tenant_id m))
-   :session-id (parse-uuid (:session_id m))
+   :tenant-id (parse-uuid* (:tenant_id m))
+   :session-id (parse-uuid* (:session_id m))
    :webhook-id (:webhook_id m)
    :attempt-no (int (or (:attempt_no m) 0))
    :status status
@@ -98,7 +98,7 @@
                          (loop [i 1]
                            (when (< i batch-size)
                              (when-let [r (loop/poll! q 5)]
-                               (conj! recs r)
+                               (set! recs (conj! recs r))
                                (recur (inc i)))))
                          (let [records (persistent! recs)
                                processed (transient [])]

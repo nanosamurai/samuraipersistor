@@ -20,7 +20,7 @@
 (defn- parse-int [value]
   (Integer/parseInt value))
 
-(defn- parse-long [value]
+(defn- parse-long* [value]
   (Long/parseLong value))
 
 (defn- parse-bool [value]
@@ -40,7 +40,7 @@
                       :password (env-value "SP_DB_PASSWORD")
                       :maximum-pool-size (env-value "SP_DB_MAX_POOL_SIZE" parse-int)
                       :minimum-idle (env-value "SP_DB_MIN_IDLE" parse-int)
-                      :connection-timeout-ms (env-value "SP_DB_CONN_TIMEOUT_MS" parse-long)}
+                      :connection-timeout-ms (env-value "SP_DB_CONN_TIMEOUT_MS" parse-long*)}
 
                  :kafka {:bootstrap-servers (env-value "SP_KAFKA_BOOTSTRAP_SERVERS")
                          :client-id (env-value "SP_KAFKA_CLIENT_ID")
