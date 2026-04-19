@@ -20,6 +20,10 @@ Nanosamurai solution currently consists of
 * `transcripts.refined` (`RefinedEvent` protobuf)
 * `transcripts.final` (`SessionTranscript` protobuf)
 
+Optional audit lane:
+
+* `webhook.delivery_outcome` (JSON, emitted by `webhook-dispatcher`)
+
 Messages **must be keyed by `session_id`** (session business key / `sessions.session_key`).
 
 ### Persists (Postgres)
@@ -29,6 +33,11 @@ Persists into the shared `drsynth` schema tables:
 * `sessions` (assumed to be created by BFF)
 * `recordings`
 * `session_transcripts` (append-only transcript records)
+
+Optional audit/reporting tables:
+
+* `webhook_delivery_outcomes` (append-only)
+* `webhook_delivery_latest` (one row per `(tenant_id, webhook_id)` for fast UI list views)
 
 `SessionTranscript.segments` persisted into `session_transcripts.segments` may optionally include word-level timing
 information under `segments[].words[]` (when produced by the xamurai finalizer).
@@ -101,12 +110,16 @@ For local development and tests, prefer **Testcontainers** (see tests below) and
 | Kafka | `SP_KAFKA_FINAL_GROUP_ID` | Consumer group for final | `samuraipersistor-final` |
 | Kafka | `SP_KAFKA_TOPIC_REFINED` | Refined topic | `transcripts.refined` |
 | Kafka | `SP_KAFKA_TOPIC_FINAL` | Final topic | `transcripts.final` |
+| Kafka | `SP_KAFKA_TOPIC_WEBHOOK_DELIVERY_OUTCOME` | Webhook delivery outcome topic | `webhook.delivery_outcome` |
 | Kafka | `SP_KAFKA_TOPIC_DLQ` | DLQ topic (optional) | `transcripts.persistor.dlq` |
 | Kafka | `SP_KAFKA_MAX_POLL_RECORDS` | Max poll records | `200` |
 | Kafka | `SP_KAFKA_MAX_POLL_INTERVAL_MS` | Max poll interval (ms) | `300000` |
 | Kafka | `SP_KAFKA_SESSION_TIMEOUT_MS` | Session timeout (ms) | `30000` |
 | Kafka | `SP_KAFKA_REFINED_BUFFER_SIZE` | Refined queue size | `2000` |
 | Kafka | `SP_KAFKA_FINAL_BUFFER_SIZE` | Final queue size | `200` |
+| Kafka | `SP_KAFKA_WEBHOOK_OUTCOME_GROUP_ID` | Consumer group for webhook outcomes | `samuraipersistor-webhook-outcomes` |
+| Kafka | `SP_KAFKA_WEBHOOK_OUTCOME_BUFFER_SIZE` | Webhook outcomes queue size | `2000` |
+| Feature flag | `SP_WEBHOOK_OUTCOME_ENABLED` | Enable webhook outcome consumer | `true` |
 
 ## Running
 
