@@ -20,8 +20,11 @@
 (defn- parse-int [value]
   (Integer/parseInt value))
 
-(defn- parse-long [value]
+(defn- parse-long* [value]
   (Long/parseLong value))
+
+(defn- parse-bool [value]
+  (contains? #{"1" "true" "TRUE" "yes" "YES" "on" "ON"} value))
 
 (defn- apply-env-overrides
   "Apply environment variable overrides onto the system config map.
@@ -31,12 +34,14 @@
   [config]
   (let [updates {:http {:host (env-value "SP_HTTP_HOST")
                         :port (env-value "SP_HTTP_PORT" parse-int)}
+
                  :db {:jdbc-url (env-value "SP_DB_JDBC_URL")
                       :username (env-value "SP_DB_USERNAME")
                       :password (env-value "SP_DB_PASSWORD")
                       :maximum-pool-size (env-value "SP_DB_MAX_POOL_SIZE" parse-int)
                       :minimum-idle (env-value "SP_DB_MIN_IDLE" parse-int)
-                      :connection-timeout-ms (env-value "SP_DB_CONN_TIMEOUT_MS" parse-long)}
+                      :connection-timeout-ms (env-value "SP_DB_CONN_TIMEOUT_MS" parse-long*)}
+
                  :kafka {:bootstrap-servers (env-value "SP_KAFKA_BOOTSTRAP_SERVERS")
                          :client-id (env-value "SP_KAFKA_CLIENT_ID")
                          ;; TLS / security
@@ -44,16 +49,26 @@
                          ;; Fallback: generic KAFKA_* vars emitted by some Helm charts.
                          :security-protocol (or (env-value "SP_KAFKA_SECURITY_PROTOCOL")
                                                 (env-value "KAFKA_SECURITY_PROTOCOL"))
+
                          :refined-consumer-group-id (env-value "SP_KAFKA_REFINED_GROUP_ID")
                          :final-consumer-group-id (env-value "SP_KAFKA_FINAL_GROUP_ID")
+                         :webhook-outcome-consumer-group-id (env-value "SP_KAFKA_WEBHOOK_OUTCOME_GROUP_ID")
+
                          :topics {:refined (env-value "SP_KAFKA_TOPIC_REFINED")
                                   :final (env-value "SP_KAFKA_TOPIC_FINAL")
+                                  :webhook-delivery-outcome (env-value "SP_KAFKA_TOPIC_WEBHOOK_DELIVERY_OUTCOME")
                                   :dlq (env-value "SP_KAFKA_TOPIC_DLQ")}
+
                          :max-poll-records (env-value "SP_KAFKA_MAX_POLL_RECORDS" parse-int)
                          :max-poll-interval-ms (env-value "SP_KAFKA_MAX_POLL_INTERVAL_MS" parse-int)
                          :session-timeout-ms (env-value "SP_KAFKA_SESSION_TIMEOUT_MS" parse-int)
+
                          :refined-buffer-size (env-value "SP_KAFKA_REFINED_BUFFER_SIZE" parse-int)
-                         :final-buffer-size (env-value "SP_KAFKA_FINAL_BUFFER_SIZE" parse-int)}}
+                         :final-buffer-size (env-value "SP_KAFKA_FINAL_BUFFER_SIZE" parse-int)
+                         :webhook-outcome-buffer-size (env-value "SP_KAFKA_WEBHOOK_OUTCOME_BUFFER_SIZE" parse-int)
+
+                         ;; Optional kill switch for the audit lane.
+                         :webhook-outcome-enabled? (env-value "SP_WEBHOOK_OUTCOME_ENABLED" parse-bool)}}
         merge-kv (fn [m k v]
                    (if (nil? v)
                      m
