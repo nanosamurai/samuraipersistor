@@ -1,5 +1,6 @@
 (ns samuraipersistor.persist
-  (:require [next.jdbc :as jdbc]
+  (:require [clojure.string :as str]
+            [next.jdbc :as jdbc]
             [next.jdbc.result-set :as rs]
             [org.corfield.logging4j2 :as log]
             [jsonista.core :as j])
@@ -20,14 +21,75 @@
                     ["SELECT id, tenant_id, user_id FROM sessions WHERE session_key=?" session-key]
                     {:builder-fn rs/as-unqualified-lower-maps}))
 
+(defn- words->vec
+  "Convert a protobuf `repeated WordAlignment` to a vector of maps.
+
+  Returns an empty vector when no words are present." 
+  [words-list]
+  (mapv (fn [^WordAlignment w]
+          {:start_s (.getStartS w)
+           :end_s (.getEndS w)
+           :text (.getText w)})
+        words-list))
+
+(defn- segment->map
+  "Convert `SessionTranscriptSegment` protobuf message to a JSON-ready map.
+
+  Includes `:words` only when present (non-empty)." 
+  [^SessionTranscriptSegment s]
+  (let [base {:start_s (.getStartS s)
+              :end_s (.getEndS s)
+              :text (.getText s)
+              :speaker (.getSpeaker s)}
+        words (words->vec (.getWordsList s))]
+    (cond-> base
+      (seq words) (assoc :words words))))
+
+(defn- refined-legacy->segments
+  "Backward-compatible refined event segments.
+
+  For older producers that don't populate `RefinedEvent.segments`, we treat the
+  scalar fields on the event itself as a single segment." 
+  [^RefinedEvent ev]
+  [{:start_s (.getStartS ev)
+    :end_s (.getEndS ev)
+    :text (.getText ev)
+    :speaker (.getSpeaker ev)}])
+
+(defn- refined-event->segments
+  "Extract refined segments from the event.
+
+  Uses `ev.segments` when present; otherwise falls back to the legacy scalar
+  fields.
+
+  Returns a seq of maps." 
+  [^RefinedEvent ev]
+  (if (pos? (.getSegmentsCount ev))
+    (map segment->map (.getSegmentsList ev))
+    (refined-legacy->segments ev)))
+
+(defn- segments->full-text
+  "Derive `full_text` from segments.
+
+  Join strategy is intentionally simple: concatenate segment texts with a
+  single space." 
+  [segments]
+  (->> segments
+       (keep :text)
+       (remove str/blank?)
+       (str/join " ")))
+
 (defn insert-refined!
   "Persist a RefinedEvent as an append-only transcript record.
 
-  `meta` must contain:
+  `meta` keys (all optional):
   - :window-length (int)
   - :model (string)
   - :source (string)  ; originating worker name, e.g. 'whisperx_worker'
   - :event-created-at-ns (long)
+
+  When `meta` doesn't contain some values, we try to fall back to new
+  RefinedEvent fields (window_sec/created_at_ns/refinement_model).
 
   Returns :ok, :missing-session, or throws on DB errors." 
   [ds ^RefinedEvent ev {:keys [window-length model source event-created-at-ns]}]
@@ -38,11 +100,23 @@
         (log/warn "Missing session for refined event" {:session-key session-key})
         :missing-session)
       (let [{:keys [id tenant_id user_id]} row
-            segment {:start_s (.getStartS ev)
-                     :end_s (.getEndS ev)
-                     :text (.getText ev)
-                     :speaker (.getSpeaker ev)}
-            segments-json (j/write-value-as-string [segment] json-writer)
+            segments (refined-event->segments ev)
+            segments-json (j/write-value-as-string segments json-writer)
+            window-length (or (when window-length (long window-length))
+                              (let [ws (.getWindowSec ev)]
+                                (when (pos? ws)
+                                  (long (Math/round (double ws))))))
+            event-created-at-ns (or (when event-created-at-ns (long event-created-at-ns))
+                                    (let [t (.getCreatedAtNs ev)]
+                                      (when (pos? t)
+                                        (long t))))
+            model (or model
+                      (let [m (.getRefinementModel ev)]
+                        (when (seq m) m)))
+            full-text (let [t (.getText ev)]
+                        (if (str/blank? t)
+                          (segments->full-text segments)
+                          t))
             sup (.getSupersedesSeqList ev)]
         (with-open [conn (jdbc/get-connection ds)]
           (let [sup-arr (when (and sup (pos? (.size sup)))
@@ -66,16 +140,16 @@
                  id
                  tenant_id
                  user_id
-                 (.getText ev)
+                 full-text
                  (let [lang (.getLang ev)] (when (seq lang) lang))
                  segments-json
                  (or source "unknown")
                  (or model "unknown")
-                 (when window-length (long window-length))
+                 window-length
                  (double (.getStartS ev))
                  (double (.getEndS ev))
                  sup-arr
-                 (when event-created-at-ns (long event-created-at-ns))]))
+                 event-created-at-ns]))
             :ok))))))
 
 (defn insert-final!
@@ -99,19 +173,7 @@
         (log/warn "Missing session for final transcript" {:session-key session-key})
         :missing-session)
       (let [{:keys [id tenant_id user_id]} row
-            segments (map (fn [^SessionTranscriptSegment s]
-                            (let [words (map (fn [^WordAlignment w]
-                                               {:start_s (.getStartS w)
-                                                :end_s (.getEndS w)
-                                                :text (.getText w)})
-                                             (.getWordsList s))
-                                  base {:start_s (.getStartS s)
-                                        :end_s (.getEndS s)
-                                        :text (.getText s)
-                                        :speaker (.getSpeaker s)}]
-                              (cond-> base
-                                (seq words) (assoc :words words))))
-                          (.getSegmentsList ev))
+            segments (map segment->map (.getSegmentsList ev))
             segments-json (j/write-value-as-string segments json-writer)
             recording-id (UUID/randomUUID)
             transcript-id (UUID/randomUUID)]

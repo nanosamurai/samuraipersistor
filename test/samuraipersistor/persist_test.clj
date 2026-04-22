@@ -129,11 +129,65 @@
                          session-id tenant-id session-key])
 
           (testing "refined insert"
-            (let [ev (-> (RefinedEvent/newBuilder)
+            (let [seg1 (-> (SessionTranscriptSegment/newBuilder)
+                           (.setStartS 1.0)
+                           (.setEndS 1.5)
+                           (.setText "hi")
+                           (.setSpeaker "SPEAKER_00")
+                           (.build))
+                  seg2 (-> (SessionTranscriptSegment/newBuilder)
+                           (.setStartS 1.5)
+                           (.setEndS 2.0)
+                           (.setText "there")
+                           (.setSpeaker "SPEAKER_01")
+                           (.build))
+                  ev (-> (RefinedEvent/newBuilder)
                          (.setSessionId session-key)
                          (.setStartS 1.0)
                          (.setEndS 2.0)
-                         (.setText "hi")
+                         ;; legacy scalar text may be populated, but segments[] is source of truth
+                         (.setText "hi there")
+                         (.setSpeaker "")
+                         (.setLang "en")
+                         (.setWindowSec 60.0)
+                         (.setSliceIndex 0)
+                         (.setFlushReason "slice")
+                         (.setCreatedAtNs 1)
+                         (.setRefinementModel "whisperx")
+                         (.addSegments seg1)
+                         (.addSegments seg2)
+                         (.build))]
+              (is (= :ok (persist/insert-refined!
+                           ds ev
+                           {:source "whisperx_worker"
+                             ;; let persistor take `model/window_length/event_created_at_ns` from the event itself
+                             :model nil
+                             :window-length nil
+                             :event-created-at-ns nil})))
+              (let [n (-> (jdbc/execute-one! ds ["SELECT count(*) AS n FROM session_transcripts WHERE type='refined'"])
+                          :n)]
+                (is (= 1 n)))
+
+              (let [row (jdbc/execute-one!
+                          ds
+                          [(str "SELECT jsonb_array_length(segments) AS seg_count, "
+                                "segments #>> '{0,speaker}' AS first_speaker, "
+                                "segments #>> '{1,text}' AS second_text, "
+                                "window_length, model, event_created_at_ns "
+                                "FROM session_transcripts WHERE type='refined' ORDER BY created_at DESC LIMIT 1")])]
+                (is (= 2 (:seg_count row)))
+                (is (= "SPEAKER_00" (:first_speaker row)))
+                (is (= "there" (:second_text row)))
+                (is (= 60 (:window_length row)))
+                (is (= "whisperx" (:model row)))
+                (is (= 1 (:event_created_at_ns row))))))
+
+          (testing "refined insert backwards compatibility (scalar fields only)"
+            (let [ev (-> (RefinedEvent/newBuilder)
+                         (.setSessionId session-key)
+                         (.setStartS 10.0)
+                         (.setEndS 11.0)
+                         (.setText "legacy")
                          (.setSpeaker "")
                          (.setLang "en")
                          (.build))]
@@ -142,10 +196,14 @@
                            {:source "whisperx_worker"
                             :model "whisperx"
                             :window-length 60
-                            :event-created-at-ns 1})))
-              (let [n (-> (jdbc/execute-one! ds ["SELECT count(*) AS n FROM session_transcripts WHERE type='refined'"])
-                          :n)]
-                (is (= 1 n)))))
+                            :event-created-at-ns 2})))
+              (let [row (jdbc/execute-one!
+                          ds
+                          [(str "SELECT jsonb_array_length(segments) AS seg_count, "
+                                "segments #>> '{0,text}' AS first_text "
+                                "FROM session_transcripts WHERE type='refined' ORDER BY created_at DESC LIMIT 1")])]
+                (is (= 1 (:seg_count row)))
+                (is (= "legacy" (:first_text row))))))
 
           (testing "final insert"
             (let [word (-> (WordAlignment/newBuilder)
