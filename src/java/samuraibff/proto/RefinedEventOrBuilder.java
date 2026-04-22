@@ -11,36 +11,36 @@ public interface RefinedEventOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   java.lang.String getSessionId();
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   com.google.protobuf.ByteString
       getSessionIdBytes();
 
   /**
-   * <code>double start_s = 2 [json_name = "startS"];</code>
+   * <code>double start_s = 2;</code>
    * @return The startS.
    */
   double getStartS();
 
   /**
-   * <code>double end_s = 3 [json_name = "endS"];</code>
+   * <code>double end_s = 3;</code>
    * @return The endS.
    */
   double getEndS();
 
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The text.
    */
   java.lang.String getText();
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The bytes for text.
    */
   com.google.protobuf.ByteString
@@ -51,7 +51,7 @@ public interface RefinedEventOrBuilder extends
    * optional/mapped
    * </pre>
    *
-   * <code>string speaker = 5 [json_name = "speaker"];</code>
+   * <code>string speaker = 5;</code>
    * @return The speaker.
    */
   java.lang.String getSpeaker();
@@ -60,7 +60,7 @@ public interface RefinedEventOrBuilder extends
    * optional/mapped
    * </pre>
    *
-   * <code>string speaker = 5 [json_name = "speaker"];</code>
+   * <code>string speaker = 5;</code>
    * @return The bytes for speaker.
    */
   com.google.protobuf.ByteString
@@ -71,7 +71,7 @@ public interface RefinedEventOrBuilder extends
    * optional linkage to live lines
    * </pre>
    *
-   * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+   * <code>repeated uint64 supersedes_seq = 6;</code>
    * @return A list containing the supersedesSeq.
    */
   java.util.List<java.lang.Long> getSupersedesSeqList();
@@ -80,7 +80,7 @@ public interface RefinedEventOrBuilder extends
    * optional linkage to live lines
    * </pre>
    *
-   * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+   * <code>repeated uint64 supersedes_seq = 6;</code>
    * @return The count of supersedesSeq.
    */
   int getSupersedesSeqCount();
@@ -89,19 +89,19 @@ public interface RefinedEventOrBuilder extends
    * optional linkage to live lines
    * </pre>
    *
-   * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+   * <code>repeated uint64 supersedes_seq = 6;</code>
    * @param index The index of the element to return.
    * @return The supersedesSeq at the given index.
    */
   long getSupersedesSeq(int index);
 
   /**
-   * <code>string lang = 7 [json_name = "lang"];</code>
+   * <code>string lang = 7;</code>
    * @return The lang.
    */
   java.lang.String getLang();
   /**
-   * <code>string lang = 7 [json_name = "lang"];</code>
+   * <code>string lang = 7;</code>
    * @return The bytes for lang.
    */
   com.google.protobuf.ByteString
@@ -113,7 +113,7 @@ public interface RefinedEventOrBuilder extends
    * This value is copied from AudioChunk.bff_origin_uri by the worker.
    * </pre>
    *
-   * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+   * <code>string bff_origin_uri = 8;</code>
    * @return The bffOriginUri.
    */
   java.lang.String getBffOriginUri();
@@ -123,7 +123,7 @@ public interface RefinedEventOrBuilder extends
    * This value is copied from AudioChunk.bff_origin_uri by the worker.
    * </pre>
    *
-   * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+   * <code>string bff_origin_uri = 8;</code>
    * @return The bytes for bffOriginUri.
    */
   com.google.protobuf.ByteString
@@ -135,7 +135,7 @@ public interface RefinedEventOrBuilder extends
    * This value is copied from AudioChunk.tenant_id by the worker.
    * </pre>
    *
-   * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 9;</code>
    * @return The tenantId.
    */
   java.lang.String getTenantId();
@@ -145,9 +145,124 @@ public interface RefinedEventOrBuilder extends
    * This value is copied from AudioChunk.tenant_id by the worker.
    * </pre>
    *
-   * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 9;</code>
    * @return The bytes for tenantId.
    */
   com.google.protobuf.ByteString
       getTenantIdBytes();
+
+  /**
+   * <pre>
+   * Identity and timing of the refinement window.
+   * NOTE: the window boundaries are represented by start_s/end_s.
+   * </pre>
+   *
+   * <code>double window_sec = 10;</code>
+   * @return The windowSec.
+   */
+  double getWindowSec();
+
+  /**
+   * <pre>
+   * 0-based index for this window size
+   * </pre>
+   *
+   * <code>uint32 slice_index = 11;</code>
+   * @return The sliceIndex.
+   */
+  int getSliceIndex();
+
+  /**
+   * <pre>
+   * "slice" | "idle" (idle = final shorter tail)
+   * </pre>
+   *
+   * <code>string flush_reason = 12;</code>
+   * @return The flushReason.
+   */
+  java.lang.String getFlushReason();
+  /**
+   * <pre>
+   * "slice" | "idle" (idle = final shorter tail)
+   * </pre>
+   *
+   * <code>string flush_reason = 12;</code>
+   * @return The bytes for flushReason.
+   */
+  com.google.protobuf.ByteString
+      getFlushReasonBytes();
+
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  java.util.List<samuraibff.proto.SessionTranscriptSegment> 
+      getSegmentsList();
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  samuraibff.proto.SessionTranscriptSegment getSegments(int index);
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  int getSegmentsCount();
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+      getSegmentsOrBuilderList();
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
+      int index);
+
+  /**
+   * <pre>
+   * Optional metadata for dedupe/ordering.
+   * </pre>
+   *
+   * <code>uint64 created_at_ns = 14;</code>
+   * @return The createdAtNs.
+   */
+  long getCreatedAtNs();
+
+  /**
+   * <pre>
+   * e.g. "whisperx" (future: voxstral, ...)
+   * </pre>
+   *
+   * <code>string refinement_model = 15;</code>
+   * @return The refinementModel.
+   */
+  java.lang.String getRefinementModel();
+  /**
+   * <pre>
+   * e.g. "whisperx" (future: voxstral, ...)
+   * </pre>
+   *
+   * <code>string refinement_model = 15;</code>
+   * @return The bytes for refinementModel.
+   */
+  com.google.protobuf.ByteString
+      getRefinementModelBytes();
 }

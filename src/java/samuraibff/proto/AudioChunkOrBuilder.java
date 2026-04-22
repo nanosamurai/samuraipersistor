@@ -11,12 +11,12 @@ public interface AudioChunkOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   java.lang.String getSessionId();
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   com.google.protobuf.ByteString
@@ -27,7 +27,7 @@ public interface AudioChunkOrBuilder extends
    * incremental per session
    * </pre>
    *
-   * <code>uint64 seq = 2 [json_name = "seq"];</code>
+   * <code>uint64 seq = 2;</code>
    * @return The seq.
    */
   long getSeq();
@@ -37,7 +37,7 @@ public interface AudioChunkOrBuilder extends
    * producer monotonic timestamp OR sample time
    * </pre>
    *
-   * <code>int64 t0_ns = 3 [json_name = "t0Ns"];</code>
+   * <code>int64 t0_ns = 3;</code>
    * @return The t0Ns.
    */
   long getT0Ns();
@@ -47,7 +47,7 @@ public interface AudioChunkOrBuilder extends
    * 16000
    * </pre>
    *
-   * <code>uint32 sample_rate = 4 [json_name = "sampleRate"];</code>
+   * <code>uint32 sample_rate = 4;</code>
    * @return The sampleRate.
    */
   int getSampleRate();
@@ -57,18 +57,18 @@ public interface AudioChunkOrBuilder extends
    * little-endian PCM16 mono
    * </pre>
    *
-   * <code>bytes pcm16_le = 5 [json_name = "pcm16Le"];</code>
+   * <code>bytes pcm16_le = 5;</code>
    * @return The pcm16Le.
    */
   com.google.protobuf.ByteString getPcm16Le();
 
   /**
-   * <code>string lang = 6 [json_name = "lang"];</code>
+   * <code>string lang = 6;</code>
    * @return The lang.
    */
   java.lang.String getLang();
   /**
-   * <code>string lang = 6 [json_name = "lang"];</code>
+   * <code>string lang = 6;</code>
    * @return The bytes for lang.
    */
   com.google.protobuf.ByteString
@@ -82,7 +82,7 @@ public interface AudioChunkOrBuilder extends
    * Example: "http://bff-1.internal:8000".
    * </pre>
    *
-   * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
+   * <code>string bff_origin_uri = 7;</code>
    * @return The bffOriginUri.
    */
   java.lang.String getBffOriginUri();
@@ -94,7 +94,7 @@ public interface AudioChunkOrBuilder extends
    * Example: "http://bff-1.internal:8000".
    * </pre>
    *
-   * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
+   * <code>string bff_origin_uri = 7;</code>
    * @return The bytes for bffOriginUri.
    */
   com.google.protobuf.ByteString
@@ -105,7 +105,7 @@ public interface AudioChunkOrBuilder extends
    * Tenant id for routing/isolation.
    * </pre>
    *
-   * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 8;</code>
    * @return The tenantId.
    */
   java.lang.String getTenantId();
@@ -114,7 +114,7 @@ public interface AudioChunkOrBuilder extends
    * Tenant id for routing/isolation.
    * </pre>
    *
-   * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 8;</code>
    * @return The bytes for tenantId.
    */
   com.google.protobuf.ByteString

@@ -55,7 +55,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -72,7 +72,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -98,7 +98,7 @@ private static final long serialVersionUID = 0L;
    * e.g. file://..., s3://...
    * </pre>
    *
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The recordingUrl.
    */
   @java.lang.Override
@@ -119,7 +119,7 @@ private static final long serialVersionUID = 0L;
    * e.g. file://..., s3://...
    * </pre>
    *
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The bytes for recordingUrl.
    */
   @java.lang.Override
@@ -140,7 +140,7 @@ private static final long serialVersionUID = 0L;
   public static final int DURATION_S_FIELD_NUMBER = 3;
   private double durationS_ = 0D;
   /**
-   * <code>double duration_s = 3 [json_name = "durationS"];</code>
+   * <code>double duration_s = 3;</code>
    * @return The durationS.
    */
   @java.lang.Override
@@ -151,7 +151,7 @@ private static final long serialVersionUID = 0L;
   public static final int SAMPLE_RATE_FIELD_NUMBER = 4;
   private int sampleRate_ = 0;
   /**
-   * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
+   * <code>int32 sample_rate = 4;</code>
    * @return The sampleRate.
    */
   @java.lang.Override
@@ -163,7 +163,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object lang_ = "";
   /**
-   * <code>string lang = 5 [json_name = "lang"];</code>
+   * <code>string lang = 5;</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -180,7 +180,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string lang = 5 [json_name = "lang"];</code>
+   * <code>string lang = 5;</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -206,7 +206,7 @@ private static final long serialVersionUID = 0L;
    * optional tenant/client label for downstream routing
    * </pre>
    *
-   * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 6;</code>
    * @return The tenantId.
    */
   @java.lang.Override
@@ -227,7 +227,7 @@ private static final long serialVersionUID = 0L;
    * optional tenant/client label for downstream routing
    * </pre>
    *
-   * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 6;</code>
    * @return The bytes for tenantId.
    */
   @java.lang.Override
@@ -252,7 +252,7 @@ private static final long serialVersionUID = 0L;
    * when this event was created
    * </pre>
    *
-   * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
+   * <code>int64 created_at_ns = 7;</code>
    * @return The createdAtNs.
    */
   @java.lang.Override
@@ -704,7 +704,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -720,7 +720,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -737,7 +737,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -750,7 +750,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -760,7 +760,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -780,7 +780,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @return The recordingUrl.
      */
     public java.lang.String getRecordingUrl() {
@@ -800,7 +800,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @return The bytes for recordingUrl.
      */
     public com.google.protobuf.ByteString
@@ -821,7 +821,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @param value The recordingUrl to set.
      * @return This builder for chaining.
      */
@@ -838,7 +838,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearRecordingUrl() {
@@ -852,7 +852,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @param value The bytes for recordingUrl to set.
      * @return This builder for chaining.
      */
@@ -868,7 +868,7 @@ private static final long serialVersionUID = 0L;
 
     private double durationS_ ;
     /**
-     * <code>double duration_s = 3 [json_name = "durationS"];</code>
+     * <code>double duration_s = 3;</code>
      * @return The durationS.
      */
     @java.lang.Override
@@ -876,7 +876,7 @@ private static final long serialVersionUID = 0L;
       return durationS_;
     }
     /**
-     * <code>double duration_s = 3 [json_name = "durationS"];</code>
+     * <code>double duration_s = 3;</code>
      * @param value The durationS to set.
      * @return This builder for chaining.
      */
@@ -888,7 +888,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double duration_s = 3 [json_name = "durationS"];</code>
+     * <code>double duration_s = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearDurationS() {
@@ -900,7 +900,7 @@ private static final long serialVersionUID = 0L;
 
     private int sampleRate_ ;
     /**
-     * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
+     * <code>int32 sample_rate = 4;</code>
      * @return The sampleRate.
      */
     @java.lang.Override
@@ -908,7 +908,7 @@ private static final long serialVersionUID = 0L;
       return sampleRate_;
     }
     /**
-     * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
+     * <code>int32 sample_rate = 4;</code>
      * @param value The sampleRate to set.
      * @return This builder for chaining.
      */
@@ -920,7 +920,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
+     * <code>int32 sample_rate = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearSampleRate() {
@@ -932,7 +932,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object lang_ = "";
     /**
-     * <code>string lang = 5 [json_name = "lang"];</code>
+     * <code>string lang = 5;</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -948,7 +948,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 5 [json_name = "lang"];</code>
+     * <code>string lang = 5;</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -965,7 +965,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 5 [json_name = "lang"];</code>
+     * <code>string lang = 5;</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -978,7 +978,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 5 [json_name = "lang"];</code>
+     * <code>string lang = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -988,7 +988,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 5 [json_name = "lang"];</code>
+     * <code>string lang = 5;</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1008,7 +1008,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 6;</code>
      * @return The tenantId.
      */
     public java.lang.String getTenantId() {
@@ -1028,7 +1028,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 6;</code>
      * @return The bytes for tenantId.
      */
     public com.google.protobuf.ByteString
@@ -1049,7 +1049,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 6;</code>
      * @param value The tenantId to set.
      * @return This builder for chaining.
      */
@@ -1066,7 +1066,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearTenantId() {
@@ -1080,7 +1080,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 6;</code>
      * @param value The bytes for tenantId to set.
      * @return This builder for chaining.
      */
@@ -1100,7 +1100,7 @@ private static final long serialVersionUID = 0L;
      * when this event was created
      * </pre>
      *
-     * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
+     * <code>int64 created_at_ns = 7;</code>
      * @return The createdAtNs.
      */
     @java.lang.Override
@@ -1112,7 +1112,7 @@ private static final long serialVersionUID = 0L;
      * when this event was created
      * </pre>
      *
-     * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
+     * <code>int64 created_at_ns = 7;</code>
      * @param value The createdAtNs to set.
      * @return This builder for chaining.
      */
@@ -1128,7 +1128,7 @@ private static final long serialVersionUID = 0L;
      * when this event was created
      * </pre>
      *
-     * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
+     * <code>int64 created_at_ns = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearCreatedAtNs() {

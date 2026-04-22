@@ -53,7 +53,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -70,7 +70,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -92,7 +92,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object recordingUrl_ = "";
   /**
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The recordingUrl.
    */
   @java.lang.Override
@@ -109,7 +109,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The bytes for recordingUrl.
    */
   @java.lang.Override
@@ -131,7 +131,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object lang_ = "";
   /**
-   * <code>string lang = 3 [json_name = "lang"];</code>
+   * <code>string lang = 3;</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -148,7 +148,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string lang = 3 [json_name = "lang"];</code>
+   * <code>string lang = 3;</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -169,7 +169,7 @@ private static final long serialVersionUID = 0L;
   public static final int DURATION_S_FIELD_NUMBER = 4;
   private float durationS_ = 0F;
   /**
-   * <code>float duration_s = 4 [json_name = "durationS"];</code>
+   * <code>float duration_s = 4;</code>
    * @return The durationS.
    */
   @java.lang.Override
@@ -181,14 +181,14 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private java.util.List<samuraibff.proto.SessionTranscriptSegment> segments_;
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   @java.lang.Override
   public java.util.List<samuraibff.proto.SessionTranscriptSegment> getSegmentsList() {
     return segments_;
   }
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   @java.lang.Override
   public java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
@@ -196,21 +196,21 @@ private static final long serialVersionUID = 0L;
     return segments_;
   }
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   @java.lang.Override
   public int getSegmentsCount() {
     return segments_.size();
   }
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   @java.lang.Override
   public samuraibff.proto.SessionTranscriptSegment getSegments(int index) {
     return segments_.get(index);
   }
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   @java.lang.Override
   public samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
@@ -222,7 +222,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object fullText_ = "";
   /**
-   * <code>string full_text = 6 [json_name = "fullText"];</code>
+   * <code>string full_text = 6;</code>
    * @return The fullText.
    */
   @java.lang.Override
@@ -239,7 +239,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string full_text = 6 [json_name = "fullText"];</code>
+   * <code>string full_text = 6;</code>
    * @return The bytes for fullText.
    */
   @java.lang.Override
@@ -261,7 +261,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object tenantId_ = "";
   /**
-   * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 7;</code>
    * @return The tenantId.
    */
   @java.lang.Override
@@ -278,7 +278,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 7;</code>
    * @return The bytes for tenantId.
    */
   @java.lang.Override
@@ -299,7 +299,7 @@ private static final long serialVersionUID = 0L;
   public static final int CREATED_AT_NS_FIELD_NUMBER = 8;
   private long createdAtNs_ = 0L;
   /**
-   * <code>uint64 created_at_ns = 8 [json_name = "createdAtNs"];</code>
+   * <code>uint64 created_at_ns = 8;</code>
    * @return The createdAtNs.
    */
   @java.lang.Override
@@ -820,7 +820,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -836,7 +836,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -853,7 +853,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -866,7 +866,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -876,7 +876,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -892,7 +892,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object recordingUrl_ = "";
     /**
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @return The recordingUrl.
      */
     public java.lang.String getRecordingUrl() {
@@ -908,7 +908,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @return The bytes for recordingUrl.
      */
     public com.google.protobuf.ByteString
@@ -925,7 +925,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @param value The recordingUrl to set.
      * @return This builder for chaining.
      */
@@ -938,7 +938,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearRecordingUrl() {
@@ -948,7 +948,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+     * <code>string recording_url = 2;</code>
      * @param value The bytes for recordingUrl to set.
      * @return This builder for chaining.
      */
@@ -964,7 +964,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object lang_ = "";
     /**
-     * <code>string lang = 3 [json_name = "lang"];</code>
+     * <code>string lang = 3;</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -980,7 +980,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 3 [json_name = "lang"];</code>
+     * <code>string lang = 3;</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -997,7 +997,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 3 [json_name = "lang"];</code>
+     * <code>string lang = 3;</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -1010,7 +1010,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 3 [json_name = "lang"];</code>
+     * <code>string lang = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -1020,7 +1020,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 3 [json_name = "lang"];</code>
+     * <code>string lang = 3;</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1036,7 +1036,7 @@ private static final long serialVersionUID = 0L;
 
     private float durationS_ ;
     /**
-     * <code>float duration_s = 4 [json_name = "durationS"];</code>
+     * <code>float duration_s = 4;</code>
      * @return The durationS.
      */
     @java.lang.Override
@@ -1044,7 +1044,7 @@ private static final long serialVersionUID = 0L;
       return durationS_;
     }
     /**
-     * <code>float duration_s = 4 [json_name = "durationS"];</code>
+     * <code>float duration_s = 4;</code>
      * @param value The durationS to set.
      * @return This builder for chaining.
      */
@@ -1056,7 +1056,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>float duration_s = 4 [json_name = "durationS"];</code>
+     * <code>float duration_s = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearDurationS() {
@@ -1079,7 +1079,7 @@ private static final long serialVersionUID = 0L;
         samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder> segmentsBuilder_;
 
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public java.util.List<samuraibff.proto.SessionTranscriptSegment> getSegmentsList() {
       if (segmentsBuilder_ == null) {
@@ -1089,7 +1089,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public int getSegmentsCount() {
       if (segmentsBuilder_ == null) {
@@ -1099,7 +1099,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public samuraibff.proto.SessionTranscriptSegment getSegments(int index) {
       if (segmentsBuilder_ == null) {
@@ -1109,7 +1109,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder setSegments(
         int index, samuraibff.proto.SessionTranscriptSegment value) {
@@ -1126,7 +1126,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder setSegments(
         int index, samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
@@ -1140,7 +1140,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder addSegments(samuraibff.proto.SessionTranscriptSegment value) {
       if (segmentsBuilder_ == null) {
@@ -1156,7 +1156,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder addSegments(
         int index, samuraibff.proto.SessionTranscriptSegment value) {
@@ -1173,7 +1173,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder addSegments(
         samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
@@ -1187,7 +1187,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder addSegments(
         int index, samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
@@ -1201,7 +1201,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder addAllSegments(
         java.lang.Iterable<? extends samuraibff.proto.SessionTranscriptSegment> values) {
@@ -1216,7 +1216,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder clearSegments() {
       if (segmentsBuilder_ == null) {
@@ -1229,7 +1229,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public Builder removeSegments(int index) {
       if (segmentsBuilder_ == null) {
@@ -1242,14 +1242,14 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public samuraibff.proto.SessionTranscriptSegment.Builder getSegmentsBuilder(
         int index) {
       return internalGetSegmentsFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
         int index) {
@@ -1259,7 +1259,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
          getSegmentsOrBuilderList() {
@@ -1270,14 +1270,14 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public samuraibff.proto.SessionTranscriptSegment.Builder addSegmentsBuilder() {
       return internalGetSegmentsFieldBuilder().addBuilder(
           samuraibff.proto.SessionTranscriptSegment.getDefaultInstance());
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public samuraibff.proto.SessionTranscriptSegment.Builder addSegmentsBuilder(
         int index) {
@@ -1285,7 +1285,7 @@ private static final long serialVersionUID = 0L;
           index, samuraibff.proto.SessionTranscriptSegment.getDefaultInstance());
     }
     /**
-     * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+     * <code>repeated .SessionTranscriptSegment segments = 5;</code>
      */
     public java.util.List<samuraibff.proto.SessionTranscriptSegment.Builder> 
          getSegmentsBuilderList() {
@@ -1308,7 +1308,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object fullText_ = "";
     /**
-     * <code>string full_text = 6 [json_name = "fullText"];</code>
+     * <code>string full_text = 6;</code>
      * @return The fullText.
      */
     public java.lang.String getFullText() {
@@ -1324,7 +1324,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string full_text = 6 [json_name = "fullText"];</code>
+     * <code>string full_text = 6;</code>
      * @return The bytes for fullText.
      */
     public com.google.protobuf.ByteString
@@ -1341,7 +1341,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string full_text = 6 [json_name = "fullText"];</code>
+     * <code>string full_text = 6;</code>
      * @param value The fullText to set.
      * @return This builder for chaining.
      */
@@ -1354,7 +1354,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string full_text = 6 [json_name = "fullText"];</code>
+     * <code>string full_text = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearFullText() {
@@ -1364,7 +1364,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string full_text = 6 [json_name = "fullText"];</code>
+     * <code>string full_text = 6;</code>
      * @param value The bytes for fullText to set.
      * @return This builder for chaining.
      */
@@ -1380,7 +1380,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object tenantId_ = "";
     /**
-     * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 7;</code>
      * @return The tenantId.
      */
     public java.lang.String getTenantId() {
@@ -1396,7 +1396,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 7;</code>
      * @return The bytes for tenantId.
      */
     public com.google.protobuf.ByteString
@@ -1413,7 +1413,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 7;</code>
      * @param value The tenantId to set.
      * @return This builder for chaining.
      */
@@ -1426,7 +1426,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearTenantId() {
@@ -1436,7 +1436,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 7;</code>
      * @param value The bytes for tenantId to set.
      * @return This builder for chaining.
      */
@@ -1452,7 +1452,7 @@ private static final long serialVersionUID = 0L;
 
     private long createdAtNs_ ;
     /**
-     * <code>uint64 created_at_ns = 8 [json_name = "createdAtNs"];</code>
+     * <code>uint64 created_at_ns = 8;</code>
      * @return The createdAtNs.
      */
     @java.lang.Override
@@ -1460,7 +1460,7 @@ private static final long serialVersionUID = 0L;
       return createdAtNs_;
     }
     /**
-     * <code>uint64 created_at_ns = 8 [json_name = "createdAtNs"];</code>
+     * <code>uint64 created_at_ns = 8;</code>
      * @param value The createdAtNs to set.
      * @return This builder for chaining.
      */
@@ -1472,7 +1472,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>uint64 created_at_ns = 8 [json_name = "createdAtNs"];</code>
+     * <code>uint64 created_at_ns = 8;</code>
      * @return This builder for chaining.
      */
     public Builder clearCreatedAtNs() {
