@@ -4,6 +4,7 @@
             [next.jdbc.result-set :as rs]
             [samuraipersistor.persist :as persist]
             [samuraipersistor.testcontainers :as tc]
+            [samuraipersistor.webhook-outcome-consumer :as wh-oc]
             [org.corfield.logging4j2 :as log])
   (:import (samuraibff.proto RefinedEvent SessionTranscript SessionTranscriptSegment WordAlignment)
            (java.time Instant)
@@ -258,3 +259,21 @@
         (finally
           (log/info "Stopping Postgres testcontainer")
           (tc/stop! pg))))))
+
+(deftest webhook-outcome-created-at-parsing-test
+  (testing "numeric epoch seconds encoded as double/scientific notation"
+    ;; we round to millis for numeric epoch seconds because doubles are imprecise
+    (is (= (Instant/ofEpochMilli 1776794181330)
+           (#'wh-oc/parse-instant 1.776794181330183E9))))
+
+  (testing "numeric epoch seconds encoded as string"
+    (is (= (Instant/ofEpochMilli 1776794181330)
+           (#'wh-oc/parse-instant "1.776794181330183E9"))))
+
+  (testing "epoch millis encoded as number"
+    (is (= (Instant/ofEpochMilli 1710000000123)
+           (#'wh-oc/parse-instant 1710000000123))))
+
+  (testing "ISO string"
+    (is (= (Instant/parse "2026-04-12T19:00:00Z")
+           (#'wh-oc/parse-instant "2026-04-12T19:00:00Z")))))

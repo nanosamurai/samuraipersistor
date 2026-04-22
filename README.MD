@@ -24,6 +24,8 @@ Optional audit lane:
 
 * `webhook.delivery_outcome` (JSON, emitted by `webhook-dispatcher`)
 
+  Note: although the v1 contract documents `created_at` as ISO-8601, in practice it may arrive as an **epoch numeric** timestamp (seconds, sometimes in scientific notation). Persistor accepts both formats.
+
 Transcript messages **must be keyed by `session_id`** (session business key / `sessions.session_key`).
 
 `webhook.delivery_outcome` messages are typically keyed by `webhook_id` (or `tenant_id`) depending on dispatcher configuration.

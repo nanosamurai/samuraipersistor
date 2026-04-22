@@ -38,10 +38,47 @@
     (UUID/fromString (str s))))
 
 (defn- parse-instant [x]
-  (cond
-    (nil? x) nil
-    (instance? Instant x) x
-    :else (Instant/parse (str x))))
+  (letfn [(epoch-seconds-double->instant ^Instant [^double d]
+            ;; Doubles are imprecise; for audit timestamps millisecond precision is enough.
+            (Instant/ofEpochMilli (long (Math/round (* d 1000.0)))))
+
+          (number->instant [n]
+            ;; Support common JSON timestamp encodings:
+            ;; - epoch seconds (double/int) (e.g. 1.776e9)
+            ;; - epoch millis (int) (e.g. 1710000000000)
+            (let [d (double n)
+                  ;; heuristic: values > 1e12 are almost certainly epoch millis
+                  epoch-ms? (> d 1.0e12)]
+              (if epoch-ms?
+                (Instant/ofEpochMilli (long d))
+                (epoch-seconds-double->instant d))))
+
+          (bigdec->instant [^java.math.BigDecimal bd]
+            ;; Prefer BigDecimal for strings to handle scientific notation precisely.
+            (let [epoch-ms? (> (.doubleValue bd) 1.0e12)]
+              (if epoch-ms?
+                (Instant/ofEpochMilli (.longValue bd))
+                (let [ms (.longValue (.setScale (.multiply bd (java.math.BigDecimal/valueOf 1000))
+                                            0
+                                            java.math.RoundingMode/HALF_UP))]
+                  (Instant/ofEpochMilli ms)))))
+
+          (string->instant [s]
+            (let [s (string/trim s)]
+              (cond
+                (string/blank? s) nil
+
+                :else
+                (try
+                  (bigdec->instant (java.math.BigDecimal. s))
+                  (catch NumberFormatException _
+                    (Instant/parse s))))))]
+
+    (cond
+      (nil? x) nil
+      (instance? Instant x) x
+      (number? x) (number->instant x)
+      :else (string->instant (str x)))))
 
 (defn- normalize-outcome
   "Normalize a decoded JSON map into the shape expected by persistence.
