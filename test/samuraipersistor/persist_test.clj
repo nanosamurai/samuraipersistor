@@ -174,7 +174,8 @@
                                 "segments #>> '{0,speaker}' AS first_speaker, "
                                 "segments #>> '{1,text}' AS second_text, "
                                 "window_length, model, event_created_at_ns "
-                                "FROM session_transcripts WHERE type='refined' ORDER BY created_at DESC LIMIT 1")])]
+                                "FROM session_transcripts WHERE type='refined' ORDER BY created_at DESC LIMIT 1")]
+                          {:builder-fn rs/as-unqualified-lower-maps})]
                 (is (= 2 (:seg_count row)))
                 (is (= "SPEAKER_00" (:first_speaker row)))
                 (is (= "there" (:second_text row)))
@@ -201,7 +202,8 @@
                           ds
                           [(str "SELECT jsonb_array_length(segments) AS seg_count, "
                                 "segments #>> '{0,text}' AS first_text "
-                                "FROM session_transcripts WHERE type='refined' ORDER BY created_at DESC LIMIT 1")])]
+                                "FROM session_transcripts WHERE type='refined' ORDER BY created_at DESC LIMIT 1")]
+                          {:builder-fn rs/as-unqualified-lower-maps})]
                 (is (= 1 (:seg_count row)))
                 (is (= "legacy" (:first_text row))))))
 
