@@ -11,48 +11,48 @@ public interface AsrEventOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   java.lang.String getSessionId();
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   com.google.protobuf.ByteString
       getSessionIdBytes();
 
   /**
-   * <code>double start_s = 2 [json_name = "startS"];</code>
+   * <code>double start_s = 2;</code>
    * @return The startS.
    */
   double getStartS();
 
   /**
-   * <code>double end_s = 3 [json_name = "endS"];</code>
+   * <code>double end_s = 3;</code>
    * @return The endS.
    */
   double getEndS();
 
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The text.
    */
   java.lang.String getText();
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The bytes for text.
    */
   com.google.protobuf.ByteString
       getTextBytes();
 
   /**
-   * <code>.AsrType type = 5 [json_name = "type"];</code>
+   * <code>.AsrType type = 5;</code>
    * @return The enum numeric value on the wire for type.
    */
   int getTypeValue();
   /**
-   * <code>.AsrType type = 5 [json_name = "type"];</code>
+   * <code>.AsrType type = 5;</code>
    * @return The type.
    */
   samuraibff.proto.AsrType getType();
@@ -62,7 +62,7 @@ public interface AsrEventOrBuilder extends
    * optional (e.g., "cs")
    * </pre>
    *
-   * <code>string lang = 6 [json_name = "lang"];</code>
+   * <code>string lang = 6;</code>
    * @return The lang.
    */
   java.lang.String getLang();
@@ -71,19 +71,19 @@ public interface AsrEventOrBuilder extends
    * optional (e.g., "cs")
    * </pre>
    *
-   * <code>string lang = 6 [json_name = "lang"];</code>
+   * <code>string lang = 6;</code>
    * @return The bytes for lang.
    */
   com.google.protobuf.ByteString
       getLangBytes();
 
   /**
-   * <code>string speaker = 7 [json_name = "speaker"];</code>
+   * <code>string speaker = 7;</code>
    * @return The speaker.
    */
   java.lang.String getSpeaker();
   /**
-   * <code>string speaker = 7 [json_name = "speaker"];</code>
+   * <code>string speaker = 7;</code>
    * @return The bytes for speaker.
    */
   com.google.protobuf.ByteString

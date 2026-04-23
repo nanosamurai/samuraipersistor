@@ -35,6 +35,9 @@ private static final long serialVersionUID = 0L;
     lang_ = "";
     bffOriginUri_ = "";
     tenantId_ = "";
+    flushReason_ = "";
+    segments_ = java.util.Collections.emptyList();
+    refinementModel_ = "";
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -54,7 +57,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -71,7 +74,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -92,7 +95,7 @@ private static final long serialVersionUID = 0L;
   public static final int START_S_FIELD_NUMBER = 2;
   private double startS_ = 0D;
   /**
-   * <code>double start_s = 2 [json_name = "startS"];</code>
+   * <code>double start_s = 2;</code>
    * @return The startS.
    */
   @java.lang.Override
@@ -103,7 +106,7 @@ private static final long serialVersionUID = 0L;
   public static final int END_S_FIELD_NUMBER = 3;
   private double endS_ = 0D;
   /**
-   * <code>double end_s = 3 [json_name = "endS"];</code>
+   * <code>double end_s = 3;</code>
    * @return The endS.
    */
   @java.lang.Override
@@ -115,7 +118,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The text.
    */
   @java.lang.Override
@@ -132,7 +135,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The bytes for text.
    */
   @java.lang.Override
@@ -158,7 +161,7 @@ private static final long serialVersionUID = 0L;
    * optional/mapped
    * </pre>
    *
-   * <code>string speaker = 5 [json_name = "speaker"];</code>
+   * <code>string speaker = 5;</code>
    * @return The speaker.
    */
   @java.lang.Override
@@ -179,7 +182,7 @@ private static final long serialVersionUID = 0L;
    * optional/mapped
    * </pre>
    *
-   * <code>string speaker = 5 [json_name = "speaker"];</code>
+   * <code>string speaker = 5;</code>
    * @return The bytes for speaker.
    */
   @java.lang.Override
@@ -206,7 +209,7 @@ private static final long serialVersionUID = 0L;
    * optional linkage to live lines
    * </pre>
    *
-   * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+   * <code>repeated uint64 supersedes_seq = 6;</code>
    * @return A list containing the supersedesSeq.
    */
   @java.lang.Override
@@ -219,7 +222,7 @@ private static final long serialVersionUID = 0L;
    * optional linkage to live lines
    * </pre>
    *
-   * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+   * <code>repeated uint64 supersedes_seq = 6;</code>
    * @return The count of supersedesSeq.
    */
   public int getSupersedesSeqCount() {
@@ -230,7 +233,7 @@ private static final long serialVersionUID = 0L;
    * optional linkage to live lines
    * </pre>
    *
-   * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+   * <code>repeated uint64 supersedes_seq = 6;</code>
    * @param index The index of the element to return.
    * @return The supersedesSeq at the given index.
    */
@@ -243,7 +246,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object lang_ = "";
   /**
-   * <code>string lang = 7 [json_name = "lang"];</code>
+   * <code>string lang = 7;</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -260,7 +263,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string lang = 7 [json_name = "lang"];</code>
+   * <code>string lang = 7;</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -287,7 +290,7 @@ private static final long serialVersionUID = 0L;
    * This value is copied from AudioChunk.bff_origin_uri by the worker.
    * </pre>
    *
-   * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+   * <code>string bff_origin_uri = 8;</code>
    * @return The bffOriginUri.
    */
   @java.lang.Override
@@ -309,7 +312,7 @@ private static final long serialVersionUID = 0L;
    * This value is copied from AudioChunk.bff_origin_uri by the worker.
    * </pre>
    *
-   * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+   * <code>string bff_origin_uri = 8;</code>
    * @return The bytes for bffOriginUri.
    */
   @java.lang.Override
@@ -336,7 +339,7 @@ private static final long serialVersionUID = 0L;
    * This value is copied from AudioChunk.tenant_id by the worker.
    * </pre>
    *
-   * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 9;</code>
    * @return The tenantId.
    */
   @java.lang.Override
@@ -358,7 +361,7 @@ private static final long serialVersionUID = 0L;
    * This value is copied from AudioChunk.tenant_id by the worker.
    * </pre>
    *
-   * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 9;</code>
    * @return The bytes for tenantId.
    */
   @java.lang.Override
@@ -370,6 +373,207 @@ private static final long serialVersionUID = 0L;
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
       tenantId_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int WINDOW_SEC_FIELD_NUMBER = 10;
+  private double windowSec_ = 0D;
+  /**
+   * <pre>
+   * Identity and timing of the refinement window.
+   * NOTE: the window boundaries are represented by start_s/end_s.
+   * </pre>
+   *
+   * <code>double window_sec = 10;</code>
+   * @return The windowSec.
+   */
+  @java.lang.Override
+  public double getWindowSec() {
+    return windowSec_;
+  }
+
+  public static final int SLICE_INDEX_FIELD_NUMBER = 11;
+  private int sliceIndex_ = 0;
+  /**
+   * <pre>
+   * 0-based index for this window size
+   * </pre>
+   *
+   * <code>uint32 slice_index = 11;</code>
+   * @return The sliceIndex.
+   */
+  @java.lang.Override
+  public int getSliceIndex() {
+    return sliceIndex_;
+  }
+
+  public static final int FLUSH_REASON_FIELD_NUMBER = 12;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object flushReason_ = "";
+  /**
+   * <pre>
+   * "slice" | "idle" (idle = final shorter tail)
+   * </pre>
+   *
+   * <code>string flush_reason = 12;</code>
+   * @return The flushReason.
+   */
+  @java.lang.Override
+  public java.lang.String getFlushReason() {
+    java.lang.Object ref = flushReason_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      flushReason_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * "slice" | "idle" (idle = final shorter tail)
+   * </pre>
+   *
+   * <code>string flush_reason = 12;</code>
+   * @return The bytes for flushReason.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getFlushReasonBytes() {
+    java.lang.Object ref = flushReason_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      flushReason_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SEGMENTS_FIELD_NUMBER = 13;
+  @SuppressWarnings("serial")
+  private java.util.List<samuraibff.proto.SessionTranscriptSegment> segments_;
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  @java.lang.Override
+  public java.util.List<samuraibff.proto.SessionTranscriptSegment> getSegmentsList() {
+    return segments_;
+  }
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  @java.lang.Override
+  public java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+      getSegmentsOrBuilderList() {
+    return segments_;
+  }
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  @java.lang.Override
+  public int getSegmentsCount() {
+    return segments_.size();
+  }
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.SessionTranscriptSegment getSegments(int index) {
+    return segments_.get(index);
+  }
+  /**
+   * <pre>
+   * The refined transcript for this window (speaker turns).
+   * </pre>
+   *
+   * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
+      int index) {
+    return segments_.get(index);
+  }
+
+  public static final int CREATED_AT_NS_FIELD_NUMBER = 14;
+  private long createdAtNs_ = 0L;
+  /**
+   * <pre>
+   * Optional metadata for dedupe/ordering.
+   * </pre>
+   *
+   * <code>uint64 created_at_ns = 14;</code>
+   * @return The createdAtNs.
+   */
+  @java.lang.Override
+  public long getCreatedAtNs() {
+    return createdAtNs_;
+  }
+
+  public static final int REFINEMENT_MODEL_FIELD_NUMBER = 15;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object refinementModel_ = "";
+  /**
+   * <pre>
+   * e.g. "whisperx" (future: voxstral, ...)
+   * </pre>
+   *
+   * <code>string refinement_model = 15;</code>
+   * @return The refinementModel.
+   */
+  @java.lang.Override
+  public java.lang.String getRefinementModel() {
+    java.lang.Object ref = refinementModel_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      refinementModel_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * e.g. "whisperx" (future: voxstral, ...)
+   * </pre>
+   *
+   * <code>string refinement_model = 15;</code>
+   * @return The bytes for refinementModel.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getRefinementModelBytes() {
+    java.lang.Object ref = refinementModel_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      refinementModel_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -422,6 +626,24 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(tenantId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 9, tenantId_);
     }
+    if (java.lang.Double.doubleToRawLongBits(windowSec_) != 0) {
+      output.writeDouble(10, windowSec_);
+    }
+    if (sliceIndex_ != 0) {
+      output.writeUInt32(11, sliceIndex_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(flushReason_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 12, flushReason_);
+    }
+    for (int i = 0; i < segments_.size(); i++) {
+      output.writeMessage(13, segments_.get(i));
+    }
+    if (createdAtNs_ != 0L) {
+      output.writeUInt64(14, createdAtNs_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(refinementModel_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 15, refinementModel_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -471,6 +693,28 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(tenantId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(9, tenantId_);
     }
+    if (java.lang.Double.doubleToRawLongBits(windowSec_) != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(10, windowSec_);
+    }
+    if (sliceIndex_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeUInt32Size(11, sliceIndex_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(flushReason_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(12, flushReason_);
+    }
+    for (int i = 0; i < segments_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(13, segments_.get(i));
+    }
+    if (createdAtNs_ != 0L) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeUInt64Size(14, createdAtNs_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(refinementModel_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(15, refinementModel_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -506,6 +750,19 @@ private static final long serialVersionUID = 0L;
         .equals(other.getBffOriginUri())) return false;
     if (!getTenantId()
         .equals(other.getTenantId())) return false;
+    if (java.lang.Double.doubleToLongBits(getWindowSec())
+        != java.lang.Double.doubleToLongBits(
+            other.getWindowSec())) return false;
+    if (getSliceIndex()
+        != other.getSliceIndex()) return false;
+    if (!getFlushReason()
+        .equals(other.getFlushReason())) return false;
+    if (!getSegmentsList()
+        .equals(other.getSegmentsList())) return false;
+    if (getCreatedAtNs()
+        != other.getCreatedAtNs()) return false;
+    if (!getRefinementModel()
+        .equals(other.getRefinementModel())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -539,6 +796,22 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getBffOriginUri().hashCode();
     hash = (37 * hash) + TENANT_ID_FIELD_NUMBER;
     hash = (53 * hash) + getTenantId().hashCode();
+    hash = (37 * hash) + WINDOW_SEC_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getWindowSec()));
+    hash = (37 * hash) + SLICE_INDEX_FIELD_NUMBER;
+    hash = (53 * hash) + getSliceIndex();
+    hash = (37 * hash) + FLUSH_REASON_FIELD_NUMBER;
+    hash = (53 * hash) + getFlushReason().hashCode();
+    if (getSegmentsCount() > 0) {
+      hash = (37 * hash) + SEGMENTS_FIELD_NUMBER;
+      hash = (53 * hash) + getSegmentsList().hashCode();
+    }
+    hash = (37 * hash) + CREATED_AT_NS_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getCreatedAtNs());
+    hash = (37 * hash) + REFINEMENT_MODEL_FIELD_NUMBER;
+    hash = (53 * hash) + getRefinementModel().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -679,6 +952,18 @@ private static final long serialVersionUID = 0L;
       lang_ = "";
       bffOriginUri_ = "";
       tenantId_ = "";
+      windowSec_ = 0D;
+      sliceIndex_ = 0;
+      flushReason_ = "";
+      if (segmentsBuilder_ == null) {
+        segments_ = java.util.Collections.emptyList();
+      } else {
+        segments_ = null;
+        segmentsBuilder_.clear();
+      }
+      bitField0_ = (bitField0_ & ~0x00001000);
+      createdAtNs_ = 0L;
+      refinementModel_ = "";
       return this;
     }
 
@@ -705,9 +990,22 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public samuraibff.proto.RefinedEvent buildPartial() {
       samuraibff.proto.RefinedEvent result = new samuraibff.proto.RefinedEvent(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(samuraibff.proto.RefinedEvent result) {
+      if (segmentsBuilder_ == null) {
+        if (((bitField0_ & 0x00001000) != 0)) {
+          segments_ = java.util.Collections.unmodifiableList(segments_);
+          bitField0_ = (bitField0_ & ~0x00001000);
+        }
+        result.segments_ = segments_;
+      } else {
+        result.segments_ = segmentsBuilder_.build();
+      }
     }
 
     private void buildPartial0(samuraibff.proto.RefinedEvent result) {
@@ -739,6 +1037,21 @@ private static final long serialVersionUID = 0L;
       }
       if (((from_bitField0_ & 0x00000100) != 0)) {
         result.tenantId_ = tenantId_;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.windowSec_ = windowSec_;
+      }
+      if (((from_bitField0_ & 0x00000400) != 0)) {
+        result.sliceIndex_ = sliceIndex_;
+      }
+      if (((from_bitField0_ & 0x00000800) != 0)) {
+        result.flushReason_ = flushReason_;
+      }
+      if (((from_bitField0_ & 0x00002000) != 0)) {
+        result.createdAtNs_ = createdAtNs_;
+      }
+      if (((from_bitField0_ & 0x00004000) != 0)) {
+        result.refinementModel_ = refinementModel_;
       }
     }
 
@@ -799,6 +1112,51 @@ private static final long serialVersionUID = 0L;
       if (!other.getTenantId().isEmpty()) {
         tenantId_ = other.tenantId_;
         bitField0_ |= 0x00000100;
+        onChanged();
+      }
+      if (java.lang.Double.doubleToRawLongBits(other.getWindowSec()) != 0) {
+        setWindowSec(other.getWindowSec());
+      }
+      if (other.getSliceIndex() != 0) {
+        setSliceIndex(other.getSliceIndex());
+      }
+      if (!other.getFlushReason().isEmpty()) {
+        flushReason_ = other.flushReason_;
+        bitField0_ |= 0x00000800;
+        onChanged();
+      }
+      if (segmentsBuilder_ == null) {
+        if (!other.segments_.isEmpty()) {
+          if (segments_.isEmpty()) {
+            segments_ = other.segments_;
+            bitField0_ = (bitField0_ & ~0x00001000);
+          } else {
+            ensureSegmentsIsMutable();
+            segments_.addAll(other.segments_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.segments_.isEmpty()) {
+          if (segmentsBuilder_.isEmpty()) {
+            segmentsBuilder_.dispose();
+            segmentsBuilder_ = null;
+            segments_ = other.segments_;
+            bitField0_ = (bitField0_ & ~0x00001000);
+            segmentsBuilder_ = 
+              com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                 internalGetSegmentsFieldBuilder() : null;
+          } else {
+            segmentsBuilder_.addAllMessages(other.segments_);
+          }
+        }
+      }
+      if (other.getCreatedAtNs() != 0L) {
+        setCreatedAtNs(other.getCreatedAtNs());
+      }
+      if (!other.getRefinementModel().isEmpty()) {
+        refinementModel_ = other.refinementModel_;
+        bitField0_ |= 0x00004000;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -883,6 +1241,44 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000100;
               break;
             } // case 74
+            case 81: {
+              windowSec_ = input.readDouble();
+              bitField0_ |= 0x00000200;
+              break;
+            } // case 81
+            case 88: {
+              sliceIndex_ = input.readUInt32();
+              bitField0_ |= 0x00000400;
+              break;
+            } // case 88
+            case 98: {
+              flushReason_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000800;
+              break;
+            } // case 98
+            case 106: {
+              samuraibff.proto.SessionTranscriptSegment m =
+                  input.readMessage(
+                      samuraibff.proto.SessionTranscriptSegment.parser(),
+                      extensionRegistry);
+              if (segmentsBuilder_ == null) {
+                ensureSegmentsIsMutable();
+                segments_.add(m);
+              } else {
+                segmentsBuilder_.addMessage(m);
+              }
+              break;
+            } // case 106
+            case 112: {
+              createdAtNs_ = input.readUInt64();
+              bitField0_ |= 0x00002000;
+              break;
+            } // case 112
+            case 122: {
+              refinementModel_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00004000;
+              break;
+            } // case 122
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -902,7 +1298,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -918,7 +1314,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -935,7 +1331,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -948,7 +1344,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -958,7 +1354,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -974,7 +1370,7 @@ private static final long serialVersionUID = 0L;
 
     private double startS_ ;
     /**
-     * <code>double start_s = 2 [json_name = "startS"];</code>
+     * <code>double start_s = 2;</code>
      * @return The startS.
      */
     @java.lang.Override
@@ -982,7 +1378,7 @@ private static final long serialVersionUID = 0L;
       return startS_;
     }
     /**
-     * <code>double start_s = 2 [json_name = "startS"];</code>
+     * <code>double start_s = 2;</code>
      * @param value The startS to set.
      * @return This builder for chaining.
      */
@@ -994,7 +1390,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double start_s = 2 [json_name = "startS"];</code>
+     * <code>double start_s = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
@@ -1006,7 +1402,7 @@ private static final long serialVersionUID = 0L;
 
     private double endS_ ;
     /**
-     * <code>double end_s = 3 [json_name = "endS"];</code>
+     * <code>double end_s = 3;</code>
      * @return The endS.
      */
     @java.lang.Override
@@ -1014,7 +1410,7 @@ private static final long serialVersionUID = 0L;
       return endS_;
     }
     /**
-     * <code>double end_s = 3 [json_name = "endS"];</code>
+     * <code>double end_s = 3;</code>
      * @param value The endS to set.
      * @return This builder for chaining.
      */
@@ -1026,7 +1422,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double end_s = 3 [json_name = "endS"];</code>
+     * <code>double end_s = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
@@ -1038,7 +1434,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object text_ = "";
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @return The text.
      */
     public java.lang.String getText() {
@@ -1054,7 +1450,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @return The bytes for text.
      */
     public com.google.protobuf.ByteString
@@ -1071,7 +1467,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @param value The text to set.
      * @return This builder for chaining.
      */
@@ -1084,7 +1480,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearText() {
@@ -1094,7 +1490,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @param value The bytes for text to set.
      * @return This builder for chaining.
      */
@@ -1114,7 +1510,7 @@ private static final long serialVersionUID = 0L;
      * optional/mapped
      * </pre>
      *
-     * <code>string speaker = 5 [json_name = "speaker"];</code>
+     * <code>string speaker = 5;</code>
      * @return The speaker.
      */
     public java.lang.String getSpeaker() {
@@ -1134,7 +1530,7 @@ private static final long serialVersionUID = 0L;
      * optional/mapped
      * </pre>
      *
-     * <code>string speaker = 5 [json_name = "speaker"];</code>
+     * <code>string speaker = 5;</code>
      * @return The bytes for speaker.
      */
     public com.google.protobuf.ByteString
@@ -1155,7 +1551,7 @@ private static final long serialVersionUID = 0L;
      * optional/mapped
      * </pre>
      *
-     * <code>string speaker = 5 [json_name = "speaker"];</code>
+     * <code>string speaker = 5;</code>
      * @param value The speaker to set.
      * @return This builder for chaining.
      */
@@ -1172,7 +1568,7 @@ private static final long serialVersionUID = 0L;
      * optional/mapped
      * </pre>
      *
-     * <code>string speaker = 5 [json_name = "speaker"];</code>
+     * <code>string speaker = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearSpeaker() {
@@ -1186,7 +1582,7 @@ private static final long serialVersionUID = 0L;
      * optional/mapped
      * </pre>
      *
-     * <code>string speaker = 5 [json_name = "speaker"];</code>
+     * <code>string speaker = 5;</code>
      * @param value The bytes for speaker to set.
      * @return This builder for chaining.
      */
@@ -1212,7 +1608,7 @@ private static final long serialVersionUID = 0L;
      * optional linkage to live lines
      * </pre>
      *
-     * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+     * <code>repeated uint64 supersedes_seq = 6;</code>
      * @return A list containing the supersedesSeq.
      */
     public java.util.List<java.lang.Long>
@@ -1225,7 +1621,7 @@ private static final long serialVersionUID = 0L;
      * optional linkage to live lines
      * </pre>
      *
-     * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+     * <code>repeated uint64 supersedes_seq = 6;</code>
      * @return The count of supersedesSeq.
      */
     public int getSupersedesSeqCount() {
@@ -1236,7 +1632,7 @@ private static final long serialVersionUID = 0L;
      * optional linkage to live lines
      * </pre>
      *
-     * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+     * <code>repeated uint64 supersedes_seq = 6;</code>
      * @param index The index of the element to return.
      * @return The supersedesSeq at the given index.
      */
@@ -1248,7 +1644,7 @@ private static final long serialVersionUID = 0L;
      * optional linkage to live lines
      * </pre>
      *
-     * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+     * <code>repeated uint64 supersedes_seq = 6;</code>
      * @param index The index to set the value at.
      * @param value The supersedesSeq to set.
      * @return This builder for chaining.
@@ -1267,7 +1663,7 @@ private static final long serialVersionUID = 0L;
      * optional linkage to live lines
      * </pre>
      *
-     * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+     * <code>repeated uint64 supersedes_seq = 6;</code>
      * @param value The supersedesSeq to add.
      * @return This builder for chaining.
      */
@@ -1284,7 +1680,7 @@ private static final long serialVersionUID = 0L;
      * optional linkage to live lines
      * </pre>
      *
-     * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+     * <code>repeated uint64 supersedes_seq = 6;</code>
      * @param values The supersedesSeq to add.
      * @return This builder for chaining.
      */
@@ -1302,7 +1698,7 @@ private static final long serialVersionUID = 0L;
      * optional linkage to live lines
      * </pre>
      *
-     * <code>repeated uint64 supersedes_seq = 6 [json_name = "supersedesSeq"];</code>
+     * <code>repeated uint64 supersedes_seq = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearSupersedesSeq() {
@@ -1314,7 +1710,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object lang_ = "";
     /**
-     * <code>string lang = 7 [json_name = "lang"];</code>
+     * <code>string lang = 7;</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -1330,7 +1726,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 7 [json_name = "lang"];</code>
+     * <code>string lang = 7;</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -1347,7 +1743,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 7 [json_name = "lang"];</code>
+     * <code>string lang = 7;</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -1360,7 +1756,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 7 [json_name = "lang"];</code>
+     * <code>string lang = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -1370,7 +1766,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 7 [json_name = "lang"];</code>
+     * <code>string lang = 7;</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1391,7 +1787,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.bff_origin_uri by the worker.
      * </pre>
      *
-     * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+     * <code>string bff_origin_uri = 8;</code>
      * @return The bffOriginUri.
      */
     public java.lang.String getBffOriginUri() {
@@ -1412,7 +1808,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.bff_origin_uri by the worker.
      * </pre>
      *
-     * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+     * <code>string bff_origin_uri = 8;</code>
      * @return The bytes for bffOriginUri.
      */
     public com.google.protobuf.ByteString
@@ -1434,7 +1830,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.bff_origin_uri by the worker.
      * </pre>
      *
-     * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+     * <code>string bff_origin_uri = 8;</code>
      * @param value The bffOriginUri to set.
      * @return This builder for chaining.
      */
@@ -1452,7 +1848,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.bff_origin_uri by the worker.
      * </pre>
      *
-     * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+     * <code>string bff_origin_uri = 8;</code>
      * @return This builder for chaining.
      */
     public Builder clearBffOriginUri() {
@@ -1467,7 +1863,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.bff_origin_uri by the worker.
      * </pre>
      *
-     * <code>string bff_origin_uri = 8 [json_name = "bffOriginUri"];</code>
+     * <code>string bff_origin_uri = 8;</code>
      * @param value The bytes for bffOriginUri to set.
      * @return This builder for chaining.
      */
@@ -1488,7 +1884,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.tenant_id by the worker.
      * </pre>
      *
-     * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 9;</code>
      * @return The tenantId.
      */
     public java.lang.String getTenantId() {
@@ -1509,7 +1905,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.tenant_id by the worker.
      * </pre>
      *
-     * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 9;</code>
      * @return The bytes for tenantId.
      */
     public com.google.protobuf.ByteString
@@ -1531,7 +1927,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.tenant_id by the worker.
      * </pre>
      *
-     * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 9;</code>
      * @param value The tenantId to set.
      * @return This builder for chaining.
      */
@@ -1549,7 +1945,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.tenant_id by the worker.
      * </pre>
      *
-     * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 9;</code>
      * @return This builder for chaining.
      */
     public Builder clearTenantId() {
@@ -1564,7 +1960,7 @@ private static final long serialVersionUID = 0L;
      * This value is copied from AudioChunk.tenant_id by the worker.
      * </pre>
      *
-     * <code>string tenant_id = 9 [json_name = "tenantId"];</code>
+     * <code>string tenant_id = 9;</code>
      * @param value The bytes for tenantId to set.
      * @return This builder for chaining.
      */
@@ -1574,6 +1970,637 @@ private static final long serialVersionUID = 0L;
       checkByteStringIsUtf8(value);
       tenantId_ = value;
       bitField0_ |= 0x00000100;
+      onChanged();
+      return this;
+    }
+
+    private double windowSec_ ;
+    /**
+     * <pre>
+     * Identity and timing of the refinement window.
+     * NOTE: the window boundaries are represented by start_s/end_s.
+     * </pre>
+     *
+     * <code>double window_sec = 10;</code>
+     * @return The windowSec.
+     */
+    @java.lang.Override
+    public double getWindowSec() {
+      return windowSec_;
+    }
+    /**
+     * <pre>
+     * Identity and timing of the refinement window.
+     * NOTE: the window boundaries are represented by start_s/end_s.
+     * </pre>
+     *
+     * <code>double window_sec = 10;</code>
+     * @param value The windowSec to set.
+     * @return This builder for chaining.
+     */
+    public Builder setWindowSec(double value) {
+
+      windowSec_ = value;
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Identity and timing of the refinement window.
+     * NOTE: the window boundaries are represented by start_s/end_s.
+     * </pre>
+     *
+     * <code>double window_sec = 10;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearWindowSec() {
+      bitField0_ = (bitField0_ & ~0x00000200);
+      windowSec_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private int sliceIndex_ ;
+    /**
+     * <pre>
+     * 0-based index for this window size
+     * </pre>
+     *
+     * <code>uint32 slice_index = 11;</code>
+     * @return The sliceIndex.
+     */
+    @java.lang.Override
+    public int getSliceIndex() {
+      return sliceIndex_;
+    }
+    /**
+     * <pre>
+     * 0-based index for this window size
+     * </pre>
+     *
+     * <code>uint32 slice_index = 11;</code>
+     * @param value The sliceIndex to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSliceIndex(int value) {
+
+      sliceIndex_ = value;
+      bitField0_ |= 0x00000400;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * 0-based index for this window size
+     * </pre>
+     *
+     * <code>uint32 slice_index = 11;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearSliceIndex() {
+      bitField0_ = (bitField0_ & ~0x00000400);
+      sliceIndex_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object flushReason_ = "";
+    /**
+     * <pre>
+     * "slice" | "idle" (idle = final shorter tail)
+     * </pre>
+     *
+     * <code>string flush_reason = 12;</code>
+     * @return The flushReason.
+     */
+    public java.lang.String getFlushReason() {
+      java.lang.Object ref = flushReason_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        flushReason_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * "slice" | "idle" (idle = final shorter tail)
+     * </pre>
+     *
+     * <code>string flush_reason = 12;</code>
+     * @return The bytes for flushReason.
+     */
+    public com.google.protobuf.ByteString
+        getFlushReasonBytes() {
+      java.lang.Object ref = flushReason_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        flushReason_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * "slice" | "idle" (idle = final shorter tail)
+     * </pre>
+     *
+     * <code>string flush_reason = 12;</code>
+     * @param value The flushReason to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFlushReason(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      flushReason_ = value;
+      bitField0_ |= 0x00000800;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * "slice" | "idle" (idle = final shorter tail)
+     * </pre>
+     *
+     * <code>string flush_reason = 12;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearFlushReason() {
+      flushReason_ = getDefaultInstance().getFlushReason();
+      bitField0_ = (bitField0_ & ~0x00000800);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * "slice" | "idle" (idle = final shorter tail)
+     * </pre>
+     *
+     * <code>string flush_reason = 12;</code>
+     * @param value The bytes for flushReason to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFlushReasonBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      flushReason_ = value;
+      bitField0_ |= 0x00000800;
+      onChanged();
+      return this;
+    }
+
+    private java.util.List<samuraibff.proto.SessionTranscriptSegment> segments_ =
+      java.util.Collections.emptyList();
+    private void ensureSegmentsIsMutable() {
+      if (!((bitField0_ & 0x00001000) != 0)) {
+        segments_ = new java.util.ArrayList<samuraibff.proto.SessionTranscriptSegment>(segments_);
+        bitField0_ |= 0x00001000;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder> segmentsBuilder_;
+
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public java.util.List<samuraibff.proto.SessionTranscriptSegment> getSegmentsList() {
+      if (segmentsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(segments_);
+      } else {
+        return segmentsBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public int getSegmentsCount() {
+      if (segmentsBuilder_ == null) {
+        return segments_.size();
+      } else {
+        return segmentsBuilder_.getCount();
+      }
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment getSegments(int index) {
+      if (segmentsBuilder_ == null) {
+        return segments_.get(index);
+      } else {
+        return segmentsBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder setSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment value) {
+      if (segmentsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureSegmentsIsMutable();
+        segments_.set(index, value);
+        onChanged();
+      } else {
+        segmentsBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder setSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        segmentsBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder addSegments(samuraibff.proto.SessionTranscriptSegment value) {
+      if (segmentsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureSegmentsIsMutable();
+        segments_.add(value);
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder addSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment value) {
+      if (segmentsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureSegmentsIsMutable();
+        segments_.add(index, value);
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder addSegments(
+        samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.add(builderForValue.build());
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder addSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder addAllSegments(
+        java.lang.Iterable<? extends samuraibff.proto.SessionTranscriptSegment> values) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, segments_);
+        onChanged();
+      } else {
+        segmentsBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder clearSegments() {
+      if (segmentsBuilder_ == null) {
+        segments_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00001000);
+        onChanged();
+      } else {
+        segmentsBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public Builder removeSegments(int index) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.remove(index);
+        onChanged();
+      } else {
+        segmentsBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment.Builder getSegmentsBuilder(
+        int index) {
+      return internalGetSegmentsFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
+        int index) {
+      if (segmentsBuilder_ == null) {
+        return segments_.get(index);  } else {
+        return segmentsBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+         getSegmentsOrBuilderList() {
+      if (segmentsBuilder_ != null) {
+        return segmentsBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(segments_);
+      }
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment.Builder addSegmentsBuilder() {
+      return internalGetSegmentsFieldBuilder().addBuilder(
+          samuraibff.proto.SessionTranscriptSegment.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment.Builder addSegmentsBuilder(
+        int index) {
+      return internalGetSegmentsFieldBuilder().addBuilder(
+          index, samuraibff.proto.SessionTranscriptSegment.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * The refined transcript for this window (speaker turns).
+     * </pre>
+     *
+     * <code>repeated .SessionTranscriptSegment segments = 13;</code>
+     */
+    public java.util.List<samuraibff.proto.SessionTranscriptSegment.Builder> 
+         getSegmentsBuilderList() {
+      return internalGetSegmentsFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+        internalGetSegmentsFieldBuilder() {
+      if (segmentsBuilder_ == null) {
+        segmentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+            samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder>(
+                segments_,
+                ((bitField0_ & 0x00001000) != 0),
+                getParentForChildren(),
+                isClean());
+        segments_ = null;
+      }
+      return segmentsBuilder_;
+    }
+
+    private long createdAtNs_ ;
+    /**
+     * <pre>
+     * Optional metadata for dedupe/ordering.
+     * </pre>
+     *
+     * <code>uint64 created_at_ns = 14;</code>
+     * @return The createdAtNs.
+     */
+    @java.lang.Override
+    public long getCreatedAtNs() {
+      return createdAtNs_;
+    }
+    /**
+     * <pre>
+     * Optional metadata for dedupe/ordering.
+     * </pre>
+     *
+     * <code>uint64 created_at_ns = 14;</code>
+     * @param value The createdAtNs to set.
+     * @return This builder for chaining.
+     */
+    public Builder setCreatedAtNs(long value) {
+
+      createdAtNs_ = value;
+      bitField0_ |= 0x00002000;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional metadata for dedupe/ordering.
+     * </pre>
+     *
+     * <code>uint64 created_at_ns = 14;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearCreatedAtNs() {
+      bitField0_ = (bitField0_ & ~0x00002000);
+      createdAtNs_ = 0L;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object refinementModel_ = "";
+    /**
+     * <pre>
+     * e.g. "whisperx" (future: voxstral, ...)
+     * </pre>
+     *
+     * <code>string refinement_model = 15;</code>
+     * @return The refinementModel.
+     */
+    public java.lang.String getRefinementModel() {
+      java.lang.Object ref = refinementModel_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        refinementModel_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * e.g. "whisperx" (future: voxstral, ...)
+     * </pre>
+     *
+     * <code>string refinement_model = 15;</code>
+     * @return The bytes for refinementModel.
+     */
+    public com.google.protobuf.ByteString
+        getRefinementModelBytes() {
+      java.lang.Object ref = refinementModel_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        refinementModel_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * e.g. "whisperx" (future: voxstral, ...)
+     * </pre>
+     *
+     * <code>string refinement_model = 15;</code>
+     * @param value The refinementModel to set.
+     * @return This builder for chaining.
+     */
+    public Builder setRefinementModel(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      refinementModel_ = value;
+      bitField0_ |= 0x00004000;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * e.g. "whisperx" (future: voxstral, ...)
+     * </pre>
+     *
+     * <code>string refinement_model = 15;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearRefinementModel() {
+      refinementModel_ = getDefaultInstance().getRefinementModel();
+      bitField0_ = (bitField0_ & ~0x00004000);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * e.g. "whisperx" (future: voxstral, ...)
+     * </pre>
+     *
+     * <code>string refinement_model = 15;</code>
+     * @param value The bytes for refinementModel to set.
+     * @return This builder for chaining.
+     */
+    public Builder setRefinementModelBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      refinementModel_ = value;
+      bitField0_ |= 0x00004000;
       onChanged();
       return this;
     }

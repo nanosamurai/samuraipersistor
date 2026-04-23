@@ -48,6 +48,11 @@ Retention note (ops): `webhook_delivery_outcomes` can be high volume. Our target
 `SessionTranscript.segments` persisted into `session_transcripts.segments` may optionally include word-level timing
 information under `segments[].words[]` (when produced by the xamurai finalizer).
 
+`RefinedEvent.segments` is also persisted into `session_transcripts.segments` (JSONB). Newer refined producers may
+emit multiple segments per refinement window (e.g. multiple speakers within a 60s slice). Older producers that do not
+populate `RefinedEvent.segments` are handled in a backward-compatible way by persisting a single segment derived from
+the legacy scalar fields (`start_s/end_s/text/speaker`).
+
 ### Optional DLQ (Kafka)
 
 If persistence cannot proceed (most importantly: missing `sessions.session_key`), the event is sent to:

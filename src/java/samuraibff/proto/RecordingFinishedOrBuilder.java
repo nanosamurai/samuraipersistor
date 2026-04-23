@@ -11,12 +11,12 @@ public interface RecordingFinishedOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   java.lang.String getSessionId();
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   com.google.protobuf.ByteString
@@ -27,7 +27,7 @@ public interface RecordingFinishedOrBuilder extends
    * e.g. file://..., s3://...
    * </pre>
    *
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The recordingUrl.
    */
   java.lang.String getRecordingUrl();
@@ -36,31 +36,31 @@ public interface RecordingFinishedOrBuilder extends
    * e.g. file://..., s3://...
    * </pre>
    *
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The bytes for recordingUrl.
    */
   com.google.protobuf.ByteString
       getRecordingUrlBytes();
 
   /**
-   * <code>double duration_s = 3 [json_name = "durationS"];</code>
+   * <code>double duration_s = 3;</code>
    * @return The durationS.
    */
   double getDurationS();
 
   /**
-   * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
+   * <code>int32 sample_rate = 4;</code>
    * @return The sampleRate.
    */
   int getSampleRate();
 
   /**
-   * <code>string lang = 5 [json_name = "lang"];</code>
+   * <code>string lang = 5;</code>
    * @return The lang.
    */
   java.lang.String getLang();
   /**
-   * <code>string lang = 5 [json_name = "lang"];</code>
+   * <code>string lang = 5;</code>
    * @return The bytes for lang.
    */
   com.google.protobuf.ByteString
@@ -71,7 +71,7 @@ public interface RecordingFinishedOrBuilder extends
    * optional tenant/client label for downstream routing
    * </pre>
    *
-   * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 6;</code>
    * @return The tenantId.
    */
   java.lang.String getTenantId();
@@ -80,7 +80,7 @@ public interface RecordingFinishedOrBuilder extends
    * optional tenant/client label for downstream routing
    * </pre>
    *
-   * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 6;</code>
    * @return The bytes for tenantId.
    */
   com.google.protobuf.ByteString
@@ -91,7 +91,7 @@ public interface RecordingFinishedOrBuilder extends
    * when this event was created
    * </pre>
    *
-   * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
+   * <code>int64 created_at_ns = 7;</code>
    * @return The createdAtNs.
    */
   long getCreatedAtNs();

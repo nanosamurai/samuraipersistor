@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -69,7 +69,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -90,7 +90,7 @@ private static final long serialVersionUID = 0L;
   public static final int START_S_FIELD_NUMBER = 2;
   private double startS_ = 0D;
   /**
-   * <code>double start_s = 2 [json_name = "startS"];</code>
+   * <code>double start_s = 2;</code>
    * @return The startS.
    */
   @java.lang.Override
@@ -101,7 +101,7 @@ private static final long serialVersionUID = 0L;
   public static final int END_S_FIELD_NUMBER = 3;
   private double endS_ = 0D;
   /**
-   * <code>double end_s = 3 [json_name = "endS"];</code>
+   * <code>double end_s = 3;</code>
    * @return The endS.
    */
   @java.lang.Override
@@ -113,7 +113,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The text.
    */
   @java.lang.Override
@@ -130,7 +130,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string text = 4 [json_name = "text"];</code>
+   * <code>string text = 4;</code>
    * @return The bytes for text.
    */
   @java.lang.Override
@@ -151,14 +151,14 @@ private static final long serialVersionUID = 0L;
   public static final int TYPE_FIELD_NUMBER = 5;
   private int type_ = 0;
   /**
-   * <code>.AsrType type = 5 [json_name = "type"];</code>
+   * <code>.AsrType type = 5;</code>
    * @return The enum numeric value on the wire for type.
    */
   @java.lang.Override public int getTypeValue() {
     return type_;
   }
   /**
-   * <code>.AsrType type = 5 [json_name = "type"];</code>
+   * <code>.AsrType type = 5;</code>
    * @return The type.
    */
   @java.lang.Override public samuraibff.proto.AsrType getType() {
@@ -174,7 +174,7 @@ private static final long serialVersionUID = 0L;
    * optional (e.g., "cs")
    * </pre>
    *
-   * <code>string lang = 6 [json_name = "lang"];</code>
+   * <code>string lang = 6;</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -195,7 +195,7 @@ private static final long serialVersionUID = 0L;
    * optional (e.g., "cs")
    * </pre>
    *
-   * <code>string lang = 6 [json_name = "lang"];</code>
+   * <code>string lang = 6;</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -217,7 +217,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object speaker_ = "";
   /**
-   * <code>string speaker = 7 [json_name = "speaker"];</code>
+   * <code>string speaker = 7;</code>
    * @return The speaker.
    */
   @java.lang.Override
@@ -234,7 +234,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string speaker = 7 [json_name = "speaker"];</code>
+   * <code>string speaker = 7;</code>
    * @return The bytes for speaker.
    */
   @java.lang.Override
@@ -692,7 +692,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -708,7 +708,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -725,7 +725,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -738,7 +738,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -748,7 +748,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1 [json_name = "sessionId"];</code>
+     * <code>string session_id = 1;</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -764,7 +764,7 @@ private static final long serialVersionUID = 0L;
 
     private double startS_ ;
     /**
-     * <code>double start_s = 2 [json_name = "startS"];</code>
+     * <code>double start_s = 2;</code>
      * @return The startS.
      */
     @java.lang.Override
@@ -772,7 +772,7 @@ private static final long serialVersionUID = 0L;
       return startS_;
     }
     /**
-     * <code>double start_s = 2 [json_name = "startS"];</code>
+     * <code>double start_s = 2;</code>
      * @param value The startS to set.
      * @return This builder for chaining.
      */
@@ -784,7 +784,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double start_s = 2 [json_name = "startS"];</code>
+     * <code>double start_s = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
@@ -796,7 +796,7 @@ private static final long serialVersionUID = 0L;
 
     private double endS_ ;
     /**
-     * <code>double end_s = 3 [json_name = "endS"];</code>
+     * <code>double end_s = 3;</code>
      * @return The endS.
      */
     @java.lang.Override
@@ -804,7 +804,7 @@ private static final long serialVersionUID = 0L;
       return endS_;
     }
     /**
-     * <code>double end_s = 3 [json_name = "endS"];</code>
+     * <code>double end_s = 3;</code>
      * @param value The endS to set.
      * @return This builder for chaining.
      */
@@ -816,7 +816,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double end_s = 3 [json_name = "endS"];</code>
+     * <code>double end_s = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
@@ -828,7 +828,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object text_ = "";
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @return The text.
      */
     public java.lang.String getText() {
@@ -844,7 +844,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @return The bytes for text.
      */
     public com.google.protobuf.ByteString
@@ -861,7 +861,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @param value The text to set.
      * @return This builder for chaining.
      */
@@ -874,7 +874,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearText() {
@@ -884,7 +884,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4 [json_name = "text"];</code>
+     * <code>string text = 4;</code>
      * @param value The bytes for text to set.
      * @return This builder for chaining.
      */
@@ -900,14 +900,14 @@ private static final long serialVersionUID = 0L;
 
     private int type_ = 0;
     /**
-     * <code>.AsrType type = 5 [json_name = "type"];</code>
+     * <code>.AsrType type = 5;</code>
      * @return The enum numeric value on the wire for type.
      */
     @java.lang.Override public int getTypeValue() {
       return type_;
     }
     /**
-     * <code>.AsrType type = 5 [json_name = "type"];</code>
+     * <code>.AsrType type = 5;</code>
      * @param value The enum numeric value on the wire for type to set.
      * @return This builder for chaining.
      */
@@ -918,7 +918,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.AsrType type = 5 [json_name = "type"];</code>
+     * <code>.AsrType type = 5;</code>
      * @return The type.
      */
     @java.lang.Override
@@ -927,7 +927,7 @@ private static final long serialVersionUID = 0L;
       return result == null ? samuraibff.proto.AsrType.UNRECOGNIZED : result;
     }
     /**
-     * <code>.AsrType type = 5 [json_name = "type"];</code>
+     * <code>.AsrType type = 5;</code>
      * @param value The type to set.
      * @return This builder for chaining.
      */
@@ -939,7 +939,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.AsrType type = 5 [json_name = "type"];</code>
+     * <code>.AsrType type = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearType() {
@@ -955,7 +955,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6 [json_name = "lang"];</code>
+     * <code>string lang = 6;</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -975,7 +975,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6 [json_name = "lang"];</code>
+     * <code>string lang = 6;</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -996,7 +996,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6 [json_name = "lang"];</code>
+     * <code>string lang = 6;</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -1013,7 +1013,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6 [json_name = "lang"];</code>
+     * <code>string lang = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -1027,7 +1027,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6 [json_name = "lang"];</code>
+     * <code>string lang = 6;</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1043,7 +1043,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object speaker_ = "";
     /**
-     * <code>string speaker = 7 [json_name = "speaker"];</code>
+     * <code>string speaker = 7;</code>
      * @return The speaker.
      */
     public java.lang.String getSpeaker() {
@@ -1059,7 +1059,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string speaker = 7 [json_name = "speaker"];</code>
+     * <code>string speaker = 7;</code>
      * @return The bytes for speaker.
      */
     public com.google.protobuf.ByteString
@@ -1076,7 +1076,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string speaker = 7 [json_name = "speaker"];</code>
+     * <code>string speaker = 7;</code>
      * @param value The speaker to set.
      * @return This builder for chaining.
      */
@@ -1089,7 +1089,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string speaker = 7 [json_name = "speaker"];</code>
+     * <code>string speaker = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearSpeaker() {
@@ -1099,7 +1099,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string speaker = 7 [json_name = "speaker"];</code>
+     * <code>string speaker = 7;</code>
      * @param value The bytes for speaker to set.
      * @return This builder for chaining.
      */

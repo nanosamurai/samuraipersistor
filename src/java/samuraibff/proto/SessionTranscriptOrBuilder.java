@@ -11,97 +11,97 @@ public interface SessionTranscriptOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
   java.lang.String getSessionId();
   /**
-   * <code>string session_id = 1 [json_name = "sessionId"];</code>
+   * <code>string session_id = 1;</code>
    * @return The bytes for sessionId.
    */
   com.google.protobuf.ByteString
       getSessionIdBytes();
 
   /**
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The recordingUrl.
    */
   java.lang.String getRecordingUrl();
   /**
-   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
+   * <code>string recording_url = 2;</code>
    * @return The bytes for recordingUrl.
    */
   com.google.protobuf.ByteString
       getRecordingUrlBytes();
 
   /**
-   * <code>string lang = 3 [json_name = "lang"];</code>
+   * <code>string lang = 3;</code>
    * @return The lang.
    */
   java.lang.String getLang();
   /**
-   * <code>string lang = 3 [json_name = "lang"];</code>
+   * <code>string lang = 3;</code>
    * @return The bytes for lang.
    */
   com.google.protobuf.ByteString
       getLangBytes();
 
   /**
-   * <code>float duration_s = 4 [json_name = "durationS"];</code>
+   * <code>float duration_s = 4;</code>
    * @return The durationS.
    */
   float getDurationS();
 
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   java.util.List<samuraibff.proto.SessionTranscriptSegment> 
       getSegmentsList();
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   samuraibff.proto.SessionTranscriptSegment getSegments(int index);
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   int getSegmentsCount();
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
       getSegmentsOrBuilderList();
   /**
-   * <code>repeated .SessionTranscriptSegment segments = 5 [json_name = "segments"];</code>
+   * <code>repeated .SessionTranscriptSegment segments = 5;</code>
    */
   samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
       int index);
 
   /**
-   * <code>string full_text = 6 [json_name = "fullText"];</code>
+   * <code>string full_text = 6;</code>
    * @return The fullText.
    */
   java.lang.String getFullText();
   /**
-   * <code>string full_text = 6 [json_name = "fullText"];</code>
+   * <code>string full_text = 6;</code>
    * @return The bytes for fullText.
    */
   com.google.protobuf.ByteString
       getFullTextBytes();
 
   /**
-   * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 7;</code>
    * @return The tenantId.
    */
   java.lang.String getTenantId();
   /**
-   * <code>string tenant_id = 7 [json_name = "tenantId"];</code>
+   * <code>string tenant_id = 7;</code>
    * @return The bytes for tenantId.
    */
   com.google.protobuf.ByteString
       getTenantIdBytes();
 
   /**
-   * <code>uint64 created_at_ns = 8 [json_name = "createdAtNs"];</code>
+   * <code>uint64 created_at_ns = 8;</code>
    * @return The createdAtNs.
    */
   long getCreatedAtNs();

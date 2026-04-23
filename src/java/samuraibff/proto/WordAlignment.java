@@ -51,7 +51,7 @@ private static final long serialVersionUID = 0L;
    * absolute word start time in seconds
    * </pre>
    *
-   * <code>double start_s = 1 [json_name = "startS"];</code>
+   * <code>double start_s = 1;</code>
    * @return The startS.
    */
   @java.lang.Override
@@ -66,7 +66,7 @@ private static final long serialVersionUID = 0L;
    * absolute word end time in seconds
    * </pre>
    *
-   * <code>double end_s = 2 [json_name = "endS"];</code>
+   * <code>double end_s = 2;</code>
    * @return The endS.
    */
   @java.lang.Override
@@ -82,7 +82,7 @@ private static final long serialVersionUID = 0L;
    * the word text (normalized)
    * </pre>
    *
-   * <code>string text = 3 [json_name = "text"];</code>
+   * <code>string text = 3;</code>
    * @return The text.
    */
   @java.lang.Override
@@ -103,7 +103,7 @@ private static final long serialVersionUID = 0L;
    * the word text (normalized)
    * </pre>
    *
-   * <code>string text = 3 [json_name = "text"];</code>
+   * <code>string text = 3;</code>
    * @return The bytes for text.
    */
   @java.lang.Override
@@ -471,7 +471,7 @@ private static final long serialVersionUID = 0L;
      * absolute word start time in seconds
      * </pre>
      *
-     * <code>double start_s = 1 [json_name = "startS"];</code>
+     * <code>double start_s = 1;</code>
      * @return The startS.
      */
     @java.lang.Override
@@ -483,7 +483,7 @@ private static final long serialVersionUID = 0L;
      * absolute word start time in seconds
      * </pre>
      *
-     * <code>double start_s = 1 [json_name = "startS"];</code>
+     * <code>double start_s = 1;</code>
      * @param value The startS to set.
      * @return This builder for chaining.
      */
@@ -499,7 +499,7 @@ private static final long serialVersionUID = 0L;
      * absolute word start time in seconds
      * </pre>
      *
-     * <code>double start_s = 1 [json_name = "startS"];</code>
+     * <code>double start_s = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
@@ -515,7 +515,7 @@ private static final long serialVersionUID = 0L;
      * absolute word end time in seconds
      * </pre>
      *
-     * <code>double end_s = 2 [json_name = "endS"];</code>
+     * <code>double end_s = 2;</code>
      * @return The endS.
      */
     @java.lang.Override
@@ -527,7 +527,7 @@ private static final long serialVersionUID = 0L;
      * absolute word end time in seconds
      * </pre>
      *
-     * <code>double end_s = 2 [json_name = "endS"];</code>
+     * <code>double end_s = 2;</code>
      * @param value The endS to set.
      * @return This builder for chaining.
      */
@@ -543,7 +543,7 @@ private static final long serialVersionUID = 0L;
      * absolute word end time in seconds
      * </pre>
      *
-     * <code>double end_s = 2 [json_name = "endS"];</code>
+     * <code>double end_s = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
@@ -559,7 +559,7 @@ private static final long serialVersionUID = 0L;
      * the word text (normalized)
      * </pre>
      *
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @return The text.
      */
     public java.lang.String getText() {
@@ -579,7 +579,7 @@ private static final long serialVersionUID = 0L;
      * the word text (normalized)
      * </pre>
      *
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @return The bytes for text.
      */
     public com.google.protobuf.ByteString
@@ -600,7 +600,7 @@ private static final long serialVersionUID = 0L;
      * the word text (normalized)
      * </pre>
      *
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @param value The text to set.
      * @return This builder for chaining.
      */
@@ -617,7 +617,7 @@ private static final long serialVersionUID = 0L;
      * the word text (normalized)
      * </pre>
      *
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearText() {
@@ -631,7 +631,7 @@ private static final long serialVersionUID = 0L;
      * the word text (normalized)
      * </pre>
      *
-     * <code>string text = 3 [json_name = "text"];</code>
+     * <code>string text = 3;</code>
      * @param value The bytes for text to set.
      * @return This builder for chaining.
      */
