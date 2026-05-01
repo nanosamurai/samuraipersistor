@@ -21,6 +21,15 @@
                     ["SELECT id, tenant_id, user_id FROM sessions WHERE session_key=?" session-key]
                     {:builder-fn rs/as-unqualified-lower-maps}))
 
+(defn session-by-id
+  "Lookup DB session row by primary key (`sessions.id`).
+
+  Returns a map {:id uuid :tenant_id uuid :user_id uuid?} or nil when missing." 
+  [ds ^UUID session-id]
+  (jdbc/execute-one! ds
+                    ["SELECT id, tenant_id, user_id FROM sessions WHERE id=?" session-id]
+                    {:builder-fn rs/as-unqualified-lower-maps}))
+
 (defn- words->vec
   "Convert a protobuf `repeated WordAlignment` to a vector of maps.
 
@@ -236,6 +245,270 @@
       (if (<= (count s) webhook-error-detail-max-len)
         s
         (subs s 0 webhook-error-detail-max-len)))))
+
+(defn parse-instant
+  "Parse a timestamp that can arrive either as:
+
+  - java.time.Instant
+  - ISO-8601 string
+  - epoch seconds (number or string; may be scientific notation)
+  - epoch millis (number or string)
+
+  Returns Instant or nil.
+
+  NOTE: For numeric epoch seconds we round to millis to avoid double precision issues." 
+  [x]
+  (letfn [(epoch-seconds-double->instant ^Instant [^double d]
+            (Instant/ofEpochMilli (long (Math/round (* d 1000.0)))))
+
+          (number->instant [n]
+            (let [d (double n)
+                  epoch-ms? (> d 1.0e12)]
+              (if epoch-ms?
+                (Instant/ofEpochMilli (long d))
+                (epoch-seconds-double->instant d))))
+
+          (bigdec->instant [^java.math.BigDecimal bd]
+            (let [epoch-ms? (> (.doubleValue bd) 1.0e12)]
+              (if epoch-ms?
+                (Instant/ofEpochMilli (.longValue bd))
+                (let [ms (.longValue (.setScale (.multiply bd (java.math.BigDecimal/valueOf 1000))
+                                            0
+                                            java.math.RoundingMode/HALF_UP))]
+                  (Instant/ofEpochMilli ms)))))
+
+          (string->instant [s]
+            (let [s (str/trim s)]
+              (cond
+                (str/blank? s) nil
+                :else
+                (try
+                  (bigdec->instant (java.math.BigDecimal. s))
+                  (catch NumberFormatException _
+                    (Instant/parse s))))))]
+
+    (cond
+      (nil? x) nil
+      (instance? Instant x) x
+      (number? x) (number->instant x)
+      :else (string->instant (str x)))))
+
+(defn- incremental-trigger?
+  "Return true if a workflow trigger type represents an incremental workflow.
+
+  In v1 we infer this purely from trigger.type (per RFC-0003):
+  - transcript.refined.* => incremental
+  - anything else => non-incremental/final" 
+  [trigger-type]
+  (let [t (str trigger-type)]
+    (str/starts-with? t "transcript.refined")))
+
+(defn insert-workflow-result!
+  "Persist a workflow-runner `workflow.result` JSON envelope.
+
+  Inputs:
+  - ds: next.jdbc datasource
+  - result: map with keys (all strings unless noted):
+    {:workflow-run-id uuid
+     :tenant-id uuid
+     :session-id uuid
+     :workflow-id uuid
+     :trigger-type string?
+     :trigger-source-event-id string?
+     :status string
+     :render-markdown string?
+     :render-json any?      ; stored as jsonb
+     :provider-type string?
+     :provider-model-id string?
+     :usage-input-tokens int?
+     :usage-output-tokens int?
+     :stream-source-uri string?
+     :stream-source-node-id string?
+     :error-code string?
+     :error-detail string?
+     :created-at Instant
+     :kafka {:topic string :partition int :offset long}}
+
+  Semantics:
+  - incremental triggers: overwrite only `workflow_results_latest`
+  - non-incremental triggers: append to `workflow_results_history` + update `workflow_results_latest`
+
+  Returns :ok, :missing-session.
+  Throws on DB errors." 
+  [ds {:keys [workflow-run-id tenant-id session-id workflow-id trigger-type trigger-source-event-id
+              status render-markdown render-json provider-type provider-model-id
+              usage-input-tokens usage-output-tokens stream-source-uri stream-source-node-id
+              error-code error-detail created-at kafka]}]
+  (let [{:keys [topic partition offset]} kafka
+        created-at (or created-at (Instant/now))
+        error-detail (truncate-error-detail error-detail)
+        session-row (session-by-id ds session-id)]
+    (if-not session-row
+      (do
+        (log/warn "Missing session for workflow result" {:session-id session-id
+                                                         :workflow-id workflow-id
+                                                         :workflow-run-id workflow-run-id})
+        :missing-session)
+      (jdbc/with-transaction [tx ds]
+        (let [inc? (incremental-trigger? trigger-type)
+              render-json-str (when (some? render-json)
+                                (j/write-value-as-string render-json json-writer))]
+          ;; Non-incremental => append history.
+          (when-not inc?
+            (jdbc/execute-one!
+              tx
+              (into
+                [(str "INSERT INTO workflow_results_history\n"
+                      "  (id, created_at, workflow_run_id, tenant_id, session_id, workflow_id,\n"
+                      "   trigger_type, trigger_source_event_id, status,\n"
+                      "   render_markdown, render_json,\n"
+                      "   provider_type, provider_model_id,\n"
+                      "   usage_input_tokens, usage_output_tokens,\n"
+                      "   stream_source_uri, stream_source_node_id,\n"
+                      "   error_code, error_detail,\n"
+                      "   kafka_topic, kafka_partition, kafka_offset)\n"
+                      "VALUES\n"
+                      "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
+                      "ON CONFLICT (workflow_run_id) DO NOTHING")]
+                [(UUID/randomUUID)
+                 (Timestamp/from created-at)
+                 workflow-run-id
+                 tenant-id
+                 session-id
+                 workflow-id
+                 trigger-type
+                 trigger-source-event-id
+                 status
+                 render-markdown
+                 render-json-str
+                 provider-type
+                 provider-model-id
+                 (when usage-input-tokens (int usage-input-tokens))
+                 (when usage-output-tokens (int usage-output-tokens))
+                 stream-source-uri
+                 stream-source-node-id
+                 error-code
+                 error-detail
+                 topic
+                 (when partition (int partition))
+                 (when offset (long offset))])))
+
+          ;; Always upsert latest, but only overwrite if incoming is newer.
+          (jdbc/execute-one!
+            tx
+            (into
+              [(str "INSERT INTO workflow_results_latest\n"
+                    "  (session_id, workflow_id, created_at, workflow_run_id, tenant_id,\n"
+                    "   trigger_type, trigger_source_event_id, status,\n"
+                    "   render_markdown, render_json,\n"
+                    "   provider_type, provider_model_id,\n"
+                    "   usage_input_tokens, usage_output_tokens,\n"
+                    "   stream_source_uri, stream_source_node_id,\n"
+                    "   error_code, error_detail,\n"
+                    "   kafka_topic, kafka_partition, kafka_offset)\n"
+                    "VALUES\n"
+                    "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
+                    "ON CONFLICT (session_id, workflow_id) DO UPDATE SET\n"
+                    "  created_at=EXCLUDED.created_at,\n"
+                    "  workflow_run_id=EXCLUDED.workflow_run_id,\n"
+                    "  tenant_id=EXCLUDED.tenant_id,\n"
+                    "  trigger_type=EXCLUDED.trigger_type,\n"
+                    "  trigger_source_event_id=EXCLUDED.trigger_source_event_id,\n"
+                    "  status=EXCLUDED.status,\n"
+                    "  render_markdown=EXCLUDED.render_markdown,\n"
+                    "  render_json=EXCLUDED.render_json,\n"
+                    "  provider_type=EXCLUDED.provider_type,\n"
+                    "  provider_model_id=EXCLUDED.provider_model_id,\n"
+                    "  usage_input_tokens=EXCLUDED.usage_input_tokens,\n"
+                    "  usage_output_tokens=EXCLUDED.usage_output_tokens,\n"
+                    "  stream_source_uri=EXCLUDED.stream_source_uri,\n"
+                    "  stream_source_node_id=EXCLUDED.stream_source_node_id,\n"
+                    "  error_code=EXCLUDED.error_code,\n"
+                    "  error_detail=EXCLUDED.error_detail,\n"
+                    "  kafka_topic=EXCLUDED.kafka_topic,\n"
+                    "  kafka_partition=EXCLUDED.kafka_partition,\n"
+                    "  kafka_offset=EXCLUDED.kafka_offset\n"
+                    "WHERE workflow_results_latest.created_at <= EXCLUDED.created_at")]
+              [session-id
+               workflow-id
+               (Timestamp/from created-at)
+               workflow-run-id
+               tenant-id
+               trigger-type
+               trigger-source-event-id
+               status
+               render-markdown
+               render-json-str
+               provider-type
+               provider-model-id
+               (when usage-input-tokens (int usage-input-tokens))
+               (when usage-output-tokens (int usage-output-tokens))
+               stream-source-uri
+               stream-source-node-id
+               error-code
+               error-detail
+               topic
+               (when partition (int partition))
+               (when offset (long offset))]))
+
+          :ok)))))
+
+(defn insert-workflow-outcome!
+  "Persist a workflow-runner `workflow.outcome` JSON envelope.
+
+  Inputs:
+  - ds: next.jdbc datasource
+  - outcome: map with keys:
+    {:workflow-run-id uuid
+     :tenant-id uuid
+     :session-id uuid
+     :workflow-id uuid
+     :attempt-no int
+     :status string
+     :latency-ms long?
+     :retry-to-topic string?
+     :error-code string?
+     :error-detail string?
+     :created-at Instant
+     :kafka {:topic string :partition int :offset long}}
+
+  Behavior:
+  - append-only insert into `workflow_outcomes` (idempotent on (workflow_run_id, attempt_no))
+
+  Returns :ok.
+  Throws on DB errors." 
+  [ds {:keys [workflow-run-id tenant-id session-id workflow-id attempt-no status
+              latency-ms retry-to-topic error-code error-detail created-at kafka]}]
+  (let [{:keys [topic partition offset]} kafka
+        created-at (or created-at (Instant/now))
+        error-detail (truncate-error-detail error-detail)
+        id (UUID/randomUUID)]
+    (jdbc/execute-one!
+      ds
+      (into
+        [(str "INSERT INTO workflow_outcomes\n"
+              "  (id, created_at, workflow_run_id, tenant_id, session_id, workflow_id,\n"
+              "   attempt_no, status, latency_ms, retry_to_topic, error_code, error_detail,\n"
+              "   kafka_topic, kafka_partition, kafka_offset)\n"
+              "VALUES\n"
+              "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
+              "ON CONFLICT (workflow_run_id, attempt_no) DO NOTHING")]
+        [id
+         (Timestamp/from created-at)
+         workflow-run-id
+         tenant-id
+         session-id
+         workflow-id
+         (int attempt-no)
+         status
+         (when latency-ms (long latency-ms))
+         retry-to-topic
+         error-code
+         error-detail
+         topic
+         (when partition (int partition))
+         (when offset (long offset))]))
+    :ok))
 
 (defn insert-webhook-delivery-outcome!
   "Persist a webhook dispatcher delivery outcome.

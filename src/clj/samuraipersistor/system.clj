@@ -53,10 +53,14 @@
                          :refined-consumer-group-id (env-value "SP_KAFKA_REFINED_GROUP_ID")
                          :final-consumer-group-id (env-value "SP_KAFKA_FINAL_GROUP_ID")
                          :webhook-outcome-consumer-group-id (env-value "SP_KAFKA_WEBHOOK_OUTCOME_GROUP_ID")
+                          :workflow-result-consumer-group-id (env-value "SP_KAFKA_WORKFLOW_RESULT_GROUP_ID")
+                          :workflow-outcome-consumer-group-id (env-value "SP_KAFKA_WORKFLOW_OUTCOME_GROUP_ID")
 
                          :topics {:refined (env-value "SP_KAFKA_TOPIC_REFINED")
                                   :final (env-value "SP_KAFKA_TOPIC_FINAL")
                                   :webhook-delivery-outcome (env-value "SP_KAFKA_TOPIC_WEBHOOK_DELIVERY_OUTCOME")
+                                   :workflow-result (env-value "SP_KAFKA_TOPIC_WORKFLOW_RESULT")
+                                   :workflow-outcome (env-value "SP_KAFKA_TOPIC_WORKFLOW_OUTCOME")
                                   :dlq (env-value "SP_KAFKA_TOPIC_DLQ")}
 
                          :max-poll-records (env-value "SP_KAFKA_MAX_POLL_RECORDS" parse-int)
@@ -66,6 +70,9 @@
                          :refined-buffer-size (env-value "SP_KAFKA_REFINED_BUFFER_SIZE" parse-int)
                          :final-buffer-size (env-value "SP_KAFKA_FINAL_BUFFER_SIZE" parse-int)
                          :webhook-outcome-buffer-size (env-value "SP_KAFKA_WEBHOOK_OUTCOME_BUFFER_SIZE" parse-int)
+
+                          :workflow-result-buffer-size (env-value "SP_KAFKA_WORKFLOW_RESULT_BUFFER_SIZE" parse-int)
+                          :workflow-outcome-buffer-size (env-value "SP_KAFKA_WORKFLOW_OUTCOME_BUFFER_SIZE" parse-int)
 
                          ;; Optional kill switch for the audit lane.
                          :webhook-outcome-enabled? (env-value "SP_WEBHOOK_OUTCOME_ENABLED" parse-bool)}}
