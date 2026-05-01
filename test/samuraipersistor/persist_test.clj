@@ -83,9 +83,8 @@
                    );"])
 
    (jdbc/execute! ds
-                 ["ALTER TABLE workflow_results_history
-                   ADD CONSTRAINT IF NOT EXISTS workflow_results_history_run_uniq
-                   UNIQUE (workflow_run_id);"])
+                 ["CREATE UNIQUE INDEX IF NOT EXISTS workflow_results_history_run_uniq
+                   ON workflow_results_history (workflow_run_id);"])
 
    (jdbc/execute! ds
                  ["CREATE TABLE IF NOT EXISTS workflow_results_latest (
@@ -133,9 +132,8 @@
                    );"])
 
    (jdbc/execute! ds
-                 ["ALTER TABLE workflow_outcomes
-                   ADD CONSTRAINT IF NOT EXISTS workflow_outcomes_run_attempt_uniq
-                   UNIQUE (workflow_run_id, attempt_no);"])
+                 ["CREATE UNIQUE INDEX IF NOT EXISTS workflow_outcomes_run_attempt_uniq
+                   ON workflow_outcomes (workflow_run_id, attempt_no);"])
 
   (jdbc/execute! ds
                 ["CREATE TABLE IF NOT EXISTS webhook_delivery_outcomes (
