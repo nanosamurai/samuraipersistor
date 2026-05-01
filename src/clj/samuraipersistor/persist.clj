@@ -368,7 +368,7 @@
                       "   error_code, error_detail,\n"
                       "   kafka_topic, kafka_partition, kafka_offset)\n"
                       "VALUES\n"
-                      "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
+                      "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
                       "ON CONFLICT (workflow_run_id) DO NOTHING")]
                 [(UUID/randomUUID)
                  (Timestamp/from created-at)
@@ -407,7 +407,7 @@
                     "   error_code, error_detail,\n"
                     "   kafka_topic, kafka_partition, kafka_offset)\n"
                     "VALUES\n"
-                    "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
+                    "  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n"
                     "ON CONFLICT (session_id, workflow_id) DO UPDATE SET\n"
                     "  created_at=EXCLUDED.created_at,\n"
                     "  workflow_run_id=EXCLUDED.workflow_run_id,\n"
