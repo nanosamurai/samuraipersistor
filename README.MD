@@ -24,6 +24,11 @@ Optional audit lane:
 
 * `webhook.delivery_outcome` (JSON, emitted by `webhook-dispatcher`)
 
+Workflows (RFC-0003):
+
+* `workflow.result` (JSON, emitted by `workflow-runner`)
+* `workflow.outcome` (JSON audit lane, emitted by `workflow-runner`)
+
   Note: although the v1 contract documents `created_at` as ISO-8601, in practice it may arrive as an **epoch numeric** timestamp (seconds, sometimes in scientific notation). Persistor accepts both formats.
 
 Transcript messages **must be keyed by `session_id`** (session business key / `sessions.session_key`).
@@ -42,6 +47,12 @@ Optional audit/reporting tables:
 
 * `webhook_delivery_outcomes` (append-only)
 * `webhook_delivery_latest` (one row per `(tenant_id, webhook_id)` for fast UI list views)
+
+Workflows (RFC-0003) persistence tables:
+
+* `workflow_results_history` (append-only history for non-incremental/final triggers)
+* `workflow_results_latest` (one row per `(session_id, workflow_id)`; incremental workflows overwrite here)
+* `workflow_outcomes` (append-only; idempotent on `(workflow_run_id, attempt_no)`)
 
 Retention note (ops): `webhook_delivery_outcomes` can be high volume. Our target is **30 days** retention; implement cleanup via a DB job/cron (this repo does not schedule DB maintenance).
 
@@ -130,6 +141,12 @@ For local development and tests, prefer **Testcontainers** (see tests below) and
 | Kafka | `SP_KAFKA_FINAL_BUFFER_SIZE` | Final queue size | `200` |
 | Kafka | `SP_KAFKA_WEBHOOK_OUTCOME_GROUP_ID` | Consumer group for webhook outcomes | `samuraipersistor-webhook-outcomes` |
 | Kafka | `SP_KAFKA_WEBHOOK_OUTCOME_BUFFER_SIZE` | Webhook outcomes queue size | `2000` |
+| Kafka | `SP_KAFKA_WORKFLOW_RESULT_GROUP_ID` | Consumer group for workflow results | `samuraipersistor-workflow-results` |
+| Kafka | `SP_KAFKA_WORKFLOW_OUTCOME_GROUP_ID` | Consumer group for workflow outcomes | `samuraipersistor-workflow-outcomes` |
+| Kafka | `SP_KAFKA_TOPIC_WORKFLOW_RESULT` | Workflow result topic | `workflow.result` |
+| Kafka | `SP_KAFKA_TOPIC_WORKFLOW_OUTCOME` | Workflow outcome topic | `workflow.outcome` |
+| Kafka | `SP_KAFKA_WORKFLOW_RESULT_BUFFER_SIZE` | Workflow result queue size | `2000` |
+| Kafka | `SP_KAFKA_WORKFLOW_OUTCOME_BUFFER_SIZE` | Workflow outcome queue size | `2000` |
 | Feature flag | `SP_WEBHOOK_OUTCOME_ENABLED` | Enable webhook outcome consumer | `true` |
 
 ## Running
