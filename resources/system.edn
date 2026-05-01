@@ -25,10 +25,16 @@
           :final-consumer-group-id "samuraipersistor-final"
           ;; webhook delivery outcome consumer (audit lane)
           :webhook-outcome-consumer-group-id "samuraipersistor-webhook-outcomes"
+          ;; workflow consumers
+          :workflow-result-consumer-group-id "samuraipersistor-workflow-results"
+          :workflow-outcome-consumer-group-id "samuraipersistor-workflow-outcomes"
           :topics {:refined "transcripts.refined"
                    :final "transcripts.final"
                    ;; webhook dispatcher attempt outcomes (JSON)
                    :webhook-delivery-outcome "webhook.delivery_outcome"
+                   ;; workflow-runner outputs (JSON)
+                   :workflow-result "workflow.result"
+                   :workflow-outcome "workflow.outcome"
                    ;; DLQ is optional; if nil, we log+commit.
                    :dlq "transcripts.persistor.dlq"}
           ;; poll tuning
@@ -38,7 +44,9 @@
           ;; backpressure channels
           :refined-buffer-size 2000
           :final-buffer-size 200
-          :webhook-outcome-buffer-size 2000}}
+          :webhook-outcome-buffer-size 2000
+          :workflow-result-buffer-size 2000
+          :workflow-outcome-buffer-size 2000}}
 
  ;; Optional alternative profile for local dev with Testcontainers.
  ;; You can launch with:
@@ -64,4 +72,12 @@
 
 :samuraipersistor/webhook-outcome-consumer
 {:config #ig/ref :samuraipersistor/config
- :db     #ig/ref :samuraipersistor/db}}
+  :db     #ig/ref :samuraipersistor/db}
+
+ :samuraipersistor/workflow-result-consumer
+ {:config #ig/ref :samuraipersistor/config
+  :db     #ig/ref :samuraipersistor/db}
+
+ :samuraipersistor/workflow-outcome-consumer
+ {:config #ig/ref :samuraipersistor/config
+  :db     #ig/ref :samuraipersistor/db}}
