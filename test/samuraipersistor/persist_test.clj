@@ -55,6 +55,88 @@
                     created_at timestamptz NOT NULL DEFAULT now()
                   );"])
 
+   ;; Workflows (RFC-0003) persistence tables.
+   (jdbc/execute! ds
+                 ["CREATE TABLE IF NOT EXISTS workflow_results_history (
+                     id uuid PRIMARY KEY,
+                     created_at timestamptz NOT NULL,
+                     workflow_run_id uuid NOT NULL,
+                     tenant_id uuid NOT NULL,
+                     session_id uuid NOT NULL,
+                     workflow_id uuid NOT NULL,
+                     trigger_type text NULL,
+                     trigger_source_event_id text NULL,
+                     status text NOT NULL,
+                     render_markdown text NULL,
+                     render_json jsonb NULL,
+                     provider_type text NULL,
+                     provider_model_id text NULL,
+                     usage_input_tokens integer NULL,
+                     usage_output_tokens integer NULL,
+                     stream_source_uri text NULL,
+                     stream_source_node_id text NULL,
+                     error_code text NULL,
+                     error_detail text NULL,
+                     kafka_topic text NULL,
+                     kafka_partition integer NULL,
+                     kafka_offset bigint NULL
+                   );"])
+
+   (jdbc/execute! ds
+                 ["ALTER TABLE workflow_results_history
+                   ADD CONSTRAINT IF NOT EXISTS workflow_results_history_run_uniq
+                   UNIQUE (workflow_run_id);"])
+
+   (jdbc/execute! ds
+                 ["CREATE TABLE IF NOT EXISTS workflow_results_latest (
+                     session_id uuid NOT NULL,
+                     workflow_id uuid NOT NULL,
+                     created_at timestamptz NOT NULL,
+                     workflow_run_id uuid NOT NULL,
+                     tenant_id uuid NOT NULL,
+                     trigger_type text NULL,
+                     trigger_source_event_id text NULL,
+                     status text NOT NULL,
+                     render_markdown text NULL,
+                     render_json jsonb NULL,
+                     provider_type text NULL,
+                     provider_model_id text NULL,
+                     usage_input_tokens integer NULL,
+                     usage_output_tokens integer NULL,
+                     stream_source_uri text NULL,
+                     stream_source_node_id text NULL,
+                     error_code text NULL,
+                     error_detail text NULL,
+                     kafka_topic text NULL,
+                     kafka_partition integer NULL,
+                     kafka_offset bigint NULL,
+                     PRIMARY KEY (session_id, workflow_id)
+                   );"])
+
+   (jdbc/execute! ds
+                 ["CREATE TABLE IF NOT EXISTS workflow_outcomes (
+                     id uuid PRIMARY KEY,
+                     created_at timestamptz NOT NULL,
+                     workflow_run_id uuid NOT NULL,
+                     tenant_id uuid NOT NULL,
+                     session_id uuid NOT NULL,
+                     workflow_id uuid NOT NULL,
+                     attempt_no integer NOT NULL,
+                     status text NOT NULL,
+                     latency_ms bigint NULL,
+                     retry_to_topic text NULL,
+                     error_code text NULL,
+                     error_detail text NULL,
+                     kafka_topic text NULL,
+                     kafka_partition integer NULL,
+                     kafka_offset bigint NULL
+                   );"])
+
+   (jdbc/execute! ds
+                 ["ALTER TABLE workflow_outcomes
+                   ADD CONSTRAINT IF NOT EXISTS workflow_outcomes_run_attempt_uniq
+                   UNIQUE (workflow_run_id, attempt_no);"])
+
   (jdbc/execute! ds
                 ["CREATE TABLE IF NOT EXISTS webhook_delivery_outcomes (
                     id uuid PRIMARY KEY,
@@ -97,7 +179,9 @@
                   );"]))
 
 (defn- clean-db! [ds]
-  (jdbc/execute! ds ["TRUNCATE webhook_delivery_latest, webhook_delivery_outcomes, session_transcripts, recordings, sessions"]))
+  (jdbc/execute! ds [(str "TRUNCATE webhook_delivery_latest, webhook_delivery_outcomes, "
+                        "workflow_results_latest, workflow_results_history, workflow_outcomes, "
+                        "session_transcripts, recordings, sessions")]))
 
 (defn- try-start-postgres! []
   (try
@@ -337,3 +421,152 @@
   (testing "ISO string"
     (is (= (Instant/parse "2026-04-12T19:00:00Z")
            (#'wh-oc/parse-instant "2026-04-12T19:00:00Z")))))
+
+(deftest workflow-result-final-vs-incremental-semantics-test
+  (let [pg (try-start-postgres!)
+        ds (jdbc/get-datasource {:dbtype "postgresql"
+                                :host "localhost"
+                                :port 15432
+                                :dbname "drsynth"
+                                :user "drsynth"
+                                :password "drsynth"})]
+    (if-not pg
+      (is true "skipped")
+      (try
+        (create-minimal-schema! ds)
+        (clean-db! ds)
+
+        (let [tenant-id (UUID/randomUUID)
+              session-id (UUID/randomUUID)
+              session-key "sess-1"
+              workflow-id (UUID/randomUUID)
+              run-id-1 (UUID/randomUUID)
+              run-id-2 (UUID/randomUUID)
+              created-1 (Instant/parse "2026-05-01T20:00:00Z")
+              created-2 (Instant/parse "2026-05-01T20:01:00Z")]
+          ;; Session must exist (workflow pipeline uses sessions.id UUID)
+          (jdbc/execute! ds
+                        ["INSERT INTO sessions (id, tenant_id, user_id, session_key) VALUES (?, ?, NULL, ?)"
+                         session-id tenant-id session-key])
+
+          (testing "final-like trigger appends history and updates latest"
+            (is (= :ok
+                   (persist/insert-workflow-result!
+                     ds
+                     {:workflow-run-id run-id-1
+                      :tenant-id tenant-id
+                      :session-id session-id
+                      :workflow-id workflow-id
+                      :trigger-type "transcript.final.ready"
+                      :trigger-source-event-id "ev-1"
+                      :status "ok"
+                      :render-markdown "# Result"
+                      :render-json {:a 1}
+                      :provider-type "bedrock"
+                      :provider-model-id "claude"
+                      :usage-input-tokens 10
+                      :usage-output-tokens 20
+                      :created-at created-1
+                      :kafka {:topic "workflow.result" :partition 0 :offset 1}})))
+
+            (let [n (-> (jdbc/execute-one! ds ["SELECT count(*) AS n FROM workflow_results_history"]) :n)]
+              (is (= 1 n)))
+
+            (let [n (-> (jdbc/execute-one! ds ["SELECT count(*) AS n FROM workflow_results_latest"]) :n)]
+              (is (= 1 n))))
+
+          (testing "incremental trigger overwrites latest only (no history)"
+            (is (= :ok
+                   (persist/insert-workflow-result!
+                     ds
+                     {:workflow-run-id run-id-2
+                      :tenant-id tenant-id
+                      :session-id session-id
+                      :workflow-id workflow-id
+                      :trigger-type "transcript.refined.segment"
+                      :trigger-source-event-id "ev-2"
+                      :status "ok"
+                      :render-markdown "# Incremental"
+                      :render-json {:b 2}
+                      :provider-type "bedrock"
+                      :provider-model-id "claude"
+                      :created-at created-2
+                      :kafka {:topic "workflow.result" :partition 0 :offset 2}})))
+
+            (let [n (-> (jdbc/execute-one! ds ["SELECT count(*) AS n FROM workflow_results_history"]) :n)]
+              (is (= 1 n) "history should still contain only the final result"))
+
+            (let [row (jdbc/execute-one!
+                        ds
+                        ["SELECT workflow_run_id, trigger_type, render_markdown
+                          FROM workflow_results_latest WHERE session_id=? AND workflow_id=?"
+                         session-id workflow-id]
+                        {:builder-fn rs/as-unqualified-lower-maps})]
+              (is (= (str run-id-2) (str (:workflow_run_id row))))
+              (is (= "transcript.refined.segment" (:trigger_type row)))
+              (is (= "# Incremental" (:render_markdown row))))))
+
+        (finally
+          (log/info "Stopping Postgres testcontainer")
+          (tc/stop! pg))))))
+
+(deftest workflow-outcome-idempotency-test
+  (let [pg (try-start-postgres!)
+        ds (jdbc/get-datasource {:dbtype "postgresql"
+                                :host "localhost"
+                                :port 15432
+                                :dbname "drsynth"
+                                :user "drsynth"
+                                :password "drsynth"})]
+    (if-not pg
+      (is true "skipped")
+      (try
+        (create-minimal-schema! ds)
+        (clean-db! ds)
+
+        (let [tenant-id (UUID/randomUUID)
+              session-id (UUID/randomUUID)
+              session-key "sess-1"
+              workflow-id (UUID/randomUUID)
+              run-id (UUID/randomUUID)
+              now (Instant/parse "2026-05-01T20:00:00Z")]
+          ;; Session row is not required by workflow_outcomes table (audit lane),
+          ;; but we insert it anyway for realism.
+          (jdbc/execute! ds
+                        ["INSERT INTO sessions (id, tenant_id, user_id, session_key) VALUES (?, ?, NULL, ?)"
+                         session-id tenant-id session-key])
+
+          (is (= :ok
+                 (persist/insert-workflow-outcome!
+                   ds
+                   {:workflow-run-id run-id
+                    :tenant-id tenant-id
+                    :session-id session-id
+                    :workflow-id workflow-id
+                    :attempt-no 0
+                    :status "SUCCESS"
+                    :latency-ms 5
+                    :retry-to-topic nil
+                    :error-code nil
+                    :error-detail nil
+                    :created-at now
+                    :kafka {:topic "workflow.outcome" :partition 0 :offset 10}})))
+
+          (is (= :ok
+                 (persist/insert-workflow-outcome!
+                   ds
+                   {:workflow-run-id run-id
+                    :tenant-id tenant-id
+                    :session-id session-id
+                    :workflow-id workflow-id
+                    :attempt-no 0
+                    :status "SUCCESS"
+                    :created-at now
+                    :kafka {:topic "workflow.outcome" :partition 0 :offset 11}})))
+
+          (let [n (-> (jdbc/execute-one! ds ["SELECT count(*) AS n FROM workflow_outcomes"]) :n)]
+            (is (= 1 n))))
+
+        (finally
+          (log/info "Stopping Postgres testcontainer")
+          (tc/stop! pg))))))
