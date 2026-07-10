@@ -1,6 +1,6 @@
 # Community Edition feature flags
 
-Status: planning
+Status: implemented
 
 Last updated: 2026-07-10
 

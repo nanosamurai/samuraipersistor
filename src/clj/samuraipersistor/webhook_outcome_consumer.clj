@@ -30,6 +30,11 @@
    "key.deserializer" "org.apache.kafka.common.serialization.ByteArrayDeserializer"
    "value.deserializer" "org.apache.kafka.common.serialization.ByteArrayDeserializer"})
 
+(defn- enabled?
+  [kcfg]
+  (and (false? (:ce-mode? kcfg))
+       (not= false (:webhook-outcome-enabled? kcfg))))
+
 (defn- bytes->string ^String [^bytes b]
   (String. b StandardCharsets/UTF_8))
 
@@ -186,11 +191,11 @@
 (defmethod ig/init-key :samuraipersistor/webhook-outcome-consumer
   [_ {:keys [config db]}]
   (let [kcfg (get config :kafka)
-        enabled? (not= false (:webhook-outcome-enabled? kcfg))
         topic (get-in kcfg [:topics :webhook-delivery-outcome])]
-    (if-not enabled?
+    (if-not (enabled? kcfg)
       (do
-        (log/warn "Webhook outcome consumer disabled" {:reason :config})
+        (log/info "Webhook outcome consumer disabled" {:ce-mode? (:ce-mode? kcfg)
+                                                       :enabled? (:webhook-outcome-enabled? kcfg)})
         {:enabled? false})
       (do
         (when-not (seq topic)
