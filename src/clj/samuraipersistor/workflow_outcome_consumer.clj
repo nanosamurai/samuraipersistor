@@ -29,6 +29,11 @@
    "key.deserializer" "org.apache.kafka.common.serialization.ByteArrayDeserializer"
    "value.deserializer" "org.apache.kafka.common.serialization.ByteArrayDeserializer"})
 
+(defn- enabled?
+  [kcfg]
+  (and (false? (:ce-mode? kcfg))
+       (not= false (:workflow-outcome-enabled? kcfg))))
+
 (defn- bytes->string ^String [^bytes b]
   (String. b StandardCharsets/UTF_8))
 
@@ -39,7 +44,7 @@
 (defn- normalize-outcome
   "Normalize a decoded JSON map into the shape expected by persistence.
 
-  Attaches Kafka provenance." 
+  Attaches Kafka provenance."
   [^ConsumerRecord rec m]
   (let [status (:status m)
         status (cond
@@ -65,7 +70,7 @@
 (defn- valid-outcome?
   "Return true if the outcome contains the minimum required fields.
 
-  If this returns false, the record should be treated as a poison pill: log + commit." 
+  If this returns false, the record should be treated as a poison pill: log + commit."
   [{:keys [workflow-run-id tenant-id session-id workflow-id status attempt-no]}]
   (and workflow-run-id tenant-id session-id workflow-id (seq status) (number? attempt-no)))
 
@@ -74,57 +79,57 @@
   (let [^LinkedBlockingQueue q queue
         stop? (atom false)
         thread (Thread.
-                 (fn []
-                   (log/info "Workflow outcome worker started")
-                   (try
-                     (while (not @stop?)
-                       (let [batch-size 200
-                             first-rec (loop/take! q)
-                             recs (transient [first-rec])]
-                         (loop [i 1]
-                           (when (< i batch-size)
-                             (when-let [r (loop/poll! q 5)]
-                               (conj! recs r)
-                               (recur (inc i)))))
-
-                         (let [records (persistent! recs)
-                               processed (transient [])]
-                           (doseq [^ConsumerRecord rec records]
-                             (try
-                               (tp/with-record-trace rec
-                                 (let [raw (bytes->string (.value rec))
-                                       m (j/read-value raw json-mapper)
-                                       out (normalize-outcome rec m)]
-                                   (log/info "Persisting workflow outcome"
-                                             {:workflow-run-id (:workflow-run-id out)
-                                              :tenant-id (:tenant-id out)
-                                              :session-id (:session-id out)
-                                              :workflow-id (:workflow-id out)
-                                              :attempt-no (:attempt-no out)
-                                              :status (:status out)})
-                                   (if (valid-outcome? out)
-                                     (persist/insert-workflow-outcome! (:ds db) out)
-                                     (log/warn "Skipping invalid workflow outcome"
-                                               {:workflow-run-id (:workflow-run-id out)
-                                                :tenant-id (:tenant-id out)
-                                                :session-id (:session-id out)
-                                                :workflow-id (:workflow-id out)
-                                                :attempt-no (:attempt-no out)
-                                                :status (:status out)}))
-                                   (conj! processed rec)))
-                               (catch Throwable t
-                                 ;; Poison-pill policy: log + commit, so the group cannot get stuck.
-                                 (log/error t "Failed to persist workflow outcome" {:topic (.topic rec)
-                                                                                    :partition (.partition rec)
-                                                                                    :offset (.offset rec)})
-                                 (conj! processed rec))))
-                           (commit! (persistent! processed)))))
-                     (catch InterruptedException _
-                       (log/info "Workflow outcome worker interrupted"))
-                     (catch Throwable t
-                       (log/error t "Workflow outcome worker crashed"))
-                     (finally
-                       (log/info "Workflow outcome worker stopped")))))]
+                (fn []
+                  (log/info "Workflow outcome worker started")
+                  (try
+                    (while (not @stop?)
+                      (let [batch-size 200
+                            first-rec (loop/take! q)
+                            recs (loop [i 1
+                                        recs (transient [first-rec])]
+                                   (if (>= i batch-size)
+                                     recs
+                                     (if-let [r (loop/poll! q 5)]
+                                       (recur (inc i) (conj! recs r))
+                                       recs)))
+                            records (persistent! recs)
+                            processed (transient [])]
+                        (doseq [^ConsumerRecord rec records]
+                          (try
+                            (tp/with-record-trace rec
+                              (let [raw (bytes->string (.value rec))
+                                    m (j/read-value raw json-mapper)
+                                    out (normalize-outcome rec m)]
+                                (log/info "Persisting workflow outcome"
+                                          {:workflow-run-id (:workflow-run-id out)
+                                           :tenant-id (:tenant-id out)
+                                           :session-id (:session-id out)
+                                           :workflow-id (:workflow-id out)
+                                           :attempt-no (:attempt-no out)
+                                           :status (:status out)})
+                                (if (valid-outcome? out)
+                                  (persist/insert-workflow-outcome! (:ds db) out)
+                                  (log/warn "Skipping invalid workflow outcome"
+                                            {:workflow-run-id (:workflow-run-id out)
+                                             :tenant-id (:tenant-id out)
+                                             :session-id (:session-id out)
+                                             :workflow-id (:workflow-id out)
+                                             :attempt-no (:attempt-no out)
+                                             :status (:status out)}))
+                                (conj! processed rec)))
+                            (catch Throwable t
+                               ;; Poison-pill policy: log + commit, so the group cannot get stuck.
+                              (log/error t "Failed to persist workflow outcome" {:topic (.topic rec)
+                                                                                 :partition (.partition rec)
+                                                                                 :offset (.offset rec)})
+                              (conj! processed rec))))
+                        (commit! (persistent! processed))))
+                    (catch InterruptedException _
+                      (log/info "Workflow outcome worker interrupted"))
+                    (catch Throwable t
+                      (log/error t "Workflow outcome worker crashed"))
+                    (finally
+                      (log/info "Workflow outcome worker stopped")))))]
     (.setName thread "workflow-outcome-worker")
     (.setDaemon thread true)
     (.start thread)
@@ -137,19 +142,26 @@
   [_ {:keys [config db]}]
   (let [kcfg (get config :kafka)
         topic (get-in kcfg [:topics :workflow-outcome])]
-    (when-not (seq topic)
-      (throw (ex-info "Missing Kafka topic for workflow.outcome" {:config-path [:kafka :topics :workflow-outcome]})))
-    (log/info "Starting workflow outcome consumer" {:topic topic})
-    (let [consumer (loop/start-consumer-loop!
-                    {:consumer-config (consumer-config kcfg)
-                     :topic topic
-                     :buffer-size (or (:workflow-outcome-buffer-size kcfg) 2000)
-                     :name "workflow-outcome"})
-          worker (start-worker! {:queue (:queue consumer)
-                                 :commit! (:commit! consumer)
-                                 :db db})]
-      {:consumer consumer
-       :worker worker})))
+    (if-not (enabled? kcfg)
+      (do
+        (log/info "Workflow outcome consumer disabled" {:ce-mode? (:ce-mode? kcfg)
+                                                        :enabled? (:workflow-outcome-enabled? kcfg)})
+        {:enabled? false})
+      (do
+        (when-not (seq topic)
+          (throw (ex-info "Missing Kafka topic for workflow.outcome" {:config-path [:kafka :topics :workflow-outcome]})))
+        (log/info "Starting workflow outcome consumer" {:topic topic})
+        (let [consumer (loop/start-consumer-loop!
+                        {:consumer-config (consumer-config kcfg)
+                         :topic topic
+                         :buffer-size (or (:workflow-outcome-buffer-size kcfg) 2000)
+                         :name "workflow-outcome"})
+              worker (start-worker! {:queue (:queue consumer)
+                                     :commit! (:commit! consumer)
+                                     :db db})]
+          {:enabled? true
+           :consumer consumer
+           :worker worker})))))
 
 (defmethod ig/halt-key! :samuraipersistor/workflow-outcome-consumer
   [_ {:keys [consumer worker]}]

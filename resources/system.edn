@@ -17,7 +17,8 @@
        :connection-timeout-ms 5000}
 
   ;; --- Kafka ---
-  :kafka {:bootstrap-servers "localhost:9092"
+  :kafka {:ce-mode? true
+          :bootstrap-servers "localhost:9092"
           :client-id "samuraipersistor"
           ;; refined consumer
           :refined-consumer-group-id "samuraipersistor-refined"

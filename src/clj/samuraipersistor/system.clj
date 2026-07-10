@@ -32,7 +32,8 @@
   Uses the SP_ prefixed env vars so the service can be configured in k8s.
   Returns the updated config map." 
   [config]
-  (let [updates {:http {:host (env-value "SP_HTTP_HOST")
+  (let [ce-mode (env-value "SAMURAIPERSISTOR_CE_MODE" parse-bool)
+        updates {:http {:host (env-value "SP_HTTP_HOST")
                         :port (env-value "SP_HTTP_PORT" parse-int)}
 
                  :db {:jdbc-url (env-value "SP_DB_JDBC_URL")
@@ -42,7 +43,8 @@
                       :minimum-idle (env-value "SP_DB_MIN_IDLE" parse-int)
                       :connection-timeout-ms (env-value "SP_DB_CONN_TIMEOUT_MS" parse-long*)}
 
-                 :kafka {:bootstrap-servers (env-value "SP_KAFKA_BOOTSTRAP_SERVERS")
+                 :kafka {:ce-mode? ce-mode
+                         :bootstrap-servers (env-value "SP_KAFKA_BOOTSTRAP_SERVERS")
                          :client-id (env-value "SP_KAFKA_CLIENT_ID")
                          ;; TLS / security
                          ;; Primary: SP_ prefixed env vars.
@@ -74,8 +76,10 @@
                           :workflow-result-buffer-size (env-value "SP_KAFKA_WORKFLOW_RESULT_BUFFER_SIZE" parse-int)
                           :workflow-outcome-buffer-size (env-value "SP_KAFKA_WORKFLOW_OUTCOME_BUFFER_SIZE" parse-int)
 
-                         ;; Optional kill switch for the audit lane.
-                         :webhook-outcome-enabled? (env-value "SP_WEBHOOK_OUTCOME_ENABLED" parse-bool)}}
+                         ;; Optional kill switches for commercial workflow/webhook lanes.
+                         :webhook-outcome-enabled? (env-value "SP_WEBHOOK_OUTCOME_ENABLED" parse-bool)
+                         :workflow-result-enabled? (env-value "SP_WORKFLOW_RESULT_ENABLED" parse-bool)
+                         :workflow-outcome-enabled? (env-value "SP_WORKFLOW_OUTCOME_ENABLED" parse-bool)}}
         merge-kv (fn [m k v]
                    (if (nil? v)
                      m
@@ -90,9 +94,10 @@
                       (update :db merge-map (:db updates))
                       (update :kafka
                               (fn [kafka-cfg]
-                                (-> kafka-cfg
-                                    (merge-map (dissoc (:kafka updates) :topics))
-                                    (update :topics merge-map (get-in updates [:kafka :topics])))))))))))
+                                    (-> kafka-cfg
+                                        (merge-map (dissoc (:kafka updates) :topics))
+                                    (update :topics merge-map (get-in updates [:kafka :topics]))
+                                    (update :ce-mode? #(if (nil? %) true %)))))))))))
 
 (defn read-system-config
   "Read Integrant config from resources/system.edn.

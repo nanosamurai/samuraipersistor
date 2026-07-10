@@ -31,6 +31,10 @@ Workflows (RFC-0003):
 
   Note: although the v1 contract documents `created_at` as ISO-8601, in practice it may arrive as an **epoch numeric** timestamp (seconds, sometimes in scientific notation). Persistor accepts both formats.
 
+Community Edition mode is enabled by default and starts only the STT transcript consumers.
+Set `SAMURAIPERSISTOR_CE_MODE=false` for deployments that should also consume
+workflow/webhook outcome topics.
+
 Transcript messages **must be keyed by `session_id`** (session business key / `sessions.session_key`).
 
 `webhook.delivery_outcome` messages are typically keyed by `webhook_id` (or `tenant_id`) depending on dispatcher configuration.
@@ -147,7 +151,10 @@ For local development and tests, prefer **Testcontainers** (see tests below) and
 | Kafka | `SP_KAFKA_TOPIC_WORKFLOW_OUTCOME` | Workflow outcome topic | `workflow.outcome` |
 | Kafka | `SP_KAFKA_WORKFLOW_RESULT_BUFFER_SIZE` | Workflow result queue size | `2000` |
 | Kafka | `SP_KAFKA_WORKFLOW_OUTCOME_BUFFER_SIZE` | Workflow outcome queue size | `2000` |
-| Feature flag | `SP_WEBHOOK_OUTCOME_ENABLED` | Enable webhook outcome consumer | `true` |
+| Feature flag | `SAMURAIPERSISTOR_CE_MODE` | Community Edition mode; disables workflow/webhook consumers when true | `true` |
+| Feature flag | `SP_WEBHOOK_OUTCOME_ENABLED` | Enable webhook outcome consumer outside CE mode | effectively `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
+| Feature flag | `SP_WORKFLOW_RESULT_ENABLED` | Enable workflow result consumer outside CE mode | effectively `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
+| Feature flag | `SP_WORKFLOW_OUTCOME_ENABLED` | Enable workflow outcome consumer outside CE mode | effectively `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
 
 ## Running
 
