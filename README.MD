@@ -191,8 +191,16 @@ docker run --rm -p 8010:8010 \
 
 Health endpoints:
 
-* `GET /health`
-* `GET /ready` (currently checks DB connectivity)
+* `GET /health` is the liveness probe and returns HTTP 200 while the HTTP
+  process is running. It does not check external dependencies.
+* `GET /ready` is the readiness probe. It checks Postgres connectivity with a
+  lightweight query, returning HTTP 200 when ready or HTTP 503 when the check
+  fails.
+
+Both endpoints return JSON (`application/json`) by default and when requested
+with `Accept: application/json`. Clients can explicitly request EDN with
+`Accept: application/edn` for backward compatibility. The endpoints are
+unauthenticated; restrict access to them at the platform/network level.
 
 ## Logging
 

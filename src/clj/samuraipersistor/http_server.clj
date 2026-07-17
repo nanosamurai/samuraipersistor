@@ -1,5 +1,7 @@
 (ns samuraipersistor.http-server
-  (:require [integrant.core :as ig]
+  (:require [clojure.string :as str]
+            [integrant.core :as ig]
+            [jsonista.core :as json]
             [org.corfield.logging4j2 :as log]
             [org.httpkit.server :as http]
             [reitit.ring :as ring]
@@ -7,14 +9,26 @@
             [next.jdbc :as jdbc])
   (:import (java.time Instant)))
 
-(defn- ok-json [m]
-  (-> (resp/response (pr-str m))
-      (resp/content-type "application/edn; charset=utf-8")))
+(defn- edn-request?
+  [req]
+  (some-> (get-in req [:headers "accept"])
+          str/lower-case
+          (str/includes? "application/edn")))
 
-(defn- health-handler [_req]
-  (ok-json {:status :ok
-            :service :samuraipersistor
-            :time (str (Instant/now))}))
+(defn- ok-response
+  [req body]
+  (let [edn? (edn-request? req)]
+    (-> (resp/response (if edn?
+                         (pr-str body)
+                         (json/write-value-as-string body)))
+        (resp/content-type (if edn?
+                             "application/edn; charset=utf-8"
+                             "application/json; charset=utf-8")))))
+
+(defn- health-handler [req]
+  (ok-response req {:status :ok
+                    :service :samuraipersistor
+                    :time (str (Instant/now))}))
 
 (defn- ready-handler
   "Readiness check.
@@ -22,22 +36,26 @@
   Currently checks DB connectivity.
   (Kafka connectivity is implied by consumer threads; we can extend with explicit checks later.)" 
   [{:keys [ds]}]
-  (fn [_req]
+  (fn [req]
     (try
       (jdbc/execute-one! ds ["SELECT 1 AS ok"])
-      (ok-json {:status :ready})
+      (ok-response req {:status :ready})
       (catch Throwable t
         (log/warn t "Readiness check failed")
-        (-> (ok-json {:status :not-ready
-                      :error "db"})
+        (-> (ok-response req {:status :not-ready
+                              :error "db"})
             (resp/status 503))))))
 
 (defn router
+  "Build the Ring handler for service health probes.
+
+  Expects a map containing the initialized DB component under `:db` and returns
+  a Ring handler. Readiness failures are converted to HTTP 503 responses."
   [{:keys [db]}]
   (ring/ring-handler
     (ring/router
       [["/health" {:get health-handler}]
-       ["/ready" {:get (ready-handler (:ds db))}]])
+       ["/ready" {:get (ready-handler db)}]])
     (ring/create-default-handler)))
 
 (defmethod ig/init-key :samuraipersistor/http-server
