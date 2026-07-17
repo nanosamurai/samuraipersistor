@@ -33,11 +33,15 @@
             (resp/status 503))))))
 
 (defn router
+  "Build the Ring handler for service health probes.
+
+  Expects a map containing the initialized DB component under `:db` and returns
+  a Ring handler. Readiness failures are converted to HTTP 503 responses."
   [{:keys [db]}]
   (ring/ring-handler
     (ring/router
       [["/health" {:get health-handler}]
-       ["/ready" {:get (ready-handler (:ds db))}]])
+       ["/ready" {:get (ready-handler db)}]])
     (ring/create-default-handler)))
 
 (defmethod ig/init-key :samuraipersistor/http-server
