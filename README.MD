@@ -197,8 +197,10 @@ Health endpoints:
   lightweight query, returning HTTP 200 when ready or HTTP 503 when the check
   fails.
 
-Both endpoints return EDN (`application/edn`) and are unauthenticated. Restrict
-access to them at the platform/network level.
+Both endpoints return JSON (`application/json`) by default and when requested
+with `Accept: application/json`. Clients can explicitly request EDN with
+`Accept: application/edn` for backward compatibility. The endpoints are
+unauthenticated; restrict access to them at the platform/network level.
 
 ## Logging
 
