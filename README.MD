@@ -231,8 +231,9 @@ clojure -X:test
 
 Note: The test suite requires **Docker** (Testcontainers).
 
-Gitleaks also scans the complete repository history. The `master` repository
-ruleset must require these checks before merge:
+The pinned open-source Gitleaks CLI also scans the complete repository history
+without injecting a repository secret. The `master` repository ruleset must
+require these checks before merge:
 
 * `Clojure tests (PR gate)`
 * `scan`
@@ -248,7 +249,8 @@ published as
 `ghcr.io/nanosamurai/samuraipersistor:sha-<git-sha>`.
 
 Validation jobs are read-only. Only the publication job receives
-`packages: write`, and only the Gitleaks gate receives `GITLEAKS_LICENSE`.
+`packages: write`; the Gitleaks gate does not require
+`GITLEAKS_LICENSE`.
 Repository secrets are unavailable to workflows triggered from forks; never
 use `pull_request_target` to execute untrusted pull request code with secrets.
 
