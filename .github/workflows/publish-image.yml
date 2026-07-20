@@ -7,16 +7,36 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 concurrency:
   group: publish-image-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  tests:
+    name: Test gate
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  secret-scan:
+    name: Gitleaks gate
+    uses: ./.github/workflows/gitleaks.yml
+    permissions:
+      contents: read
+      pull-requests: read
+    secrets:
+      GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
   publish:
     name: Build + push image to GHCR
+    needs:
+      - tests
+      - secret-scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout

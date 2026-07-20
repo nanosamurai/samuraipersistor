@@ -222,7 +222,7 @@ clojure -X:test
 
 ## CI
 
-This repo uses **GitHub Actions** for CI. The PR gate runs:
+This repo uses **GitHub Actions** for CI. Pull requests targeting `master` run:
 
 ```bash
 clojure -T:build compile-java
@@ -230,6 +230,27 @@ clojure -X:test
 ```
 
 Note: The test suite requires **Docker** (Testcontainers).
+
+Gitleaks also scans the complete repository history. The `master` repository
+ruleset must require these checks before merge:
+
+* `Clojure tests (PR gate)`
+* `scan`
+
+The ruleset must require the pull request branch to be up to date and prevent
+routine bypass. Workflow triggers make checks run; the repository ruleset
+makes them merge prerequisites.
+
+On pushes to `master`, the image publication workflow reuses the test and
+Gitleaks workflows to validate the exact merged commit. Docker build, GHCR
+login, and publication begin only after both gates succeed. The image is
+published as
+`ghcr.io/nanosamurai/samuraipersistor:sha-<git-sha>`.
+
+Validation jobs are read-only. Only the publication job receives
+`packages: write`, and only the Gitleaks gate receives `GITLEAKS_LICENSE`.
+Repository secrets are unavailable to workflows triggered from forks; never
+use `pull_request_target` to execute untrusted pull request code with secrets.
 
 ## Observability
 The BFF supports OTEL integration and tracing - for more information see https://github.com/mikub/xamurai/blob/master/docs/local-k8s-observability.md (locally usually `%USERPROFILE%\PycharmProjects\xamurai\docs\local-k8s-observability.md`)
