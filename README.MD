@@ -2,15 +2,22 @@
 
 Kafka → Postgres persistence service for nanosamurai's transcript events.
 
-This service is intended to replace direct DB persistence currently implemented inside
-Python workers (`whisperx_worker`, `finalizer_worker`) in the `xamurai` monorepo (formerly 'drsynth').
+This service replaces direct DB persistence inside the Python workers
+(`whisperx_worker`, `finalizer_worker`) in the `xamurai` monorepo.
 
 ## About Nanosamur.ai
-Nanosamurai solution currently consists of
-- **SamuraiBFF** - the BFF for the solution (https://github.com/mikub/samuraibff ; locally usually at `%USERPROFILE%\IdeaProjects\samuraibff`),
-- **xamurai** (https://github.com/mikub/xamurai ; locally usually at `%USERPROFILE%\PycharmProjects\xamurai`) services connected via Kafka/gRPC
-    - xamurai is a monorepo that contains multiple Speach-to-text and speaker diarization services for Nanosamur.ai solution - they provide both real-time transcription as well as near-real-time refinement.
-- **samuraipersistor** (this repo)
+The Community Edition consists of:
+
+- **SamuraiBFF** (https://github.com/mikub/samuraibff): API, browser UI,
+  authentication, and orchestration.
+- **xamurai** (https://github.com/nanosamurai/xamurai): speech-to-text and
+  speaker-diarization workers connected through Kafka and gRPC.
+- **samuraipersistor** (this repo): Kafka-to-Postgres persistence.
+- **nanosamurai** (https://github.com/nanosamurai/nanosamurai): the public
+  Docker Compose quickstart and operator guidance.
+- **nanosamurai-sdk** (https://github.com/nanosamurai/nanosamurai-sdk): the
+  Python client SDK.
+
 ---
 
 ## Responsibilities of samuraipersistor
@@ -22,12 +29,12 @@ Nanosamurai solution currently consists of
 
 Optional audit lane:
 
-* `webhook.delivery_outcome` (JSON, emitted by `webhook-dispatcher`)
+* `webhook.delivery_outcome` (JSON, emitted by an external non-CE integration)
 
 Workflows (RFC-0003):
 
-* `workflow.result` (JSON, emitted by `workflow-runner`)
-* `workflow.outcome` (JSON audit lane, emitted by `workflow-runner`)
+* `workflow.result` (JSON, emitted by an external non-CE integration)
+* `workflow.outcome` (JSON audit lane, emitted by an external non-CE integration)
 
   Note: although the v1 contract documents `created_at` as ISO-8601, in practice it may arrive as an **epoch numeric** timestamp (seconds, sometimes in scientific notation). Persistor accepts both formats.
 
@@ -41,7 +48,7 @@ Transcript messages **must be keyed by `session_id`** (session business key / `s
 
 ### Persists (Postgres)
 
-Persists into the shared `drsynth` schema tables:
+Persists into the shared nanosamurai Postgres tables:
 
 * `sessions` (assumed to be created by BFF)
 * `recordings`
@@ -255,7 +262,9 @@ Repository secrets are unavailable to workflows triggered from forks; never
 use `pull_request_target` to execute untrusted pull request code with secrets.
 
 ## Observability
-The BFF supports OTEL integration and tracing - for more information see https://github.com/mikub/xamurai/blob/master/docs/local-k8s-observability.md (locally usually `%USERPROFILE%\PycharmProjects\xamurai\docs\local-k8s-observability.md`)
+The BFF supports OpenTelemetry integration and tracing. For the Community Edition
+stack, see the
+[`nanosamurai` observability guide](https://github.com/nanosamurai/nanosamurai#observability).
 
 ## Notes / known follow-ups
 

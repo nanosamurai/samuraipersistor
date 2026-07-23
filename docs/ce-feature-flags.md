@@ -17,8 +17,8 @@ Use a single edition flag first:
 | `SAMURAIPERSISTOR_CE_MODE` | `true` | When true, do not start workflow/webhook outcome consumers. |
 
 This keeps OSS easy to run: the `nanosamurai` Compose stack can omit the flag
-and get CE behavior. Commercial/full deployments managed by `nanodeploy` should
-set `SAMURAIPERSISTOR_CE_MODE=false`.
+and get CE behavior. A deployment that intentionally enables the non-CE
+integration contracts must set `SAMURAIPERSISTOR_CE_MODE=false`.
 
 `SP_WEBHOOK_OUTCOME_ENABLED` already exists. Keep it as a per-feature override,
 but make CE mode the higher-level default so OSS does not need to know about
@@ -55,8 +55,8 @@ commercial-only topics.
 4. Ensure disabled consumers do not validate or require their Kafka topics.
 5. Add focused tests for default CE startup and full-mode startup.
 6. After code lands, update `nanosamurai` docs to rely on the default CE mode
-   and update `nanodeploy` k8s/Compose values to set
-   `SAMURAIPERSISTOR_CE_MODE=false`.
+   and document `SAMURAIPERSISTOR_CE_MODE=false` only in the deployment
+   configuration that owns the non-CE integrations.
 
 ## Security note
 

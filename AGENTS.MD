@@ -8,19 +8,21 @@ transcription workers (e.g. `whisperx_worker`, `finalizer_worker`) in the Python
 `xamurai` monorepo.
 
 ## Main Rules / Best Practices
-- You are usually being run from CLINE IDE plugin, which limits you to the given working repository. If you want to execute commands (i.e. run executables, make git commands) in other folders / repositories, the only way you can do so is via powershell `Set-Location`
-    - e.g. `powershell -NoProfile -Command "Set-Location 'C:\Users\miros\IdeaProjects\samuraipersistor'; clojure -M -e '(println :ok)'"`
-- All changes should be documented accordingly in the relevant .MD docs; before claiming task is coplete, always check docs for gaps as well as for a stale or no longer correct information and fix that
+- All changes should be documented in the relevant `.md` files. Before claiming
+  a task is complete, check the docs for gaps or stale information and fix it.
 - For any task, create a dedicated branch (named imperatively) from master (unless told otherwise) and as you progress make small(er) atomic commits named imperatively
 - For a task to be completed, there should be no security risks or concerns, always assess task's completion also from the security standpoint and highlight any risks.
 - NEVER EXPOSE PORTS on local LAN for testing, always use localhost or 127.0.0.1
 - Xamurai used to be called "drsynth", so do not be confused if you do see this name somewhere. That name however is legacy and you should always use xamurai when naming things related to xamurai stack- alternatively, you can also use nanosamurai if the name refers to the whole solution and not just the subset of voice-to-text services
 - before you claim any task is complete, run full set of test/integration tests
-- DO NOT EVER attempt to read or fetch the compiled js code (usually at resources/public/js/main.js ) - it is too big and your cotext will rot into oblivion
+- Do not read or fetch compiled artifacts when the corresponding source is
+  available.
 - DO NOT EVER run `clojure -Spath` or similar command to list entire classpath, you would burn too many tokens and rot your context without any significant benefit
 - **IMPORTANT:** If you encounter unbalanced parentheses, brackets, or braces in any `.clj`, `.cljs`, `.cljc`, `.cljd`, or EDN-like file: Do NOT try to manually repair them by repeated editing. Run `clj-paren-repair <path>` on the affected file. After repair, re-read the file and continue.
-- DO NOT create huge namespaces. If a namespace has 1000 LoC, you are doing something wrong and are likely to run into issues. Break dow the namespace into smaller logical namespaces instead.
-- USE LOGGING FFS!!! Whenever you are doing something important from the business logic perspective, use log info and log what are you about to do, and then if you have done it successfully - for instance "Saving webhook data into database {***map with web hook data****}...."
+- Avoid oversized namespaces. Break a namespace approaching 1,000 lines into
+  smaller logical namespaces.
+- Use structured logging for important business operations, including the
+  operation's start and successful completion, without logging sensitive data.
 
 ## Clojure / ClojureScript editing rules
 
@@ -62,15 +64,18 @@ The `clj-paren-repair` tool exhibits the following behavior:
 - For clj linting, you can run it via clojure tools/deps like this: `clj -Sdeps '{:deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}}' -M -m clj-kondo.main --lint src/clj`
 
 # About Nanosamur.ai
-Nanosamurai solution currently consists of
-- **SamuraiBFF** (https://github.com/mikub/samuraibff locally usually at `%USERPROFILE%\IdeaProjects\samuraibff`),
-- **xamurai** (https://github.com/mikub/xamurai ; locally usually at `%USERPROFILE%\PycharmProjects\xamurai`) services connected via Kafka/gRPC
-    - xamurai is a monorepo that contains multiple Speach-to-text and speaker diarization services for Nanosamur.ai solution - they provide both real-time transcription as well as near-real-time refinement.
-- **samuraipersistor** (this repo) (https://github.com/mikub/samuraipersistor ; locally usually at `%USERPROFILE%\IdeaProjects\samuraipersistor` ) for persistence.
-    - Database persistence is handled by a separate service, the samuraipersistor; consumes from all relevant Kafka topics and stores the data in Postgres
-- **nanodeploy** - Helm charts for local k8s  and aws EKS deployments and also local docker compose setup (https://github.com/mikub/nanodeploy ; locally usually at `%USERPROFILE%\PycharmProjects\nanodeploy`)
-- **nanplatform** - Pulumi infra setup in AWS (https://github.com/mikub/nanplatform ; locally usually at `%USERPROFILE%\PycharmProjects\nanplatform`)
-- **nanosamurai-sdk** - A python sdk client for nanosamur.ai (uses client credentials for m2m access) (https://github.com/mikub/nanosamurai-sdk ; locally usually at `%USERPROFILE%\PycharmProjects\nanosamurai-sdk`)
+
+The Community Edition consists of:
+
+- **SamuraiBFF** (https://github.com/mikub/samuraibff): API, browser UI,
+  authentication, and orchestration.
+- **xamurai** (https://github.com/nanosamurai/xamurai): speech-to-text and
+  speaker-diarization workers.
+- **samuraipersistor** (this repo): Kafka-to-Postgres persistence.
+- **nanosamurai** (https://github.com/nanosamurai/nanosamurai): the public
+  Docker Compose quickstart and operator guidance.
+- **nanosamurai-sdk** (https://github.com/nanosamurai/nanosamurai-sdk): the
+  Python client SDK.
 
 
 ## 1) Samurai Persistor Service responsibilities
@@ -83,7 +88,7 @@ Consumes Kafka topics (protobuf payloads, keyed by `session_id`):
 
 ### Outputs
 
-* Persists into Postgres tables owned by the shared `drsynth` schema:
+* Persists into the shared nanosamurai Postgres tables:
   * `sessions` (assumed to be created by BFF)
   * `recordings`
   * `session_transcripts` (append-only)
@@ -101,7 +106,8 @@ Consumes Kafka topics (protobuf payloads, keyed by `session_id`):
 ## 2) Architectural decisions
 
 ### Append-only transcript records
-We keep `session_transcripts` as an append-only table (per drsynth migration 0002).
+We keep `session_transcripts` as an append-only table, following the shared
+transcript migration.
 This supports multiple transcription worker variants (different models/windows).
 
 ### Session ownership
