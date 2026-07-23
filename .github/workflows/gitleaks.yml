@@ -26,3 +26,11 @@ jobs:
             --env GIT_CONFIG_VALUE_0=/repo \
             ghcr.io/gitleaks/gitleaks:v8.30.1 \
             git --redact --verbose --log-opts="--all" /repo
+
+      - name: Scan current public tree including documentation
+        run: |
+          docker run --rm \
+            --volume "${GITHUB_WORKSPACE}:/repo:ro" \
+            ghcr.io/gitleaks/gitleaks:v8.30.1 \
+            dir --redact --verbose \
+            --config=/repo/.gitleaks-public-tree.toml /repo
