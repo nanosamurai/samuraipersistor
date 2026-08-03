@@ -8,7 +8,7 @@ This service replaces direct DB persistence inside the Python workers
 ## About Nanosamur.ai
 The Community Edition consists of:
 
-- **SamuraiBFF** (https://github.com/mikub/samuraibff): API, browser UI,
+- **SamuraiBFF** (https://github.com/nanosamurai/samuraibff): API, browser UI,
   authentication, and orchestration.
 - **xamurai** (https://github.com/nanosamurai/xamurai): speech-to-text and
   speaker-diarization workers connected through Kafka and gRPC.
