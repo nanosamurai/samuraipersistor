@@ -1,21 +1,27 @@
+# syntax=docker/dockerfile:1
+
 FROM clojure:temurin-21-tools-deps AS builder
 
 WORKDIR /app
 
 COPY deps.edn build.clj ./
+RUN clojure -P
+
+COPY resources ./resources
 COPY src ./src
 
-RUN clojure -T:build compile-java
+RUN clojure -T:build uber
 
-FROM clojure:temurin-21-tools-deps
+FROM eclipse-temurin:21-jre AS runtime
 
 WORKDIR /app
 
-COPY deps.edn ./
-COPY resources ./resources
-COPY src ./src
-COPY --from=builder /app/target/classes ./target/classes
+RUN useradd -r -u 10001 -g root samuraipersistor
+
+COPY --from=builder /app/target/samuraipersistor.jar /app/samuraipersistor.jar
 
 EXPOSE 8010
 
-CMD ["clojure", "-M:run"]
+USER 10001
+
+ENTRYPOINT ["java", "-jar", "/app/samuraipersistor.jar"]

@@ -255,11 +255,28 @@ login, and publication begin only after both gates succeed. The image is
 published as
 `ghcr.io/nanosamurai/samuraipersistor:sha-<git-sha>`.
 
-Validation jobs are read-only. Only the publication job receives
-`packages: write`; the Gitleaks gate does not require
+Validation jobs are read-only. The publication job receives `packages: write`
+and the GitHub attestation permissions; the Gitleaks gate does not require
 `GITLEAKS_LICENSE`.
 Repository secrets are unavailable to workflows triggered from forks; never
 use `pull_request_target` to execute untrusted pull request code with secrets.
+
+### Image SBOM
+
+The published image includes an SPDX JSON software bill of materials as a
+GHCR-attached OCI attestation. The workflow validates the SBOM after the push
+and also uploads it as a workflow artifact named
+`sbom-samuraipersistor-<git-sha>`. Public repositories additionally publish a
+signed GitHub artifact attestation; that signing step is skipped while the
+repository is private.
+
+Retrieve the canonical SBOM attached to an image with:
+
+```bash
+docker buildx imagetools inspect \
+  ghcr.io/nanosamurai/samuraipersistor:sha-<git-sha> \
+  --format "{{ json .SBOM.SPDX }}" > samuraipersistor.spdx.json
+```
 
 ## Observability
 The BFF supports OpenTelemetry integration and tracing. For the Community Edition
