@@ -71,6 +71,10 @@
 {:config #ig/ref :samuraipersistor/config
  :db     #ig/ref :samuraipersistor/db}
 
+:samuraipersistor/final-track-consumer
+{:config #ig/ref :samuraipersistor/config
+ :db     #ig/ref :samuraipersistor/db}
+
 :samuraipersistor/webhook-outcome-consumer
 {:config #ig/ref :samuraipersistor/config
   :db     #ig/ref :samuraipersistor/db}

@@ -11,85 +11,85 @@ public interface FinalEventOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The sessionId.
    */
   java.lang.String getSessionId();
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The bytes for sessionId.
    */
   com.google.protobuf.ByteString
       getSessionIdBytes();
 
   /**
-   * <code>double start_s = 2;</code>
+   * <code>double start_s = 2 [json_name = "startS"];</code>
    * @return The startS.
    */
   double getStartS();
 
   /**
-   * <code>double end_s = 3;</code>
+   * <code>double end_s = 3 [json_name = "endS"];</code>
    * @return The endS.
    */
   double getEndS();
 
   /**
-   * <code>string text = 4;</code>
+   * <code>string text = 4 [json_name = "text"];</code>
    * @return The text.
    */
   java.lang.String getText();
   /**
-   * <code>string text = 4;</code>
+   * <code>string text = 4 [json_name = "text"];</code>
    * @return The bytes for text.
    */
   com.google.protobuf.ByteString
       getTextBytes();
 
   /**
-   * <code>string speaker = 5;</code>
+   * <code>string speaker = 5 [json_name = "speaker"];</code>
    * @return The speaker.
    */
   java.lang.String getSpeaker();
   /**
-   * <code>string speaker = 5;</code>
+   * <code>string speaker = 5 [json_name = "speaker"];</code>
    * @return The bytes for speaker.
    */
   com.google.protobuf.ByteString
       getSpeakerBytes();
 
   /**
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The lang.
    */
   java.lang.String getLang();
   /**
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The bytes for lang.
    */
   com.google.protobuf.ByteString
       getLangBytes();
 
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   java.util.List<samuraibff.proto.WordAlignment> 
       getWordsList();
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   samuraibff.proto.WordAlignment getWords(int index);
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   int getWordsCount();
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
       getWordsOrBuilderList();
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
       int index);

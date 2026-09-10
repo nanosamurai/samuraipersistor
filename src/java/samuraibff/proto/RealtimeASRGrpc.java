@@ -12,6 +12,37 @@ public final class RealtimeASRGrpc {
   public static final java.lang.String SERVICE_NAME = "RealtimeASR";
 
   // Static method descriptors that strictly reflect the proto.
+  private static volatile io.grpc.MethodDescriptor<samuraibff.proto.RealtimeCapabilitiesRequest,
+      samuraibff.proto.RealtimeCapabilities> getGetCapabilitiesMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetCapabilities",
+      requestType = samuraibff.proto.RealtimeCapabilitiesRequest.class,
+      responseType = samuraibff.proto.RealtimeCapabilities.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<samuraibff.proto.RealtimeCapabilitiesRequest,
+      samuraibff.proto.RealtimeCapabilities> getGetCapabilitiesMethod() {
+    io.grpc.MethodDescriptor<samuraibff.proto.RealtimeCapabilitiesRequest, samuraibff.proto.RealtimeCapabilities> getGetCapabilitiesMethod;
+    if ((getGetCapabilitiesMethod = RealtimeASRGrpc.getGetCapabilitiesMethod) == null) {
+      synchronized (RealtimeASRGrpc.class) {
+        if ((getGetCapabilitiesMethod = RealtimeASRGrpc.getGetCapabilitiesMethod) == null) {
+          RealtimeASRGrpc.getGetCapabilitiesMethod = getGetCapabilitiesMethod =
+              io.grpc.MethodDescriptor.<samuraibff.proto.RealtimeCapabilitiesRequest, samuraibff.proto.RealtimeCapabilities>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetCapabilities"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  samuraibff.proto.RealtimeCapabilitiesRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  samuraibff.proto.RealtimeCapabilities.getDefaultInstance()))
+              .setSchemaDescriptor(new RealtimeASRMethodDescriptorSupplier("GetCapabilities"))
+              .build();
+        }
+      }
+    }
+    return getGetCapabilitiesMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<samuraibff.proto.AudioChunk,
       samuraibff.proto.AsrEvent> getStreamMethod;
 
@@ -108,6 +139,13 @@ public final class RealtimeASRGrpc {
 
     /**
      */
+    default void getCapabilities(samuraibff.proto.RealtimeCapabilitiesRequest request,
+        io.grpc.stub.StreamObserver<samuraibff.proto.RealtimeCapabilities> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetCapabilitiesMethod(), responseObserver);
+    }
+
+    /**
+     */
     default io.grpc.stub.StreamObserver<samuraibff.proto.AudioChunk> stream(
         io.grpc.stub.StreamObserver<samuraibff.proto.AsrEvent> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getStreamMethod(), responseObserver);
@@ -143,6 +181,14 @@ public final class RealtimeASRGrpc {
 
     /**
      */
+    public void getCapabilities(samuraibff.proto.RealtimeCapabilitiesRequest request,
+        io.grpc.stub.StreamObserver<samuraibff.proto.RealtimeCapabilities> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetCapabilitiesMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public io.grpc.stub.StreamObserver<samuraibff.proto.AudioChunk> stream(
         io.grpc.stub.StreamObserver<samuraibff.proto.AsrEvent> responseObserver) {
       return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
@@ -164,6 +210,13 @@ public final class RealtimeASRGrpc {
     protected RealtimeASRBlockingV2Stub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new RealtimeASRBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     */
+    public samuraibff.proto.RealtimeCapabilities getCapabilities(samuraibff.proto.RealtimeCapabilitiesRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getGetCapabilitiesMethod(), getCallOptions(), request);
     }
 
     /**
@@ -191,6 +244,13 @@ public final class RealtimeASRGrpc {
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new RealtimeASRBlockingStub(channel, callOptions);
     }
+
+    /**
+     */
+    public samuraibff.proto.RealtimeCapabilities getCapabilities(samuraibff.proto.RealtimeCapabilitiesRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetCapabilitiesMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -208,9 +268,18 @@ public final class RealtimeASRGrpc {
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new RealtimeASRFutureStub(channel, callOptions);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<samuraibff.proto.RealtimeCapabilities> getCapabilities(
+        samuraibff.proto.RealtimeCapabilitiesRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetCapabilitiesMethod(), getCallOptions()), request);
+    }
   }
 
-  private static final int METHODID_STREAM = 0;
+  private static final int METHODID_GET_CAPABILITIES = 0;
+  private static final int METHODID_STREAM = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -229,6 +298,10 @@ public final class RealtimeASRGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_GET_CAPABILITIES:
+          serviceImpl.getCapabilities((samuraibff.proto.RealtimeCapabilitiesRequest) request,
+              (io.grpc.stub.StreamObserver<samuraibff.proto.RealtimeCapabilities>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -250,6 +323,13 @@ public final class RealtimeASRGrpc {
 
   public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
     return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getGetCapabilitiesMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              samuraibff.proto.RealtimeCapabilitiesRequest,
+              samuraibff.proto.RealtimeCapabilities>(
+                service, METHODID_GET_CAPABILITIES)))
         .addMethod(
           getStreamMethod(),
           io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
@@ -305,6 +385,7 @@ public final class RealtimeASRGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new RealtimeASRFileDescriptorSupplier())
+              .addMethod(getGetCapabilitiesMethod())
               .addMethod(getStreamMethod())
               .build();
         }

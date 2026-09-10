@@ -49,7 +49,7 @@ private static final long serialVersionUID = 0L;
   public static final int START_S_FIELD_NUMBER = 1;
   private double startS_ = 0D;
   /**
-   * <code>double start_s = 1;</code>
+   * <code>double start_s = 1 [json_name = "startS"];</code>
    * @return The startS.
    */
   @java.lang.Override
@@ -60,7 +60,7 @@ private static final long serialVersionUID = 0L;
   public static final int END_S_FIELD_NUMBER = 2;
   private double endS_ = 0D;
   /**
-   * <code>double end_s = 2;</code>
+   * <code>double end_s = 2 [json_name = "endS"];</code>
    * @return The endS.
    */
   @java.lang.Override
@@ -72,7 +72,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
   /**
-   * <code>string text = 3;</code>
+   * <code>string text = 3 [json_name = "text"];</code>
    * @return The text.
    */
   @java.lang.Override
@@ -89,7 +89,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string text = 3;</code>
+   * <code>string text = 3 [json_name = "text"];</code>
    * @return The bytes for text.
    */
   @java.lang.Override
@@ -115,7 +115,7 @@ private static final long serialVersionUID = 0L;
    * optional, "" if unknown
    * </pre>
    *
-   * <code>string speaker = 4;</code>
+   * <code>string speaker = 4 [json_name = "speaker"];</code>
    * @return The speaker.
    */
   @java.lang.Override
@@ -136,7 +136,7 @@ private static final long serialVersionUID = 0L;
    * optional, "" if unknown
    * </pre>
    *
-   * <code>string speaker = 4;</code>
+   * <code>string speaker = 4 [json_name = "speaker"];</code>
    * @return The bytes for speaker.
    */
   @java.lang.Override
@@ -159,12 +159,11 @@ private static final long serialVersionUID = 0L;
   private java.util.List<samuraibff.proto.WordAlignment> words_;
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   @java.lang.Override
   public java.util.List<samuraibff.proto.WordAlignment> getWordsList() {
@@ -172,12 +171,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   @java.lang.Override
   public java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
@@ -186,12 +184,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   @java.lang.Override
   public int getWordsCount() {
@@ -199,12 +196,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   @java.lang.Override
   public samuraibff.proto.WordAlignment getWords(int index) {
@@ -212,12 +208,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   @java.lang.Override
   public samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
@@ -667,7 +662,7 @@ private static final long serialVersionUID = 0L;
 
     private double startS_ ;
     /**
-     * <code>double start_s = 1;</code>
+     * <code>double start_s = 1 [json_name = "startS"];</code>
      * @return The startS.
      */
     @java.lang.Override
@@ -675,7 +670,7 @@ private static final long serialVersionUID = 0L;
       return startS_;
     }
     /**
-     * <code>double start_s = 1;</code>
+     * <code>double start_s = 1 [json_name = "startS"];</code>
      * @param value The startS to set.
      * @return This builder for chaining.
      */
@@ -687,7 +682,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double start_s = 1;</code>
+     * <code>double start_s = 1 [json_name = "startS"];</code>
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
@@ -699,7 +694,7 @@ private static final long serialVersionUID = 0L;
 
     private double endS_ ;
     /**
-     * <code>double end_s = 2;</code>
+     * <code>double end_s = 2 [json_name = "endS"];</code>
      * @return The endS.
      */
     @java.lang.Override
@@ -707,7 +702,7 @@ private static final long serialVersionUID = 0L;
       return endS_;
     }
     /**
-     * <code>double end_s = 2;</code>
+     * <code>double end_s = 2 [json_name = "endS"];</code>
      * @param value The endS to set.
      * @return This builder for chaining.
      */
@@ -719,7 +714,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double end_s = 2;</code>
+     * <code>double end_s = 2 [json_name = "endS"];</code>
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
@@ -731,7 +726,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object text_ = "";
     /**
-     * <code>string text = 3;</code>
+     * <code>string text = 3 [json_name = "text"];</code>
      * @return The text.
      */
     public java.lang.String getText() {
@@ -747,7 +742,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 3;</code>
+     * <code>string text = 3 [json_name = "text"];</code>
      * @return The bytes for text.
      */
     public com.google.protobuf.ByteString
@@ -764,7 +759,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 3;</code>
+     * <code>string text = 3 [json_name = "text"];</code>
      * @param value The text to set.
      * @return This builder for chaining.
      */
@@ -777,7 +772,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 3;</code>
+     * <code>string text = 3 [json_name = "text"];</code>
      * @return This builder for chaining.
      */
     public Builder clearText() {
@@ -787,7 +782,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 3;</code>
+     * <code>string text = 3 [json_name = "text"];</code>
      * @param value The bytes for text to set.
      * @return This builder for chaining.
      */
@@ -807,7 +802,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4;</code>
+     * <code>string speaker = 4 [json_name = "speaker"];</code>
      * @return The speaker.
      */
     public java.lang.String getSpeaker() {
@@ -827,7 +822,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4;</code>
+     * <code>string speaker = 4 [json_name = "speaker"];</code>
      * @return The bytes for speaker.
      */
     public com.google.protobuf.ByteString
@@ -848,7 +843,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4;</code>
+     * <code>string speaker = 4 [json_name = "speaker"];</code>
      * @param value The speaker to set.
      * @return This builder for chaining.
      */
@@ -865,7 +860,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4;</code>
+     * <code>string speaker = 4 [json_name = "speaker"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSpeaker() {
@@ -879,7 +874,7 @@ private static final long serialVersionUID = 0L;
      * optional, "" if unknown
      * </pre>
      *
-     * <code>string speaker = 4;</code>
+     * <code>string speaker = 4 [json_name = "speaker"];</code>
      * @param value The bytes for speaker to set.
      * @return This builder for chaining.
      */
@@ -907,12 +902,11 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public java.util.List<samuraibff.proto.WordAlignment> getWordsList() {
       if (wordsBuilder_ == null) {
@@ -923,12 +917,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public int getWordsCount() {
       if (wordsBuilder_ == null) {
@@ -939,12 +932,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment getWords(int index) {
       if (wordsBuilder_ == null) {
@@ -955,12 +947,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder setWords(
         int index, samuraibff.proto.WordAlignment value) {
@@ -978,12 +969,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder setWords(
         int index, samuraibff.proto.WordAlignment.Builder builderForValue) {
@@ -998,12 +988,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder addWords(samuraibff.proto.WordAlignment value) {
       if (wordsBuilder_ == null) {
@@ -1020,12 +1009,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder addWords(
         int index, samuraibff.proto.WordAlignment value) {
@@ -1043,12 +1031,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder addWords(
         samuraibff.proto.WordAlignment.Builder builderForValue) {
@@ -1063,12 +1050,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder addWords(
         int index, samuraibff.proto.WordAlignment.Builder builderForValue) {
@@ -1083,12 +1069,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder addAllWords(
         java.lang.Iterable<? extends samuraibff.proto.WordAlignment> values) {
@@ -1104,12 +1089,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder clearWords() {
       if (wordsBuilder_ == null) {
@@ -1123,12 +1107,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public Builder removeWords(int index) {
       if (wordsBuilder_ == null) {
@@ -1142,12 +1125,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment.Builder getWordsBuilder(
         int index) {
@@ -1155,12 +1137,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
         int index) {
@@ -1171,12 +1152,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
          getWordsOrBuilderList() {
@@ -1188,12 +1168,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment.Builder addWordsBuilder() {
       return internalGetWordsFieldBuilder().addBuilder(
@@ -1201,12 +1180,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment.Builder addWordsBuilder(
         int index) {
@@ -1215,12 +1193,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Optional word-level alignment details as produced by the xamurai finalizer.
-     * If absent (older producers) or empty, consumers should treat the segment as
-     * having no word-level timing information.
+     * Optional word-level timing (requires WhisperX alignment).
+     * When present, words are relative to the recording start (absolute within session).
      * </pre>
      *
-     * <code>repeated .WordAlignment words = 5;</code>
+     * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
      */
     public java.util.List<samuraibff.proto.WordAlignment.Builder> 
          getWordsBuilderList() {

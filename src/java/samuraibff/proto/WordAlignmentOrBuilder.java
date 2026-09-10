@@ -15,7 +15,7 @@ public interface WordAlignmentOrBuilder extends
    * absolute word start time in seconds
    * </pre>
    *
-   * <code>double start_s = 1;</code>
+   * <code>double start_s = 1 [json_name = "startS"];</code>
    * @return The startS.
    */
   double getStartS();
@@ -25,7 +25,7 @@ public interface WordAlignmentOrBuilder extends
    * absolute word end time in seconds
    * </pre>
    *
-   * <code>double end_s = 2;</code>
+   * <code>double end_s = 2 [json_name = "endS"];</code>
    * @return The endS.
    */
   double getEndS();
@@ -35,7 +35,7 @@ public interface WordAlignmentOrBuilder extends
    * the word text (normalized)
    * </pre>
    *
-   * <code>string text = 3;</code>
+   * <code>string text = 3 [json_name = "text"];</code>
    * @return The text.
    */
   java.lang.String getText();
@@ -44,7 +44,7 @@ public interface WordAlignmentOrBuilder extends
    * the word text (normalized)
    * </pre>
    *
-   * <code>string text = 3;</code>
+   * <code>string text = 3 [json_name = "text"];</code>
    * @return The bytes for text.
    */
   com.google.protobuf.ByteString

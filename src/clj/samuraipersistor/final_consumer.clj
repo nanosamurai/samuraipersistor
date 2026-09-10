@@ -5,6 +5,7 @@
             [samuraipersistor.kafka.common :as kcommon]
             [samuraipersistor.otel.traceparent :as tp]
             [samuraipersistor.persist :as persist])
+  (:require [samuraipersistor.final-track-consumer :as final-tracks])
   (:import (java.util.concurrent LinkedBlockingQueue)
            (org.apache.kafka.clients.consumer ConsumerRecord)
            (org.apache.kafka.clients.producer KafkaProducer)
@@ -46,53 +47,53 @@
         ^KafkaProducer dlq-producer (when dlq-topic (kcommon/->producer kafka-config))
         stop? (atom false)
         thread (Thread.
-                 (fn []
-                   (log/info "Final worker started")
-                   (try
-                     (while (not @stop?)
-                       (let [batch-size 20
-                             first-rec (loop/take! q)
-                             recs (transient [first-rec])]
-                         (loop [i 1]
-                           (when (< i batch-size)
-                             (when-let [r (loop/poll! q 10)]
-                               (conj! recs r)
-                               (recur (inc i)))))
-                         (let [records (persistent! recs)
-                               processed (transient [])]
-                           (doseq [^ConsumerRecord rec records]
-                             (try
-                               (tp/with-record-trace rec
-                                 (let [ev (parse-final (.value rec))
-                                       res (persist/insert-final!
-                                             (:ds db)
-                                             ev
-                                             {:source "finalizer_worker"
-                                              :model "whisperx"
-                                              :event-created-at-ns (when (pos? (.getCreatedAtNs ev))
-                                                                    (.getCreatedAtNs ev))})]
-                                   (when (= res :missing-session)
-                                     (when dlq-producer
-                                       (kcommon/send-dlq!
-                                         dlq-producer
-                                         dlq-topic
-                                         (.getSessionId ev)
-                                         (record->dlq-payload rec ev "missing_session"))))
-                                   (conj! processed rec)))
-                               (catch Throwable t
-                                 (log/error t "Failed to persist final transcript" {:topic (.topic rec)
-                                                                                    :partition (.partition rec)
-                                                                                    :offset (.offset rec)}))))
-                           (let [processed (persistent! processed)]
-                             (commit! processed)))))
-                     (catch InterruptedException _
-                       (log/info "Final worker interrupted"))
-                     (catch Throwable t
-                       (log/error t "Final worker crashed"))
-                     (finally
-                       (when dlq-producer
-                         (try (.close dlq-producer) (catch Throwable _)))
-                       (log/info "Final worker stopped")))))]
+                (fn []
+                  (log/info "Final worker started")
+                  (try
+                    (while (not @stop?)
+                      (let [batch-size 20
+                            first-rec (loop/take! q)
+                            recs (transient [first-rec])]
+                        (loop [i 1]
+                          (when (< i batch-size)
+                            (when-let [r (loop/poll! q 10)]
+                              (conj! recs r)
+                              (recur (inc i)))))
+                        (let [records (persistent! recs)
+                              processed (transient [])]
+                          (doseq [^ConsumerRecord rec records]
+                            (try
+                              (tp/with-record-trace rec
+                                (let [ev (parse-final (.value rec))
+                                      res (persist/insert-final!
+                                           (:ds db)
+                                           ev
+                                           {:source "finalizer_worker"
+                                            :model "whisperx"
+                                            :event-created-at-ns (when (pos? (.getCreatedAtNs ev))
+                                                                   (.getCreatedAtNs ev))})]
+                                  (when (= res :missing-session)
+                                    (when dlq-producer
+                                      (kcommon/send-dlq!
+                                       dlq-producer
+                                       dlq-topic
+                                       (.getSessionId ev)
+                                       (record->dlq-payload rec ev "missing_session"))))
+                                  (conj! processed rec)))
+                              (catch Throwable t
+                                (log/error t "Failed to persist final transcript" {:topic (.topic rec)
+                                                                                   :partition (.partition rec)
+                                                                                   :offset (.offset rec)}))))
+                          (let [processed (persistent! processed)]
+                            (commit! processed)))))
+                    (catch InterruptedException _
+                      (log/info "Final worker interrupted"))
+                    (catch Throwable t
+                      (log/error t "Final worker crashed"))
+                    (finally
+                      (when dlq-producer
+                        (try (.close dlq-producer) (catch Throwable _)))
+                      (log/info "Final worker stopped")))))]
     (.setName thread "final-worker")
     (.setDaemon thread true)
     (.start thread)
@@ -103,23 +104,26 @@
 
 (defmethod ig/init-key :samuraipersistor/final-consumer
   [_ {:keys [config db]}]
-  (let [kcfg (get config :kafka)
-        topic (get-in kcfg [:topics :final])
-        dlq-topic (get-in kcfg [:topics :dlq])
-        consumer (loop/start-consumer-loop!
-                   {:consumer-config (consumer-config kcfg)
-                    :topic topic
-                    :buffer-size (or (:final-buffer-size kcfg) 200)
-                    :name "final"})
-        worker (start-worker! {:queue (:queue consumer)
-                               :commit! (:commit! consumer)
-                               :db db
-                               :dlq-topic dlq-topic
-                               :kafka-config kcfg})]
-    {:consumer consumer
-     :worker worker}))
+  (if (true? (get-in config [:kafka :final-tracks-enabled?]))
+    {:track-consumer (final-tracks/start! (:kafka config) db true)}
+    (let [kcfg (get config :kafka)
+          topic (get-in kcfg [:topics :final])
+          dlq-topic (get-in kcfg [:topics :dlq])
+          consumer (loop/start-consumer-loop!
+                    {:consumer-config (consumer-config kcfg)
+                     :topic topic
+                     :buffer-size (or (:final-buffer-size kcfg) 200)
+                     :name "final"})
+          worker (start-worker! {:queue (:queue consumer)
+                                 :commit! (:commit! consumer)
+                                 :db db
+                                 :dlq-topic dlq-topic
+                                 :kafka-config kcfg})]
+      {:consumer consumer
+       :worker worker})))
 
 (defmethod ig/halt-key! :samuraipersistor/final-consumer
-  [_ {:keys [consumer worker]}]
+  [_ {:keys [consumer worker track-consumer]}]
+  (when-let [stop! (:stop! track-consumer)] (stop!))
   (when-let [stop! (get-in worker [:stop!])] (stop!))
   (when-let [stop! (get-in consumer [:stop!])] (stop!)))

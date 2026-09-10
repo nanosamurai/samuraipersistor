@@ -56,7 +56,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -73,7 +73,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -98,7 +98,7 @@ private static final long serialVersionUID = 0L;
    * incremental per session
    * </pre>
    *
-   * <code>uint64 seq = 2;</code>
+   * <code>uint64 seq = 2 [json_name = "seq"];</code>
    * @return The seq.
    */
   @java.lang.Override
@@ -113,7 +113,7 @@ private static final long serialVersionUID = 0L;
    * producer monotonic timestamp OR sample time
    * </pre>
    *
-   * <code>int64 t0_ns = 3;</code>
+   * <code>int64 t0_ns = 3 [json_name = "t0Ns"];</code>
    * @return The t0Ns.
    */
   @java.lang.Override
@@ -128,7 +128,7 @@ private static final long serialVersionUID = 0L;
    * 16000
    * </pre>
    *
-   * <code>uint32 sample_rate = 4;</code>
+   * <code>uint32 sample_rate = 4 [json_name = "sampleRate"];</code>
    * @return The sampleRate.
    */
   @java.lang.Override
@@ -143,7 +143,7 @@ private static final long serialVersionUID = 0L;
    * little-endian PCM16 mono
    * </pre>
    *
-   * <code>bytes pcm16_le = 5;</code>
+   * <code>bytes pcm16_le = 5 [json_name = "pcm16Le"];</code>
    * @return The pcm16Le.
    */
   @java.lang.Override
@@ -155,7 +155,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object lang_ = "";
   /**
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -172,7 +172,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -201,7 +201,7 @@ private static final long serialVersionUID = 0L;
    * Example: "http://bff-1.internal:8000".
    * </pre>
    *
-   * <code>string bff_origin_uri = 7;</code>
+   * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
    * @return The bffOriginUri.
    */
   @java.lang.Override
@@ -225,7 +225,7 @@ private static final long serialVersionUID = 0L;
    * Example: "http://bff-1.internal:8000".
    * </pre>
    *
-   * <code>string bff_origin_uri = 7;</code>
+   * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
    * @return The bytes for bffOriginUri.
    */
   @java.lang.Override
@@ -251,7 +251,7 @@ private static final long serialVersionUID = 0L;
    * Tenant id for routing/isolation.
    * </pre>
    *
-   * <code>string tenant_id = 8;</code>
+   * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
    * @return The tenantId.
    */
   @java.lang.Override
@@ -272,7 +272,7 @@ private static final long serialVersionUID = 0L;
    * Tenant id for routing/isolation.
    * </pre>
    *
-   * <code>string tenant_id = 8;</code>
+   * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
    * @return The bytes for tenantId.
    */
   @java.lang.Override
@@ -756,7 +756,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -772,7 +772,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -789,7 +789,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -802,7 +802,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -812,7 +812,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -832,7 +832,7 @@ private static final long serialVersionUID = 0L;
      * incremental per session
      * </pre>
      *
-     * <code>uint64 seq = 2;</code>
+     * <code>uint64 seq = 2 [json_name = "seq"];</code>
      * @return The seq.
      */
     @java.lang.Override
@@ -844,7 +844,7 @@ private static final long serialVersionUID = 0L;
      * incremental per session
      * </pre>
      *
-     * <code>uint64 seq = 2;</code>
+     * <code>uint64 seq = 2 [json_name = "seq"];</code>
      * @param value The seq to set.
      * @return This builder for chaining.
      */
@@ -860,7 +860,7 @@ private static final long serialVersionUID = 0L;
      * incremental per session
      * </pre>
      *
-     * <code>uint64 seq = 2;</code>
+     * <code>uint64 seq = 2 [json_name = "seq"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSeq() {
@@ -876,7 +876,7 @@ private static final long serialVersionUID = 0L;
      * producer monotonic timestamp OR sample time
      * </pre>
      *
-     * <code>int64 t0_ns = 3;</code>
+     * <code>int64 t0_ns = 3 [json_name = "t0Ns"];</code>
      * @return The t0Ns.
      */
     @java.lang.Override
@@ -888,7 +888,7 @@ private static final long serialVersionUID = 0L;
      * producer monotonic timestamp OR sample time
      * </pre>
      *
-     * <code>int64 t0_ns = 3;</code>
+     * <code>int64 t0_ns = 3 [json_name = "t0Ns"];</code>
      * @param value The t0Ns to set.
      * @return This builder for chaining.
      */
@@ -904,7 +904,7 @@ private static final long serialVersionUID = 0L;
      * producer monotonic timestamp OR sample time
      * </pre>
      *
-     * <code>int64 t0_ns = 3;</code>
+     * <code>int64 t0_ns = 3 [json_name = "t0Ns"];</code>
      * @return This builder for chaining.
      */
     public Builder clearT0Ns() {
@@ -920,7 +920,7 @@ private static final long serialVersionUID = 0L;
      * 16000
      * </pre>
      *
-     * <code>uint32 sample_rate = 4;</code>
+     * <code>uint32 sample_rate = 4 [json_name = "sampleRate"];</code>
      * @return The sampleRate.
      */
     @java.lang.Override
@@ -932,7 +932,7 @@ private static final long serialVersionUID = 0L;
      * 16000
      * </pre>
      *
-     * <code>uint32 sample_rate = 4;</code>
+     * <code>uint32 sample_rate = 4 [json_name = "sampleRate"];</code>
      * @param value The sampleRate to set.
      * @return This builder for chaining.
      */
@@ -948,7 +948,7 @@ private static final long serialVersionUID = 0L;
      * 16000
      * </pre>
      *
-     * <code>uint32 sample_rate = 4;</code>
+     * <code>uint32 sample_rate = 4 [json_name = "sampleRate"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSampleRate() {
@@ -964,7 +964,7 @@ private static final long serialVersionUID = 0L;
      * little-endian PCM16 mono
      * </pre>
      *
-     * <code>bytes pcm16_le = 5;</code>
+     * <code>bytes pcm16_le = 5 [json_name = "pcm16Le"];</code>
      * @return The pcm16Le.
      */
     @java.lang.Override
@@ -976,7 +976,7 @@ private static final long serialVersionUID = 0L;
      * little-endian PCM16 mono
      * </pre>
      *
-     * <code>bytes pcm16_le = 5;</code>
+     * <code>bytes pcm16_le = 5 [json_name = "pcm16Le"];</code>
      * @param value The pcm16Le to set.
      * @return This builder for chaining.
      */
@@ -992,7 +992,7 @@ private static final long serialVersionUID = 0L;
      * little-endian PCM16 mono
      * </pre>
      *
-     * <code>bytes pcm16_le = 5;</code>
+     * <code>bytes pcm16_le = 5 [json_name = "pcm16Le"];</code>
      * @return This builder for chaining.
      */
     public Builder clearPcm16Le() {
@@ -1004,7 +1004,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object lang_ = "";
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -1020,7 +1020,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -1037,7 +1037,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -1050,7 +1050,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -1060,7 +1060,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1083,7 +1083,7 @@ private static final long serialVersionUID = 0L;
      * Example: "http://bff-1.internal:8000".
      * </pre>
      *
-     * <code>string bff_origin_uri = 7;</code>
+     * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
      * @return The bffOriginUri.
      */
     public java.lang.String getBffOriginUri() {
@@ -1106,7 +1106,7 @@ private static final long serialVersionUID = 0L;
      * Example: "http://bff-1.internal:8000".
      * </pre>
      *
-     * <code>string bff_origin_uri = 7;</code>
+     * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
      * @return The bytes for bffOriginUri.
      */
     public com.google.protobuf.ByteString
@@ -1130,7 +1130,7 @@ private static final long serialVersionUID = 0L;
      * Example: "http://bff-1.internal:8000".
      * </pre>
      *
-     * <code>string bff_origin_uri = 7;</code>
+     * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
      * @param value The bffOriginUri to set.
      * @return This builder for chaining.
      */
@@ -1150,7 +1150,7 @@ private static final long serialVersionUID = 0L;
      * Example: "http://bff-1.internal:8000".
      * </pre>
      *
-     * <code>string bff_origin_uri = 7;</code>
+     * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
      * @return This builder for chaining.
      */
     public Builder clearBffOriginUri() {
@@ -1167,7 +1167,7 @@ private static final long serialVersionUID = 0L;
      * Example: "http://bff-1.internal:8000".
      * </pre>
      *
-     * <code>string bff_origin_uri = 7;</code>
+     * <code>string bff_origin_uri = 7 [json_name = "bffOriginUri"];</code>
      * @param value The bytes for bffOriginUri to set.
      * @return This builder for chaining.
      */
@@ -1187,7 +1187,7 @@ private static final long serialVersionUID = 0L;
      * Tenant id for routing/isolation.
      * </pre>
      *
-     * <code>string tenant_id = 8;</code>
+     * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
      * @return The tenantId.
      */
     public java.lang.String getTenantId() {
@@ -1207,7 +1207,7 @@ private static final long serialVersionUID = 0L;
      * Tenant id for routing/isolation.
      * </pre>
      *
-     * <code>string tenant_id = 8;</code>
+     * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
      * @return The bytes for tenantId.
      */
     public com.google.protobuf.ByteString
@@ -1228,7 +1228,7 @@ private static final long serialVersionUID = 0L;
      * Tenant id for routing/isolation.
      * </pre>
      *
-     * <code>string tenant_id = 8;</code>
+     * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
      * @param value The tenantId to set.
      * @return This builder for chaining.
      */
@@ -1245,7 +1245,7 @@ private static final long serialVersionUID = 0L;
      * Tenant id for routing/isolation.
      * </pre>
      *
-     * <code>string tenant_id = 8;</code>
+     * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
      * @return This builder for chaining.
      */
     public Builder clearTenantId() {
@@ -1259,7 +1259,7 @@ private static final long serialVersionUID = 0L;
      * Tenant id for routing/isolation.
      * </pre>
      *
-     * <code>string tenant_id = 8;</code>
+     * <code>string tenant_id = 8 [json_name = "tenantId"];</code>
      * @param value The bytes for tenantId to set.
      * @return This builder for chaining.
      */

@@ -19,6 +19,14 @@ public enum AsrType
    * <code>FINAL = 1;</code>
    */
   FINAL(1),
+  /**
+   * <pre>
+   * First server response. Audio must not be sent before this is received.
+   * </pre>
+   *
+   * <code>SESSION_ACCEPTED = 2;</code>
+   */
+  SESSION_ACCEPTED(2),
   UNRECOGNIZED(-1),
   ;
 
@@ -39,6 +47,14 @@ public enum AsrType
    * <code>FINAL = 1;</code>
    */
   public static final int FINAL_VALUE = 1;
+  /**
+   * <pre>
+   * First server response. Audio must not be sent before this is received.
+   * </pre>
+   *
+   * <code>SESSION_ACCEPTED = 2;</code>
+   */
+  public static final int SESSION_ACCEPTED_VALUE = 2;
 
 
   public final int getNumber() {
@@ -67,6 +83,7 @@ public enum AsrType
     switch (value) {
       case 0: return PARTIAL;
       case 1: return FINAL;
+      case 2: return SESSION_ACCEPTED;
       default: return null;
     }
   }

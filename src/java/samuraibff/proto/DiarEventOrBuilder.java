@@ -11,25 +11,25 @@ public interface DiarEventOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The sessionId.
    */
   java.lang.String getSessionId();
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The bytes for sessionId.
    */
   com.google.protobuf.ByteString
       getSessionIdBytes();
 
   /**
-   * <code>double start_s = 2;</code>
+   * <code>double start_s = 2 [json_name = "startS"];</code>
    * @return The startS.
    */
   double getStartS();
 
   /**
-   * <code>double end_s = 3;</code>
+   * <code>double end_s = 3 [json_name = "endS"];</code>
    * @return The endS.
    */
   double getEndS();
@@ -39,7 +39,7 @@ public interface DiarEventOrBuilder extends
    * "SPEAKER_00" or enrolled name
    * </pre>
    *
-   * <code>string speaker = 4;</code>
+   * <code>string speaker = 4 [json_name = "speaker"];</code>
    * @return The speaker.
    */
   java.lang.String getSpeaker();
@@ -48,7 +48,7 @@ public interface DiarEventOrBuilder extends
    * "SPEAKER_00" or enrolled name
    * </pre>
    *
-   * <code>string speaker = 4;</code>
+   * <code>string speaker = 4 [json_name = "speaker"];</code>
    * @return The bytes for speaker.
    */
   com.google.protobuf.ByteString
@@ -59,7 +59,7 @@ public interface DiarEventOrBuilder extends
    * 0..1
    * </pre>
    *
-   * <code>float confidence = 5;</code>
+   * <code>float confidence = 5 [json_name = "confidence"];</code>
    * @return The confidence.
    */
   float getConfidence();

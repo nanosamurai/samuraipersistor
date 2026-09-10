@@ -33,6 +33,8 @@ private static final long serialVersionUID = 0L;
     type_ = 0;
     lang_ = "";
     speaker_ = "";
+    providerProfileId_ = "";
+    servingInstanceId_ = "";
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -52,7 +54,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -69,7 +71,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -90,7 +92,7 @@ private static final long serialVersionUID = 0L;
   public static final int START_S_FIELD_NUMBER = 2;
   private double startS_ = 0D;
   /**
-   * <code>double start_s = 2;</code>
+   * <code>double start_s = 2 [json_name = "startS"];</code>
    * @return The startS.
    */
   @java.lang.Override
@@ -101,7 +103,7 @@ private static final long serialVersionUID = 0L;
   public static final int END_S_FIELD_NUMBER = 3;
   private double endS_ = 0D;
   /**
-   * <code>double end_s = 3;</code>
+   * <code>double end_s = 3 [json_name = "endS"];</code>
    * @return The endS.
    */
   @java.lang.Override
@@ -113,7 +115,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
   /**
-   * <code>string text = 4;</code>
+   * <code>string text = 4 [json_name = "text"];</code>
    * @return The text.
    */
   @java.lang.Override
@@ -130,7 +132,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string text = 4;</code>
+   * <code>string text = 4 [json_name = "text"];</code>
    * @return The bytes for text.
    */
   @java.lang.Override
@@ -151,14 +153,14 @@ private static final long serialVersionUID = 0L;
   public static final int TYPE_FIELD_NUMBER = 5;
   private int type_ = 0;
   /**
-   * <code>.AsrType type = 5;</code>
+   * <code>.AsrType type = 5 [json_name = "type"];</code>
    * @return The enum numeric value on the wire for type.
    */
   @java.lang.Override public int getTypeValue() {
     return type_;
   }
   /**
-   * <code>.AsrType type = 5;</code>
+   * <code>.AsrType type = 5 [json_name = "type"];</code>
    * @return The type.
    */
   @java.lang.Override public samuraibff.proto.AsrType getType() {
@@ -174,7 +176,7 @@ private static final long serialVersionUID = 0L;
    * optional (e.g., "cs")
    * </pre>
    *
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -195,7 +197,7 @@ private static final long serialVersionUID = 0L;
    * optional (e.g., "cs")
    * </pre>
    *
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -217,7 +219,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object speaker_ = "";
   /**
-   * <code>string speaker = 7;</code>
+   * <code>string speaker = 7 [json_name = "speaker"];</code>
    * @return The speaker.
    */
   @java.lang.Override
@@ -234,7 +236,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string speaker = 7;</code>
+   * <code>string speaker = 7 [json_name = "speaker"];</code>
    * @return The bytes for speaker.
    */
   @java.lang.Override
@@ -246,6 +248,92 @@ private static final long serialVersionUID = 0L;
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
       speaker_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int PROVIDER_PROFILE_ID_FIELD_NUMBER = 8;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object providerProfileId_ = "";
+  /**
+   * <code>string provider_profile_id = 8 [json_name = "providerProfileId"];</code>
+   * @return The providerProfileId.
+   */
+  @java.lang.Override
+  public java.lang.String getProviderProfileId() {
+    java.lang.Object ref = providerProfileId_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      providerProfileId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string provider_profile_id = 8 [json_name = "providerProfileId"];</code>
+   * @return The bytes for providerProfileId.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getProviderProfileIdBytes() {
+    java.lang.Object ref = providerProfileId_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      providerProfileId_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SERVING_INSTANCE_ID_FIELD_NUMBER = 9;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object servingInstanceId_ = "";
+  /**
+   * <pre>
+   * Server-generated process identity, populated only on SESSION_ACCEPTED.
+   * </pre>
+   *
+   * <code>string serving_instance_id = 9 [json_name = "servingInstanceId"];</code>
+   * @return The servingInstanceId.
+   */
+  @java.lang.Override
+  public java.lang.String getServingInstanceId() {
+    java.lang.Object ref = servingInstanceId_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      servingInstanceId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * Server-generated process identity, populated only on SESSION_ACCEPTED.
+   * </pre>
+   *
+   * <code>string serving_instance_id = 9 [json_name = "servingInstanceId"];</code>
+   * @return The bytes for servingInstanceId.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getServingInstanceIdBytes() {
+    java.lang.Object ref = servingInstanceId_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      servingInstanceId_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -287,6 +375,12 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(speaker_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 7, speaker_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(providerProfileId_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 8, providerProfileId_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(servingInstanceId_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 9, servingInstanceId_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -320,6 +414,12 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(speaker_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(7, speaker_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(providerProfileId_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(8, providerProfileId_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(servingInstanceId_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(9, servingInstanceId_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -350,6 +450,10 @@ private static final long serialVersionUID = 0L;
         .equals(other.getLang())) return false;
     if (!getSpeaker()
         .equals(other.getSpeaker())) return false;
+    if (!getProviderProfileId()
+        .equals(other.getProviderProfileId())) return false;
+    if (!getServingInstanceId()
+        .equals(other.getServingInstanceId())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -377,6 +481,10 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getLang().hashCode();
     hash = (37 * hash) + SPEAKER_FIELD_NUMBER;
     hash = (53 * hash) + getSpeaker().hashCode();
+    hash = (37 * hash) + PROVIDER_PROFILE_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getProviderProfileId().hashCode();
+    hash = (37 * hash) + SERVING_INSTANCE_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getServingInstanceId().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -515,6 +623,8 @@ private static final long serialVersionUID = 0L;
       type_ = 0;
       lang_ = "";
       speaker_ = "";
+      providerProfileId_ = "";
+      servingInstanceId_ = "";
       return this;
     }
 
@@ -569,6 +679,12 @@ private static final long serialVersionUID = 0L;
       if (((from_bitField0_ & 0x00000040) != 0)) {
         result.speaker_ = speaker_;
       }
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.providerProfileId_ = providerProfileId_;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.servingInstanceId_ = servingInstanceId_;
+      }
     }
 
     @java.lang.Override
@@ -610,6 +726,16 @@ private static final long serialVersionUID = 0L;
       if (!other.getSpeaker().isEmpty()) {
         speaker_ = other.speaker_;
         bitField0_ |= 0x00000040;
+        onChanged();
+      }
+      if (!other.getProviderProfileId().isEmpty()) {
+        providerProfileId_ = other.providerProfileId_;
+        bitField0_ |= 0x00000080;
+        onChanged();
+      }
+      if (!other.getServingInstanceId().isEmpty()) {
+        servingInstanceId_ = other.servingInstanceId_;
+        bitField0_ |= 0x00000100;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -673,6 +799,16 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000040;
               break;
             } // case 58
+            case 66: {
+              providerProfileId_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000080;
+              break;
+            } // case 66
+            case 74: {
+              servingInstanceId_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000100;
+              break;
+            } // case 74
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -692,7 +828,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -708,7 +844,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -725,7 +861,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -738,7 +874,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -748,7 +884,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -764,7 +900,7 @@ private static final long serialVersionUID = 0L;
 
     private double startS_ ;
     /**
-     * <code>double start_s = 2;</code>
+     * <code>double start_s = 2 [json_name = "startS"];</code>
      * @return The startS.
      */
     @java.lang.Override
@@ -772,7 +908,7 @@ private static final long serialVersionUID = 0L;
       return startS_;
     }
     /**
-     * <code>double start_s = 2;</code>
+     * <code>double start_s = 2 [json_name = "startS"];</code>
      * @param value The startS to set.
      * @return This builder for chaining.
      */
@@ -784,7 +920,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double start_s = 2;</code>
+     * <code>double start_s = 2 [json_name = "startS"];</code>
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
@@ -796,7 +932,7 @@ private static final long serialVersionUID = 0L;
 
     private double endS_ ;
     /**
-     * <code>double end_s = 3;</code>
+     * <code>double end_s = 3 [json_name = "endS"];</code>
      * @return The endS.
      */
     @java.lang.Override
@@ -804,7 +940,7 @@ private static final long serialVersionUID = 0L;
       return endS_;
     }
     /**
-     * <code>double end_s = 3;</code>
+     * <code>double end_s = 3 [json_name = "endS"];</code>
      * @param value The endS to set.
      * @return This builder for chaining.
      */
@@ -816,7 +952,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double end_s = 3;</code>
+     * <code>double end_s = 3 [json_name = "endS"];</code>
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
@@ -828,7 +964,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object text_ = "";
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @return The text.
      */
     public java.lang.String getText() {
@@ -844,7 +980,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @return The bytes for text.
      */
     public com.google.protobuf.ByteString
@@ -861,7 +997,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @param value The text to set.
      * @return This builder for chaining.
      */
@@ -874,7 +1010,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @return This builder for chaining.
      */
     public Builder clearText() {
@@ -884,7 +1020,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @param value The bytes for text to set.
      * @return This builder for chaining.
      */
@@ -900,14 +1036,14 @@ private static final long serialVersionUID = 0L;
 
     private int type_ = 0;
     /**
-     * <code>.AsrType type = 5;</code>
+     * <code>.AsrType type = 5 [json_name = "type"];</code>
      * @return The enum numeric value on the wire for type.
      */
     @java.lang.Override public int getTypeValue() {
       return type_;
     }
     /**
-     * <code>.AsrType type = 5;</code>
+     * <code>.AsrType type = 5 [json_name = "type"];</code>
      * @param value The enum numeric value on the wire for type to set.
      * @return This builder for chaining.
      */
@@ -918,7 +1054,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.AsrType type = 5;</code>
+     * <code>.AsrType type = 5 [json_name = "type"];</code>
      * @return The type.
      */
     @java.lang.Override
@@ -927,7 +1063,7 @@ private static final long serialVersionUID = 0L;
       return result == null ? samuraibff.proto.AsrType.UNRECOGNIZED : result;
     }
     /**
-     * <code>.AsrType type = 5;</code>
+     * <code>.AsrType type = 5 [json_name = "type"];</code>
      * @param value The type to set.
      * @return This builder for chaining.
      */
@@ -939,7 +1075,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.AsrType type = 5;</code>
+     * <code>.AsrType type = 5 [json_name = "type"];</code>
      * @return This builder for chaining.
      */
     public Builder clearType() {
@@ -955,7 +1091,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -975,7 +1111,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -996,7 +1132,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -1013,7 +1149,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -1027,7 +1163,7 @@ private static final long serialVersionUID = 0L;
      * optional (e.g., "cs")
      * </pre>
      *
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1043,7 +1179,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object speaker_ = "";
     /**
-     * <code>string speaker = 7;</code>
+     * <code>string speaker = 7 [json_name = "speaker"];</code>
      * @return The speaker.
      */
     public java.lang.String getSpeaker() {
@@ -1059,7 +1195,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string speaker = 7;</code>
+     * <code>string speaker = 7 [json_name = "speaker"];</code>
      * @return The bytes for speaker.
      */
     public com.google.protobuf.ByteString
@@ -1076,7 +1212,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string speaker = 7;</code>
+     * <code>string speaker = 7 [json_name = "speaker"];</code>
      * @param value The speaker to set.
      * @return This builder for chaining.
      */
@@ -1089,7 +1225,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string speaker = 7;</code>
+     * <code>string speaker = 7 [json_name = "speaker"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSpeaker() {
@@ -1099,7 +1235,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string speaker = 7;</code>
+     * <code>string speaker = 7 [json_name = "speaker"];</code>
      * @param value The bytes for speaker to set.
      * @return This builder for chaining.
      */
@@ -1109,6 +1245,170 @@ private static final long serialVersionUID = 0L;
       checkByteStringIsUtf8(value);
       speaker_ = value;
       bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object providerProfileId_ = "";
+    /**
+     * <code>string provider_profile_id = 8 [json_name = "providerProfileId"];</code>
+     * @return The providerProfileId.
+     */
+    public java.lang.String getProviderProfileId() {
+      java.lang.Object ref = providerProfileId_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        providerProfileId_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string provider_profile_id = 8 [json_name = "providerProfileId"];</code>
+     * @return The bytes for providerProfileId.
+     */
+    public com.google.protobuf.ByteString
+        getProviderProfileIdBytes() {
+      java.lang.Object ref = providerProfileId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        providerProfileId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string provider_profile_id = 8 [json_name = "providerProfileId"];</code>
+     * @param value The providerProfileId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setProviderProfileId(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      providerProfileId_ = value;
+      bitField0_ |= 0x00000080;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string provider_profile_id = 8 [json_name = "providerProfileId"];</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearProviderProfileId() {
+      providerProfileId_ = getDefaultInstance().getProviderProfileId();
+      bitField0_ = (bitField0_ & ~0x00000080);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string provider_profile_id = 8 [json_name = "providerProfileId"];</code>
+     * @param value The bytes for providerProfileId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setProviderProfileIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      providerProfileId_ = value;
+      bitField0_ |= 0x00000080;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object servingInstanceId_ = "";
+    /**
+     * <pre>
+     * Server-generated process identity, populated only on SESSION_ACCEPTED.
+     * </pre>
+     *
+     * <code>string serving_instance_id = 9 [json_name = "servingInstanceId"];</code>
+     * @return The servingInstanceId.
+     */
+    public java.lang.String getServingInstanceId() {
+      java.lang.Object ref = servingInstanceId_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        servingInstanceId_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Server-generated process identity, populated only on SESSION_ACCEPTED.
+     * </pre>
+     *
+     * <code>string serving_instance_id = 9 [json_name = "servingInstanceId"];</code>
+     * @return The bytes for servingInstanceId.
+     */
+    public com.google.protobuf.ByteString
+        getServingInstanceIdBytes() {
+      java.lang.Object ref = servingInstanceId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        servingInstanceId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Server-generated process identity, populated only on SESSION_ACCEPTED.
+     * </pre>
+     *
+     * <code>string serving_instance_id = 9 [json_name = "servingInstanceId"];</code>
+     * @param value The servingInstanceId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setServingInstanceId(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      servingInstanceId_ = value;
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Server-generated process identity, populated only on SESSION_ACCEPTED.
+     * </pre>
+     *
+     * <code>string serving_instance_id = 9 [json_name = "servingInstanceId"];</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearServingInstanceId() {
+      servingInstanceId_ = getDefaultInstance().getServingInstanceId();
+      bitField0_ = (bitField0_ & ~0x00000100);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Server-generated process identity, populated only on SESSION_ACCEPTED.
+     * </pre>
+     *
+     * <code>string serving_instance_id = 9 [json_name = "servingInstanceId"];</code>
+     * @param value The bytes for servingInstanceId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setServingInstanceIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      servingInstanceId_ = value;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }

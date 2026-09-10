@@ -11,24 +11,24 @@ public interface SessionTranscriptSegmentOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>double start_s = 1;</code>
+   * <code>double start_s = 1 [json_name = "startS"];</code>
    * @return The startS.
    */
   double getStartS();
 
   /**
-   * <code>double end_s = 2;</code>
+   * <code>double end_s = 2 [json_name = "endS"];</code>
    * @return The endS.
    */
   double getEndS();
 
   /**
-   * <code>string text = 3;</code>
+   * <code>string text = 3 [json_name = "text"];</code>
    * @return The text.
    */
   java.lang.String getText();
   /**
-   * <code>string text = 3;</code>
+   * <code>string text = 3 [json_name = "text"];</code>
    * @return The bytes for text.
    */
   com.google.protobuf.ByteString
@@ -39,7 +39,7 @@ public interface SessionTranscriptSegmentOrBuilder extends
    * optional, "" if unknown
    * </pre>
    *
-   * <code>string speaker = 4;</code>
+   * <code>string speaker = 4 [json_name = "speaker"];</code>
    * @return The speaker.
    */
   java.lang.String getSpeaker();
@@ -48,7 +48,7 @@ public interface SessionTranscriptSegmentOrBuilder extends
    * optional, "" if unknown
    * </pre>
    *
-   * <code>string speaker = 4;</code>
+   * <code>string speaker = 4 [json_name = "speaker"];</code>
    * @return The bytes for speaker.
    */
   com.google.protobuf.ByteString
@@ -56,54 +56,49 @@ public interface SessionTranscriptSegmentOrBuilder extends
 
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   java.util.List<samuraibff.proto.WordAlignment> 
       getWordsList();
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   samuraibff.proto.WordAlignment getWords(int index);
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   int getWordsCount();
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
       getWordsOrBuilderList();
   /**
    * <pre>
-   * Optional word-level alignment details as produced by the xamurai finalizer.
-   * If absent (older producers) or empty, consumers should treat the segment as
-   * having no word-level timing information.
+   * Optional word-level timing (requires WhisperX alignment).
+   * When present, words are relative to the recording start (absolute within session).
    * </pre>
    *
-   * <code>repeated .WordAlignment words = 5;</code>
+   * <code>repeated .WordAlignment words = 5 [json_name = "words"];</code>
    */
   samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
       int index);

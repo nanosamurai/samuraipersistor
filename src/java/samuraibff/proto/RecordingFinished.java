@@ -51,11 +51,12 @@ private static final long serialVersionUID = 0L;
             samuraibff.proto.RecordingFinished.class, samuraibff.proto.RecordingFinished.Builder.class);
   }
 
+  private int bitField0_;
   public static final int SESSION_ID_FIELD_NUMBER = 1;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -72,7 +73,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -98,7 +99,7 @@ private static final long serialVersionUID = 0L;
    * e.g. file://..., s3://...
    * </pre>
    *
-   * <code>string recording_url = 2;</code>
+   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
    * @return The recordingUrl.
    */
   @java.lang.Override
@@ -119,7 +120,7 @@ private static final long serialVersionUID = 0L;
    * e.g. file://..., s3://...
    * </pre>
    *
-   * <code>string recording_url = 2;</code>
+   * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
    * @return The bytes for recordingUrl.
    */
   @java.lang.Override
@@ -140,7 +141,7 @@ private static final long serialVersionUID = 0L;
   public static final int DURATION_S_FIELD_NUMBER = 3;
   private double durationS_ = 0D;
   /**
-   * <code>double duration_s = 3;</code>
+   * <code>double duration_s = 3 [json_name = "durationS"];</code>
    * @return The durationS.
    */
   @java.lang.Override
@@ -151,7 +152,7 @@ private static final long serialVersionUID = 0L;
   public static final int SAMPLE_RATE_FIELD_NUMBER = 4;
   private int sampleRate_ = 0;
   /**
-   * <code>int32 sample_rate = 4;</code>
+   * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
    * @return The sampleRate.
    */
   @java.lang.Override
@@ -163,7 +164,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object lang_ = "";
   /**
-   * <code>string lang = 5;</code>
+   * <code>string lang = 5 [json_name = "lang"];</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -180,7 +181,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string lang = 5;</code>
+   * <code>string lang = 5 [json_name = "lang"];</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -206,7 +207,7 @@ private static final long serialVersionUID = 0L;
    * optional tenant/client label for downstream routing
    * </pre>
    *
-   * <code>string tenant_id = 6;</code>
+   * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
    * @return The tenantId.
    */
   @java.lang.Override
@@ -227,7 +228,7 @@ private static final long serialVersionUID = 0L;
    * optional tenant/client label for downstream routing
    * </pre>
    *
-   * <code>string tenant_id = 6;</code>
+   * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
    * @return The bytes for tenantId.
    */
   @java.lang.Override
@@ -252,12 +253,76 @@ private static final long serialVersionUID = 0L;
    * when this event was created
    * </pre>
    *
-   * <code>int64 created_at_ns = 7;</code>
+   * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
    * @return The createdAtNs.
    */
   @java.lang.Override
   public long getCreatedAtNs() {
     return createdAtNs_;
+  }
+
+  public static final int SOURCE_FIELD_NUMBER = 8;
+  private samuraibff.proto.AudioArtifact source_;
+  /**
+   * <pre>
+   * Additive final-track contract. Absent on legacy recordings.
+   * </pre>
+   *
+   * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+   * @return Whether the source field is set.
+   */
+  @java.lang.Override
+  public boolean hasSource() {
+    return ((bitField0_ & 0x00000001) != 0);
+  }
+  /**
+   * <pre>
+   * Additive final-track contract. Absent on legacy recordings.
+   * </pre>
+   *
+   * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+   * @return The source.
+   */
+  @java.lang.Override
+  public samuraibff.proto.AudioArtifact getSource() {
+    return source_ == null ? samuraibff.proto.AudioArtifact.getDefaultInstance() : source_;
+  }
+  /**
+   * <pre>
+   * Additive final-track contract. Absent on legacy recordings.
+   * </pre>
+   *
+   * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.AudioArtifactOrBuilder getSourceOrBuilder() {
+    return source_ == null ? samuraibff.proto.AudioArtifact.getDefaultInstance() : source_;
+  }
+
+  public static final int FINAL_PLAN_FIELD_NUMBER = 9;
+  private samuraibff.proto.AsyncTrackPlan finalPlan_;
+  /**
+   * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+   * @return Whether the finalPlan field is set.
+   */
+  @java.lang.Override
+  public boolean hasFinalPlan() {
+    return ((bitField0_ & 0x00000002) != 0);
+  }
+  /**
+   * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+   * @return The finalPlan.
+   */
+  @java.lang.Override
+  public samuraibff.proto.AsyncTrackPlan getFinalPlan() {
+    return finalPlan_ == null ? samuraibff.proto.AsyncTrackPlan.getDefaultInstance() : finalPlan_;
+  }
+  /**
+   * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.AsyncTrackPlanOrBuilder getFinalPlanOrBuilder() {
+    return finalPlan_ == null ? samuraibff.proto.AsyncTrackPlan.getDefaultInstance() : finalPlan_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -295,6 +360,12 @@ private static final long serialVersionUID = 0L;
     if (createdAtNs_ != 0L) {
       output.writeInt64(7, createdAtNs_);
     }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      output.writeMessage(8, getSource());
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      output.writeMessage(9, getFinalPlan());
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -328,6 +399,14 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt64Size(7, createdAtNs_);
     }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(8, getSource());
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(9, getFinalPlan());
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -358,6 +437,16 @@ private static final long serialVersionUID = 0L;
         .equals(other.getTenantId())) return false;
     if (getCreatedAtNs()
         != other.getCreatedAtNs()) return false;
+    if (hasSource() != other.hasSource()) return false;
+    if (hasSource()) {
+      if (!getSource()
+          .equals(other.getSource())) return false;
+    }
+    if (hasFinalPlan() != other.hasFinalPlan()) return false;
+    if (hasFinalPlan()) {
+      if (!getFinalPlan()
+          .equals(other.getFinalPlan())) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -385,6 +474,14 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + CREATED_AT_NS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getCreatedAtNs());
+    if (hasSource()) {
+      hash = (37 * hash) + SOURCE_FIELD_NUMBER;
+      hash = (53 * hash) + getSource().hashCode();
+    }
+    if (hasFinalPlan()) {
+      hash = (37 * hash) + FINAL_PLAN_FIELD_NUMBER;
+      hash = (53 * hash) + getFinalPlan().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -508,13 +605,20 @@ private static final long serialVersionUID = 0L;
 
     // Construct using samuraibff.proto.RecordingFinished.newBuilder()
     private Builder() {
-
+      maybeForceBuilderInitialization();
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       super(parent);
-
+      maybeForceBuilderInitialization();
+    }
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessage
+              .alwaysUseFieldBuilders) {
+        internalGetSourceFieldBuilder();
+        internalGetFinalPlanFieldBuilder();
+      }
     }
     @java.lang.Override
     public Builder clear() {
@@ -527,6 +631,16 @@ private static final long serialVersionUID = 0L;
       lang_ = "";
       tenantId_ = "";
       createdAtNs_ = 0L;
+      source_ = null;
+      if (sourceBuilder_ != null) {
+        sourceBuilder_.dispose();
+        sourceBuilder_ = null;
+      }
+      finalPlan_ = null;
+      if (finalPlanBuilder_ != null) {
+        finalPlanBuilder_.dispose();
+        finalPlanBuilder_ = null;
+      }
       return this;
     }
 
@@ -581,6 +695,20 @@ private static final long serialVersionUID = 0L;
       if (((from_bitField0_ & 0x00000040) != 0)) {
         result.createdAtNs_ = createdAtNs_;
       }
+      int to_bitField0_ = 0;
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.source_ = sourceBuilder_ == null
+            ? source_
+            : sourceBuilder_.build();
+        to_bitField0_ |= 0x00000001;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.finalPlan_ = finalPlanBuilder_ == null
+            ? finalPlan_
+            : finalPlanBuilder_.build();
+        to_bitField0_ |= 0x00000002;
+      }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -623,6 +751,12 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getCreatedAtNs() != 0L) {
         setCreatedAtNs(other.getCreatedAtNs());
+      }
+      if (other.hasSource()) {
+        mergeSource(other.getSource());
+      }
+      if (other.hasFinalPlan()) {
+        mergeFinalPlan(other.getFinalPlan());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -685,6 +819,20 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000040;
               break;
             } // case 56
+            case 66: {
+              input.readMessage(
+                  internalGetSourceFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              bitField0_ |= 0x00000080;
+              break;
+            } // case 66
+            case 74: {
+              input.readMessage(
+                  internalGetFinalPlanFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              bitField0_ |= 0x00000100;
+              break;
+            } // case 74
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -704,7 +852,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -720,7 +868,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -737,7 +885,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -750,7 +898,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -760,7 +908,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -780,7 +928,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2;</code>
+     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
      * @return The recordingUrl.
      */
     public java.lang.String getRecordingUrl() {
@@ -800,7 +948,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2;</code>
+     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
      * @return The bytes for recordingUrl.
      */
     public com.google.protobuf.ByteString
@@ -821,7 +969,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2;</code>
+     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
      * @param value The recordingUrl to set.
      * @return This builder for chaining.
      */
@@ -838,7 +986,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2;</code>
+     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
      * @return This builder for chaining.
      */
     public Builder clearRecordingUrl() {
@@ -852,7 +1000,7 @@ private static final long serialVersionUID = 0L;
      * e.g. file://..., s3://...
      * </pre>
      *
-     * <code>string recording_url = 2;</code>
+     * <code>string recording_url = 2 [json_name = "recordingUrl"];</code>
      * @param value The bytes for recordingUrl to set.
      * @return This builder for chaining.
      */
@@ -868,7 +1016,7 @@ private static final long serialVersionUID = 0L;
 
     private double durationS_ ;
     /**
-     * <code>double duration_s = 3;</code>
+     * <code>double duration_s = 3 [json_name = "durationS"];</code>
      * @return The durationS.
      */
     @java.lang.Override
@@ -876,7 +1024,7 @@ private static final long serialVersionUID = 0L;
       return durationS_;
     }
     /**
-     * <code>double duration_s = 3;</code>
+     * <code>double duration_s = 3 [json_name = "durationS"];</code>
      * @param value The durationS to set.
      * @return This builder for chaining.
      */
@@ -888,7 +1036,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double duration_s = 3;</code>
+     * <code>double duration_s = 3 [json_name = "durationS"];</code>
      * @return This builder for chaining.
      */
     public Builder clearDurationS() {
@@ -900,7 +1048,7 @@ private static final long serialVersionUID = 0L;
 
     private int sampleRate_ ;
     /**
-     * <code>int32 sample_rate = 4;</code>
+     * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
      * @return The sampleRate.
      */
     @java.lang.Override
@@ -908,7 +1056,7 @@ private static final long serialVersionUID = 0L;
       return sampleRate_;
     }
     /**
-     * <code>int32 sample_rate = 4;</code>
+     * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
      * @param value The sampleRate to set.
      * @return This builder for chaining.
      */
@@ -920,7 +1068,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 sample_rate = 4;</code>
+     * <code>int32 sample_rate = 4 [json_name = "sampleRate"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSampleRate() {
@@ -932,7 +1080,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object lang_ = "";
     /**
-     * <code>string lang = 5;</code>
+     * <code>string lang = 5 [json_name = "lang"];</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -948,7 +1096,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 5;</code>
+     * <code>string lang = 5 [json_name = "lang"];</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -965,7 +1113,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 5;</code>
+     * <code>string lang = 5 [json_name = "lang"];</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -978,7 +1126,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 5;</code>
+     * <code>string lang = 5 [json_name = "lang"];</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -988,7 +1136,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 5;</code>
+     * <code>string lang = 5 [json_name = "lang"];</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1008,7 +1156,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6;</code>
+     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
      * @return The tenantId.
      */
     public java.lang.String getTenantId() {
@@ -1028,7 +1176,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6;</code>
+     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
      * @return The bytes for tenantId.
      */
     public com.google.protobuf.ByteString
@@ -1049,7 +1197,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6;</code>
+     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
      * @param value The tenantId to set.
      * @return This builder for chaining.
      */
@@ -1066,7 +1214,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6;</code>
+     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
      * @return This builder for chaining.
      */
     public Builder clearTenantId() {
@@ -1080,7 +1228,7 @@ private static final long serialVersionUID = 0L;
      * optional tenant/client label for downstream routing
      * </pre>
      *
-     * <code>string tenant_id = 6;</code>
+     * <code>string tenant_id = 6 [json_name = "tenantId"];</code>
      * @param value The bytes for tenantId to set.
      * @return This builder for chaining.
      */
@@ -1100,7 +1248,7 @@ private static final long serialVersionUID = 0L;
      * when this event was created
      * </pre>
      *
-     * <code>int64 created_at_ns = 7;</code>
+     * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
      * @return The createdAtNs.
      */
     @java.lang.Override
@@ -1112,7 +1260,7 @@ private static final long serialVersionUID = 0L;
      * when this event was created
      * </pre>
      *
-     * <code>int64 created_at_ns = 7;</code>
+     * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
      * @param value The createdAtNs to set.
      * @return This builder for chaining.
      */
@@ -1128,7 +1276,7 @@ private static final long serialVersionUID = 0L;
      * when this event was created
      * </pre>
      *
-     * <code>int64 created_at_ns = 7;</code>
+     * <code>int64 created_at_ns = 7 [json_name = "createdAtNs"];</code>
      * @return This builder for chaining.
      */
     public Builder clearCreatedAtNs() {
@@ -1136,6 +1284,284 @@ private static final long serialVersionUID = 0L;
       createdAtNs_ = 0L;
       onChanged();
       return this;
+    }
+
+    private samuraibff.proto.AudioArtifact source_;
+    private com.google.protobuf.SingleFieldBuilder<
+        samuraibff.proto.AudioArtifact, samuraibff.proto.AudioArtifact.Builder, samuraibff.proto.AudioArtifactOrBuilder> sourceBuilder_;
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     * @return Whether the source field is set.
+     */
+    public boolean hasSource() {
+      return ((bitField0_ & 0x00000080) != 0);
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     * @return The source.
+     */
+    public samuraibff.proto.AudioArtifact getSource() {
+      if (sourceBuilder_ == null) {
+        return source_ == null ? samuraibff.proto.AudioArtifact.getDefaultInstance() : source_;
+      } else {
+        return sourceBuilder_.getMessage();
+      }
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     */
+    public Builder setSource(samuraibff.proto.AudioArtifact value) {
+      if (sourceBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        source_ = value;
+      } else {
+        sourceBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x00000080;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     */
+    public Builder setSource(
+        samuraibff.proto.AudioArtifact.Builder builderForValue) {
+      if (sourceBuilder_ == null) {
+        source_ = builderForValue.build();
+      } else {
+        sourceBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000080;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     */
+    public Builder mergeSource(samuraibff.proto.AudioArtifact value) {
+      if (sourceBuilder_ == null) {
+        if (((bitField0_ & 0x00000080) != 0) &&
+          source_ != null &&
+          source_ != samuraibff.proto.AudioArtifact.getDefaultInstance()) {
+          getSourceBuilder().mergeFrom(value);
+        } else {
+          source_ = value;
+        }
+      } else {
+        sourceBuilder_.mergeFrom(value);
+      }
+      if (source_ != null) {
+        bitField0_ |= 0x00000080;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     */
+    public Builder clearSource() {
+      bitField0_ = (bitField0_ & ~0x00000080);
+      source_ = null;
+      if (sourceBuilder_ != null) {
+        sourceBuilder_.dispose();
+        sourceBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     */
+    public samuraibff.proto.AudioArtifact.Builder getSourceBuilder() {
+      bitField0_ |= 0x00000080;
+      onChanged();
+      return internalGetSourceFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     */
+    public samuraibff.proto.AudioArtifactOrBuilder getSourceOrBuilder() {
+      if (sourceBuilder_ != null) {
+        return sourceBuilder_.getMessageOrBuilder();
+      } else {
+        return source_ == null ?
+            samuraibff.proto.AudioArtifact.getDefaultInstance() : source_;
+      }
+    }
+    /**
+     * <pre>
+     * Additive final-track contract. Absent on legacy recordings.
+     * </pre>
+     *
+     * <code>.AudioArtifact source = 8 [json_name = "source"];</code>
+     */
+    private com.google.protobuf.SingleFieldBuilder<
+        samuraibff.proto.AudioArtifact, samuraibff.proto.AudioArtifact.Builder, samuraibff.proto.AudioArtifactOrBuilder> 
+        internalGetSourceFieldBuilder() {
+      if (sourceBuilder_ == null) {
+        sourceBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+            samuraibff.proto.AudioArtifact, samuraibff.proto.AudioArtifact.Builder, samuraibff.proto.AudioArtifactOrBuilder>(
+                getSource(),
+                getParentForChildren(),
+                isClean());
+        source_ = null;
+      }
+      return sourceBuilder_;
+    }
+
+    private samuraibff.proto.AsyncTrackPlan finalPlan_;
+    private com.google.protobuf.SingleFieldBuilder<
+        samuraibff.proto.AsyncTrackPlan, samuraibff.proto.AsyncTrackPlan.Builder, samuraibff.proto.AsyncTrackPlanOrBuilder> finalPlanBuilder_;
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     * @return Whether the finalPlan field is set.
+     */
+    public boolean hasFinalPlan() {
+      return ((bitField0_ & 0x00000100) != 0);
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     * @return The finalPlan.
+     */
+    public samuraibff.proto.AsyncTrackPlan getFinalPlan() {
+      if (finalPlanBuilder_ == null) {
+        return finalPlan_ == null ? samuraibff.proto.AsyncTrackPlan.getDefaultInstance() : finalPlan_;
+      } else {
+        return finalPlanBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     */
+    public Builder setFinalPlan(samuraibff.proto.AsyncTrackPlan value) {
+      if (finalPlanBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        finalPlan_ = value;
+      } else {
+        finalPlanBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     */
+    public Builder setFinalPlan(
+        samuraibff.proto.AsyncTrackPlan.Builder builderForValue) {
+      if (finalPlanBuilder_ == null) {
+        finalPlan_ = builderForValue.build();
+      } else {
+        finalPlanBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     */
+    public Builder mergeFinalPlan(samuraibff.proto.AsyncTrackPlan value) {
+      if (finalPlanBuilder_ == null) {
+        if (((bitField0_ & 0x00000100) != 0) &&
+          finalPlan_ != null &&
+          finalPlan_ != samuraibff.proto.AsyncTrackPlan.getDefaultInstance()) {
+          getFinalPlanBuilder().mergeFrom(value);
+        } else {
+          finalPlan_ = value;
+        }
+      } else {
+        finalPlanBuilder_.mergeFrom(value);
+      }
+      if (finalPlan_ != null) {
+        bitField0_ |= 0x00000100;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     */
+    public Builder clearFinalPlan() {
+      bitField0_ = (bitField0_ & ~0x00000100);
+      finalPlan_ = null;
+      if (finalPlanBuilder_ != null) {
+        finalPlanBuilder_.dispose();
+        finalPlanBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     */
+    public samuraibff.proto.AsyncTrackPlan.Builder getFinalPlanBuilder() {
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return internalGetFinalPlanFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     */
+    public samuraibff.proto.AsyncTrackPlanOrBuilder getFinalPlanOrBuilder() {
+      if (finalPlanBuilder_ != null) {
+        return finalPlanBuilder_.getMessageOrBuilder();
+      } else {
+        return finalPlan_ == null ?
+            samuraibff.proto.AsyncTrackPlan.getDefaultInstance() : finalPlan_;
+      }
+    }
+    /**
+     * <code>.AsyncTrackPlan final_plan = 9 [json_name = "finalPlan"];</code>
+     */
+    private com.google.protobuf.SingleFieldBuilder<
+        samuraibff.proto.AsyncTrackPlan, samuraibff.proto.AsyncTrackPlan.Builder, samuraibff.proto.AsyncTrackPlanOrBuilder> 
+        internalGetFinalPlanFieldBuilder() {
+      if (finalPlanBuilder_ == null) {
+        finalPlanBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+            samuraibff.proto.AsyncTrackPlan, samuraibff.proto.AsyncTrackPlan.Builder, samuraibff.proto.AsyncTrackPlanOrBuilder>(
+                getFinalPlan(),
+                getParentForChildren(),
+                isClean());
+        finalPlan_ = null;
+      }
+      return finalPlanBuilder_;
     }
 
     // @@protoc_insertion_point(builder_scope:RecordingFinished)

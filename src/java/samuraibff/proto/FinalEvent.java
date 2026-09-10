@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object sessionId_ = "";
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The sessionId.
    */
   @java.lang.Override
@@ -69,7 +69,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string session_id = 1;</code>
+   * <code>string session_id = 1 [json_name = "sessionId"];</code>
    * @return The bytes for sessionId.
    */
   @java.lang.Override
@@ -90,7 +90,7 @@ private static final long serialVersionUID = 0L;
   public static final int START_S_FIELD_NUMBER = 2;
   private double startS_ = 0D;
   /**
-   * <code>double start_s = 2;</code>
+   * <code>double start_s = 2 [json_name = "startS"];</code>
    * @return The startS.
    */
   @java.lang.Override
@@ -101,7 +101,7 @@ private static final long serialVersionUID = 0L;
   public static final int END_S_FIELD_NUMBER = 3;
   private double endS_ = 0D;
   /**
-   * <code>double end_s = 3;</code>
+   * <code>double end_s = 3 [json_name = "endS"];</code>
    * @return The endS.
    */
   @java.lang.Override
@@ -113,7 +113,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object text_ = "";
   /**
-   * <code>string text = 4;</code>
+   * <code>string text = 4 [json_name = "text"];</code>
    * @return The text.
    */
   @java.lang.Override
@@ -130,7 +130,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string text = 4;</code>
+   * <code>string text = 4 [json_name = "text"];</code>
    * @return The bytes for text.
    */
   @java.lang.Override
@@ -152,7 +152,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object speaker_ = "";
   /**
-   * <code>string speaker = 5;</code>
+   * <code>string speaker = 5 [json_name = "speaker"];</code>
    * @return The speaker.
    */
   @java.lang.Override
@@ -169,7 +169,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string speaker = 5;</code>
+   * <code>string speaker = 5 [json_name = "speaker"];</code>
    * @return The bytes for speaker.
    */
   @java.lang.Override
@@ -191,7 +191,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object lang_ = "";
   /**
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The lang.
    */
   @java.lang.Override
@@ -208,7 +208,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string lang = 6;</code>
+   * <code>string lang = 6 [json_name = "lang"];</code>
    * @return The bytes for lang.
    */
   @java.lang.Override
@@ -230,14 +230,14 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private java.util.List<samuraibff.proto.WordAlignment> words_;
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   @java.lang.Override
   public java.util.List<samuraibff.proto.WordAlignment> getWordsList() {
     return words_;
   }
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   @java.lang.Override
   public java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
@@ -245,21 +245,21 @@ private static final long serialVersionUID = 0L;
     return words_;
   }
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   @java.lang.Override
   public int getWordsCount() {
     return words_.size();
   }
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   @java.lang.Override
   public samuraibff.proto.WordAlignment getWords(int index) {
     return words_.get(index);
   }
   /**
-   * <code>repeated .WordAlignment words = 7;</code>
+   * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
    */
   @java.lang.Override
   public samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
@@ -757,7 +757,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object sessionId_ = "";
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The sessionId.
      */
     public java.lang.String getSessionId() {
@@ -773,7 +773,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return The bytes for sessionId.
      */
     public com.google.protobuf.ByteString
@@ -790,7 +790,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The sessionId to set.
      * @return This builder for chaining.
      */
@@ -803,7 +803,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSessionId() {
@@ -813,7 +813,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string session_id = 1;</code>
+     * <code>string session_id = 1 [json_name = "sessionId"];</code>
      * @param value The bytes for sessionId to set.
      * @return This builder for chaining.
      */
@@ -829,7 +829,7 @@ private static final long serialVersionUID = 0L;
 
     private double startS_ ;
     /**
-     * <code>double start_s = 2;</code>
+     * <code>double start_s = 2 [json_name = "startS"];</code>
      * @return The startS.
      */
     @java.lang.Override
@@ -837,7 +837,7 @@ private static final long serialVersionUID = 0L;
       return startS_;
     }
     /**
-     * <code>double start_s = 2;</code>
+     * <code>double start_s = 2 [json_name = "startS"];</code>
      * @param value The startS to set.
      * @return This builder for chaining.
      */
@@ -849,7 +849,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double start_s = 2;</code>
+     * <code>double start_s = 2 [json_name = "startS"];</code>
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
@@ -861,7 +861,7 @@ private static final long serialVersionUID = 0L;
 
     private double endS_ ;
     /**
-     * <code>double end_s = 3;</code>
+     * <code>double end_s = 3 [json_name = "endS"];</code>
      * @return The endS.
      */
     @java.lang.Override
@@ -869,7 +869,7 @@ private static final long serialVersionUID = 0L;
       return endS_;
     }
     /**
-     * <code>double end_s = 3;</code>
+     * <code>double end_s = 3 [json_name = "endS"];</code>
      * @param value The endS to set.
      * @return This builder for chaining.
      */
@@ -881,7 +881,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double end_s = 3;</code>
+     * <code>double end_s = 3 [json_name = "endS"];</code>
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
@@ -893,7 +893,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object text_ = "";
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @return The text.
      */
     public java.lang.String getText() {
@@ -909,7 +909,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @return The bytes for text.
      */
     public com.google.protobuf.ByteString
@@ -926,7 +926,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @param value The text to set.
      * @return This builder for chaining.
      */
@@ -939,7 +939,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @return This builder for chaining.
      */
     public Builder clearText() {
@@ -949,7 +949,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string text = 4;</code>
+     * <code>string text = 4 [json_name = "text"];</code>
      * @param value The bytes for text to set.
      * @return This builder for chaining.
      */
@@ -965,7 +965,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object speaker_ = "";
     /**
-     * <code>string speaker = 5;</code>
+     * <code>string speaker = 5 [json_name = "speaker"];</code>
      * @return The speaker.
      */
     public java.lang.String getSpeaker() {
@@ -981,7 +981,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string speaker = 5;</code>
+     * <code>string speaker = 5 [json_name = "speaker"];</code>
      * @return The bytes for speaker.
      */
     public com.google.protobuf.ByteString
@@ -998,7 +998,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string speaker = 5;</code>
+     * <code>string speaker = 5 [json_name = "speaker"];</code>
      * @param value The speaker to set.
      * @return This builder for chaining.
      */
@@ -1011,7 +1011,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string speaker = 5;</code>
+     * <code>string speaker = 5 [json_name = "speaker"];</code>
      * @return This builder for chaining.
      */
     public Builder clearSpeaker() {
@@ -1021,7 +1021,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string speaker = 5;</code>
+     * <code>string speaker = 5 [json_name = "speaker"];</code>
      * @param value The bytes for speaker to set.
      * @return This builder for chaining.
      */
@@ -1037,7 +1037,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object lang_ = "";
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return The lang.
      */
     public java.lang.String getLang() {
@@ -1053,7 +1053,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return The bytes for lang.
      */
     public com.google.protobuf.ByteString
@@ -1070,7 +1070,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @param value The lang to set.
      * @return This builder for chaining.
      */
@@ -1083,7 +1083,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @return This builder for chaining.
      */
     public Builder clearLang() {
@@ -1093,7 +1093,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string lang = 6;</code>
+     * <code>string lang = 6 [json_name = "lang"];</code>
      * @param value The bytes for lang to set.
      * @return This builder for chaining.
      */
@@ -1120,7 +1120,7 @@ private static final long serialVersionUID = 0L;
         samuraibff.proto.WordAlignment, samuraibff.proto.WordAlignment.Builder, samuraibff.proto.WordAlignmentOrBuilder> wordsBuilder_;
 
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public java.util.List<samuraibff.proto.WordAlignment> getWordsList() {
       if (wordsBuilder_ == null) {
@@ -1130,7 +1130,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public int getWordsCount() {
       if (wordsBuilder_ == null) {
@@ -1140,7 +1140,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment getWords(int index) {
       if (wordsBuilder_ == null) {
@@ -1150,7 +1150,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder setWords(
         int index, samuraibff.proto.WordAlignment value) {
@@ -1167,7 +1167,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder setWords(
         int index, samuraibff.proto.WordAlignment.Builder builderForValue) {
@@ -1181,7 +1181,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder addWords(samuraibff.proto.WordAlignment value) {
       if (wordsBuilder_ == null) {
@@ -1197,7 +1197,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder addWords(
         int index, samuraibff.proto.WordAlignment value) {
@@ -1214,7 +1214,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder addWords(
         samuraibff.proto.WordAlignment.Builder builderForValue) {
@@ -1228,7 +1228,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder addWords(
         int index, samuraibff.proto.WordAlignment.Builder builderForValue) {
@@ -1242,7 +1242,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder addAllWords(
         java.lang.Iterable<? extends samuraibff.proto.WordAlignment> values) {
@@ -1257,7 +1257,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder clearWords() {
       if (wordsBuilder_ == null) {
@@ -1270,7 +1270,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public Builder removeWords(int index) {
       if (wordsBuilder_ == null) {
@@ -1283,14 +1283,14 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment.Builder getWordsBuilder(
         int index) {
       return internalGetWordsFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignmentOrBuilder getWordsOrBuilder(
         int index) {
@@ -1300,7 +1300,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public java.util.List<? extends samuraibff.proto.WordAlignmentOrBuilder> 
          getWordsOrBuilderList() {
@@ -1311,14 +1311,14 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment.Builder addWordsBuilder() {
       return internalGetWordsFieldBuilder().addBuilder(
           samuraibff.proto.WordAlignment.getDefaultInstance());
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public samuraibff.proto.WordAlignment.Builder addWordsBuilder(
         int index) {
@@ -1326,7 +1326,7 @@ private static final long serialVersionUID = 0L;
           index, samuraibff.proto.WordAlignment.getDefaultInstance());
     }
     /**
-     * <code>repeated .WordAlignment words = 7;</code>
+     * <code>repeated .WordAlignment words = 7 [json_name = "words"];</code>
      */
     public java.util.List<samuraibff.proto.WordAlignment.Builder> 
          getWordsBuilderList() {

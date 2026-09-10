@@ -52,6 +52,26 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_RecordingFinished_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AsyncTrackSelection_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_AsyncTrackSelection_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AsyncTrackPlan_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_AsyncTrackPlan_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AudioArtifact_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_AudioArtifact_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_FinalTrackResult_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_FinalTrackResult_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_WordAlignment_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -61,6 +81,16 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_FinalEvent_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_RealtimeCapabilitiesRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_RealtimeCapabilitiesRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_RealtimeCapabilities_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_RealtimeCapabilities_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_SessionTranscriptSegment_descriptor;
   static final 
@@ -80,46 +110,124 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014stream.proto\"\234\001\n\nAudioChunk\022\022\n\nsession" +
-      "_id\030\001 \001(\t\022\013\n\003seq\030\002 \001(\004\022\r\n\005t0_ns\030\003 \001(\003\022\023\n" +
-      "\013sample_rate\030\004 \001(\r\022\020\n\010pcm16_le\030\005 \001(\014\022\014\n\004" +
-      "lang\030\006 \001(\t\022\026\n\016bff_origin_uri\030\007 \001(\t\022\021\n\tte" +
-      "nant_id\030\010 \001(\t\"\203\001\n\010AsrEvent\022\022\n\nsession_id" +
-      "\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n\005end_s\030\003 \001(\001\022\014" +
-      "\n\004text\030\004 \001(\t\022\026\n\004type\030\005 \001(\0162\010.AsrType\022\014\n\004" +
-      "lang\030\006 \001(\t\022\017\n\007speaker\030\007 \001(\t\"d\n\tDiarEvent" +
-      "\022\022\n\nsession_id\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n" +
-      "\005end_s\030\003 \001(\001\022\017\n\007speaker\030\004 \001(\t\022\022\n\nconfide" +
-      "nce\030\005 \001(\002\"\317\002\n\014RefinedEvent\022\022\n\nsession_id" +
-      "\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n\005end_s\030\003 \001(\001\022\014" +
-      "\n\004text\030\004 \001(\t\022\017\n\007speaker\030\005 \001(\t\022\026\n\016superse" +
-      "des_seq\030\006 \003(\004\022\014\n\004lang\030\007 \001(\t\022\026\n\016bff_origi" +
-      "n_uri\030\010 \001(\t\022\021\n\ttenant_id\030\t \001(\t\022\022\n\nwindow" +
-      "_sec\030\n \001(\001\022\023\n\013slice_index\030\013 \001(\r\022\024\n\014flush" +
-      "_reason\030\014 \001(\t\022+\n\010segments\030\r \003(\0132\031.Sessio" +
-      "nTranscriptSegment\022\025\n\rcreated_at_ns\030\016 \001(" +
-      "\004\022\030\n\020refinement_model\030\017 \001(\t\"\237\001\n\021Recordin" +
-      "gFinished\022\022\n\nsession_id\030\001 \001(\t\022\025\n\rrecordi" +
-      "ng_url\030\002 \001(\t\022\022\n\nduration_s\030\003 \001(\001\022\023\n\013samp" +
-      "le_rate\030\004 \001(\005\022\014\n\004lang\030\005 \001(\t\022\021\n\ttenant_id" +
-      "\030\006 \001(\t\022\025\n\rcreated_at_ns\030\007 \001(\003\"=\n\rWordAli" +
-      "gnment\022\017\n\007start_s\030\001 \001(\001\022\r\n\005end_s\030\002 \001(\001\022\014" +
-      "\n\004text\030\003 \001(\t\"\214\001\n\nFinalEvent\022\022\n\nsession_i" +
-      "d\030\001 \001(\t\022\017\n\007start_s\030\002 \001(\001\022\r\n\005end_s\030\003 \001(\001\022" +
-      "\014\n\004text\030\004 \001(\t\022\017\n\007speaker\030\005 \001(\t\022\014\n\004lang\030\006" +
-      " \001(\t\022\035\n\005words\030\007 \003(\0132\016.WordAlignment\"x\n\030S" +
-      "essionTranscriptSegment\022\017\n\007start_s\030\001 \001(\001" +
-      "\022\r\n\005end_s\030\002 \001(\001\022\014\n\004text\030\003 \001(\t\022\017\n\007speaker" +
-      "\030\004 \001(\t\022\035\n\005words\030\005 \003(\0132\016.WordAlignment\"\312\001" +
-      "\n\021SessionTranscript\022\022\n\nsession_id\030\001 \001(\t\022" +
-      "\025\n\rrecording_url\030\002 \001(\t\022\014\n\004lang\030\003 \001(\t\022\022\n\n" +
-      "duration_s\030\004 \001(\002\022+\n\010segments\030\005 \003(\0132\031.Ses" +
-      "sionTranscriptSegment\022\021\n\tfull_text\030\006 \001(\t" +
-      "\022\021\n\ttenant_id\030\007 \001(\t\022\025\n\rcreated_at_ns\030\010 \001" +
-      "(\004*!\n\007AsrType\022\013\n\007PARTIAL\020\000\022\t\n\005FINAL\020\00123\n" +
-      "\013RealtimeASR\022$\n\006Stream\022\013.AudioChunk\032\t.As" +
-      "rEvent(\0010\001B!\n\020samuraibff.protoB\013StreamPr" +
-      "otoP\001b\006proto3"
+      "\n\014stream.proto\"\345\001\n\nAudioChunk\022\035\n\nsession" +
+      "_id\030\001 \001(\tR\tsessionId\022\020\n\003seq\030\002 \001(\004R\003seq\022\023" +
+      "\n\005t0_ns\030\003 \001(\003R\004t0Ns\022\037\n\013sample_rate\030\004 \001(\r" +
+      "R\nsampleRate\022\031\n\010pcm16_le\030\005 \001(\014R\007pcm16Le\022" +
+      "\022\n\004lang\030\006 \001(\tR\004lang\022$\n\016bff_origin_uri\030\007 " +
+      "\001(\tR\014bffOriginUri\022\033\n\ttenant_id\030\010 \001(\tR\010te" +
+      "nantId\"\227\002\n\010AsrEvent\022\035\n\nsession_id\030\001 \001(\tR" +
+      "\tsessionId\022\027\n\007start_s\030\002 \001(\001R\006startS\022\023\n\005e" +
+      "nd_s\030\003 \001(\001R\004endS\022\022\n\004text\030\004 \001(\tR\004text\022\034\n\004" +
+      "type\030\005 \001(\0162\010.AsrTypeR\004type\022\022\n\004lang\030\006 \001(\t" +
+      "R\004lang\022\030\n\007speaker\030\007 \001(\tR\007speaker\022.\n\023prov" +
+      "ider_profile_id\030\010 \001(\tR\021providerProfileId" +
+      "\022.\n\023serving_instance_id\030\t \001(\tR\021servingIn" +
+      "stanceId\"\222\001\n\tDiarEvent\022\035\n\nsession_id\030\001 \001" +
+      "(\tR\tsessionId\022\027\n\007start_s\030\002 \001(\001R\006startS\022\023" +
+      "\n\005end_s\030\003 \001(\001R\004endS\022\030\n\007speaker\030\004 \001(\tR\007sp" +
+      "eaker\022\036\n\nconfidence\030\005 \001(\002R\nconfidence\"\360\003" +
+      "\n\014RefinedEvent\022\035\n\nsession_id\030\001 \001(\tR\tsess" +
+      "ionId\022\027\n\007start_s\030\002 \001(\001R\006startS\022\023\n\005end_s\030" +
+      "\003 \001(\001R\004endS\022\022\n\004text\030\004 \001(\tR\004text\022\030\n\007speak" +
+      "er\030\005 \001(\tR\007speaker\022%\n\016supersedes_seq\030\006 \003(" +
+      "\004R\rsupersedesSeq\022\022\n\004lang\030\007 \001(\tR\004lang\022$\n\016" +
+      "bff_origin_uri\030\010 \001(\tR\014bffOriginUri\022\033\n\tte" +
+      "nant_id\030\t \001(\tR\010tenantId\022\035\n\nwindow_sec\030\n " +
+      "\001(\001R\twindowSec\022\037\n\013slice_index\030\013 \001(\rR\nsli" +
+      "ceIndex\022!\n\014flush_reason\030\014 \001(\tR\013flushReas" +
+      "on\0225\n\010segments\030\r \003(\0132\031.SessionTranscript" +
+      "SegmentR\010segments\022\"\n\rcreated_at_ns\030\016 \001(\004" +
+      "R\013createdAtNs\022)\n\020refinement_model\030\017 \001(\tR" +
+      "\017refinementModel\"\304\002\n\021RecordingFinished\022\035" +
+      "\n\nsession_id\030\001 \001(\tR\tsessionId\022#\n\rrecordi" +
+      "ng_url\030\002 \001(\tR\014recordingUrl\022\035\n\nduration_s" +
+      "\030\003 \001(\001R\tdurationS\022\037\n\013sample_rate\030\004 \001(\005R\n" +
+      "sampleRate\022\022\n\004lang\030\005 \001(\tR\004lang\022\033\n\ttenant" +
+      "_id\030\006 \001(\tR\010tenantId\022\"\n\rcreated_at_ns\030\007 \001" +
+      "(\003R\013createdAtNs\022&\n\006source\030\010 \001(\0132\016.AudioA" +
+      "rtifactR\006source\022.\n\nfinal_plan\030\t \001(\0132\017.As" +
+      "yncTrackPlanR\tfinalPlan\"i\n\023AsyncTrackSel" +
+      "ection\022\031\n\010track_id\030\001 \001(\tR\007trackId\022\035\n\npro" +
+      "file_id\030\002 \001(\tR\tprofileId\022\030\n\007primary\030\003 \001(" +
+      "\010R\007primary\"\305\001\n\016AsyncTrackPlan\022%\n\016schema_" +
+      "version\030\001 \001(\rR\rschemaVersion\022\027\n\007plan_id\030" +
+      "\002 \001(\tR\006planId\022\033\n\ttenant_id\030\003 \001(\tR\010tenant" +
+      "Id\022\035\n\nsession_id\030\004 \001(\tR\tsessionId\0227\n\014fin" +
+      "al_tracks\030\005 \003(\0132\024.AsyncTrackSelectionR\013f" +
+      "inalTracks\"\212\002\n\rAudioArtifact\022\037\n\013artifact" +
+      "_id\030\001 \001(\tR\nartifactId\022\037\n\013storage_uri\030\002 \001" +
+      "(\tR\nstorageUri\022\026\n\006sha256\030\003 \001(\tR\006sha256\022\035" +
+      "\n\nsize_bytes\030\004 \001(\004R\tsizeBytes\022\037\n\013sample_" +
+      "rate\030\005 \001(\rR\nsampleRate\022!\n\014sample_count\030\006" +
+      " \001(\004R\013sampleCount\022\035\n\nmedia_type\030\007 \001(\tR\tm" +
+      "ediaType\022\035\n\nversion_id\030\010 \001(\tR\tversionId\"" +
+      "\247\006\n\020FinalTrackResult\022%\n\016schema_version\030\001" +
+      " \001(\rR\rschemaVersion\022\035\n\nsession_id\030\002 \001(\tR" +
+      "\tsessionId\022\033\n\ttenant_id\030\003 \001(\tR\010tenantId\022" +
+      "\024\n\005stage\030\004 \001(\tR\005stage\022\031\n\010track_id\030\005 \001(\tR" +
+      "\007trackId\022\035\n\nprofile_id\030\006 \001(\tR\tprofileId\022" +
+      "\025\n\006run_id\030\007 \001(\tR\005runId\022\035\n\nattempt_id\030\010 \001" +
+      "(\tR\tattemptId\022\033\n\tresult_id\030\t \001(\tR\010result" +
+      "Id\022\027\n\007unit_id\030\n \001(\tR\006unitId\022\032\n\010revision\030" +
+      "\013 \001(\rR\010revision\022\026\n\006status\030\014 \001(\tR\006status\022" +
+      "&\n\006source\030\r \001(\0132\016.AudioArtifactR\006source\022" +
+      "\035\n\nresult_uri\030\016 \001(\tR\tresultUri\022#\n\rresult" +
+      "_sha256\030\017 \001(\tR\014resultSha256\022\030\n\007primary\030\020" +
+      " \001(\010R\007primary\022\035\n\nerror_code\030\021 \001(\tR\terror" +
+      "Code\022\"\n\014degradations\030\022 \003(\tR\014degradations" +
+      "\022-\n\022segment_timestamps\030\023 \001(\010R\021segmentTim" +
+      "estamps\022\'\n\017word_timestamps\030\024 \001(\010R\016wordTi" +
+      "mestamps\022%\n\016speaker_labels\030\025 \001(\010R\rspeake" +
+      "rLabels\022\'\n\017provenance_json\030\026 \001(\tR\016proven" +
+      "anceJson\022\"\n\rcreated_at_ns\030\027 \001(\003R\013created" +
+      "AtNs\022\022\n\004lang\030\030 \001(\tR\004lang\022\027\n\007plan_id\030\031 \001(" +
+      "\tR\006planId\"Q\n\rWordAlignment\022\027\n\007start_s\030\001 " +
+      "\001(\001R\006startS\022\023\n\005end_s\030\002 \001(\001R\004endS\022\022\n\004text" +
+      "\030\003 \001(\tR\004text\"\301\001\n\nFinalEvent\022\035\n\nsession_i" +
+      "d\030\001 \001(\tR\tsessionId\022\027\n\007start_s\030\002 \001(\001R\006sta" +
+      "rtS\022\023\n\005end_s\030\003 \001(\001R\004endS\022\022\n\004text\030\004 \001(\tR\004" +
+      "text\022\030\n\007speaker\030\005 \001(\tR\007speaker\022\022\n\004lang\030\006" +
+      " \001(\tR\004lang\022$\n\005words\030\007 \003(\0132\016.WordAlignmen" +
+      "tR\005words\"\035\n\033RealtimeCapabilitiesRequest\"" +
+      "\262\006\n\024RealtimeCapabilities\022.\n\023provider_pro" +
+      "file_id\030\001 \001(\tR\021providerProfileId\022+\n\021wind" +
+      "owed_realtime\030\002 \001(\010R\020windowedRealtime\022)\n" +
+      "\020native_streaming\030\003 \001(\010R\017nativeStreaming" +
+      "\022\024\n\005batch\030\004 \001(\010R\005batch\022-\n\022segment_timest" +
+      "amps\030\005 \001(\010R\021segmentTimestamps\022\'\n\017word_ti" +
+      "mestamps\030\006 \001(\010R\016wordTimestamps\022-\n\022langua" +
+      "ge_detection\030\007 \001(\010R\021languageDetection\022/\n" +
+      "\023supported_languages\030\010 \003(\tR\022supportedLan" +
+      "guages\022\032\n\010stateful\030\t \001(\010R\010stateful\0222\n\025pr" +
+      "eferred_sample_rate\030\n \001(\rR\023preferredSamp" +
+      "leRate\0222\n\025maximum_audio_seconds\030\013 \001(\001R\023m" +
+      "aximumAudioSeconds\022>\n\033maximum_concurrent" +
+      "_sessions\030\014 \001(\rR\031maximumConcurrentSessio" +
+      "ns\022\030\n\007runtime\030\r \001(\tR\007runtime\022%\n\016model_re" +
+      "vision\030\016 \001(\tR\rmodelRevision\022!\n\014model_dig" +
+      "est\030\017 \001(\tR\013modelDigest\0227\n\027implementation" +
+      "_revision\030\020 \001(\tR\026implementationRevision\022" +
+      "%\n\016speaker_labels\030\021 \001(\010R\rspeakerLabels\022<" +
+      "\n\032aligned_diarized_languages\030\022 \003(\tR\030alig" +
+      "nedDiarizedLanguages\"\234\001\n\030SessionTranscri" +
+      "ptSegment\022\027\n\007start_s\030\001 \001(\001R\006startS\022\023\n\005en" +
+      "d_s\030\002 \001(\001R\004endS\022\022\n\004text\030\003 \001(\tR\004text\022\030\n\007s" +
+      "peaker\030\004 \001(\tR\007speaker\022$\n\005words\030\005 \003(\0132\016.W" +
+      "ordAlignmentR\005words\"\237\002\n\021SessionTranscrip" +
+      "t\022\035\n\nsession_id\030\001 \001(\tR\tsessionId\022#\n\rreco" +
+      "rding_url\030\002 \001(\tR\014recordingUrl\022\022\n\004lang\030\003 " +
+      "\001(\tR\004lang\022\035\n\nduration_s\030\004 \001(\002R\tdurationS" +
+      "\0225\n\010segments\030\005 \003(\0132\031.SessionTranscriptSe" +
+      "gmentR\010segments\022\033\n\tfull_text\030\006 \001(\tR\010full" +
+      "Text\022\033\n\ttenant_id\030\007 \001(\tR\010tenantId\022\"\n\rcre" +
+      "ated_at_ns\030\010 \001(\004R\013createdAtNs*7\n\007AsrType" +
+      "\022\013\n\007PARTIAL\020\000\022\t\n\005FINAL\020\001\022\024\n\020SESSION_ACCE" +
+      "PTED\020\0022{\n\013RealtimeASR\022F\n\017GetCapabilities" +
+      "\022\034.RealtimeCapabilitiesRequest\032\025.Realtim" +
+      "eCapabilities\022$\n\006Stream\022\013.AudioChunk\032\t.A" +
+      "srEvent(\0010\001B!\n\020samuraibff.protoB\013StreamP" +
+      "rotoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -136,7 +244,7 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     internal_static_AsrEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AsrEvent_descriptor,
-        new java.lang.String[] { "SessionId", "StartS", "EndS", "Text", "Type", "Lang", "Speaker", });
+        new java.lang.String[] { "SessionId", "StartS", "EndS", "Text", "Type", "Lang", "Speaker", "ProviderProfileId", "ServingInstanceId", });
     internal_static_DiarEvent_descriptor =
       getDescriptor().getMessageType(2);
     internal_static_DiarEvent_fieldAccessorTable = new
@@ -154,27 +262,63 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     internal_static_RecordingFinished_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_RecordingFinished_descriptor,
-        new java.lang.String[] { "SessionId", "RecordingUrl", "DurationS", "SampleRate", "Lang", "TenantId", "CreatedAtNs", });
-    internal_static_WordAlignment_descriptor =
+        new java.lang.String[] { "SessionId", "RecordingUrl", "DurationS", "SampleRate", "Lang", "TenantId", "CreatedAtNs", "Source", "FinalPlan", });
+    internal_static_AsyncTrackSelection_descriptor =
       getDescriptor().getMessageType(5);
+    internal_static_AsyncTrackSelection_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_AsyncTrackSelection_descriptor,
+        new java.lang.String[] { "TrackId", "ProfileId", "Primary", });
+    internal_static_AsyncTrackPlan_descriptor =
+      getDescriptor().getMessageType(6);
+    internal_static_AsyncTrackPlan_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_AsyncTrackPlan_descriptor,
+        new java.lang.String[] { "SchemaVersion", "PlanId", "TenantId", "SessionId", "FinalTracks", });
+    internal_static_AudioArtifact_descriptor =
+      getDescriptor().getMessageType(7);
+    internal_static_AudioArtifact_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_AudioArtifact_descriptor,
+        new java.lang.String[] { "ArtifactId", "StorageUri", "Sha256", "SizeBytes", "SampleRate", "SampleCount", "MediaType", "VersionId", });
+    internal_static_FinalTrackResult_descriptor =
+      getDescriptor().getMessageType(8);
+    internal_static_FinalTrackResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_FinalTrackResult_descriptor,
+        new java.lang.String[] { "SchemaVersion", "SessionId", "TenantId", "Stage", "TrackId", "ProfileId", "RunId", "AttemptId", "ResultId", "UnitId", "Revision", "Status", "Source", "ResultUri", "ResultSha256", "Primary", "ErrorCode", "Degradations", "SegmentTimestamps", "WordTimestamps", "SpeakerLabels", "ProvenanceJson", "CreatedAtNs", "Lang", "PlanId", });
+    internal_static_WordAlignment_descriptor =
+      getDescriptor().getMessageType(9);
     internal_static_WordAlignment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_WordAlignment_descriptor,
         new java.lang.String[] { "StartS", "EndS", "Text", });
     internal_static_FinalEvent_descriptor =
-      getDescriptor().getMessageType(6);
+      getDescriptor().getMessageType(10);
     internal_static_FinalEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_FinalEvent_descriptor,
         new java.lang.String[] { "SessionId", "StartS", "EndS", "Text", "Speaker", "Lang", "Words", });
+    internal_static_RealtimeCapabilitiesRequest_descriptor =
+      getDescriptor().getMessageType(11);
+    internal_static_RealtimeCapabilitiesRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_RealtimeCapabilitiesRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_RealtimeCapabilities_descriptor =
+      getDescriptor().getMessageType(12);
+    internal_static_RealtimeCapabilities_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_RealtimeCapabilities_descriptor,
+        new java.lang.String[] { "ProviderProfileId", "WindowedRealtime", "NativeStreaming", "Batch", "SegmentTimestamps", "WordTimestamps", "LanguageDetection", "SupportedLanguages", "Stateful", "PreferredSampleRate", "MaximumAudioSeconds", "MaximumConcurrentSessions", "Runtime", "ModelRevision", "ModelDigest", "ImplementationRevision", "SpeakerLabels", "AlignedDiarizedLanguages", });
     internal_static_SessionTranscriptSegment_descriptor =
-      getDescriptor().getMessageType(7);
+      getDescriptor().getMessageType(13);
     internal_static_SessionTranscriptSegment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SessionTranscriptSegment_descriptor,
         new java.lang.String[] { "StartS", "EndS", "Text", "Speaker", "Words", });
     internal_static_SessionTranscript_descriptor =
-      getDescriptor().getMessageType(8);
+      getDescriptor().getMessageType(14);
     internal_static_SessionTranscript_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SessionTranscript_descriptor,
