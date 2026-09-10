@@ -41,3 +41,7 @@ arrival orders, exact replay, conflicting duplicates, legacy appends and
 tenant/storage tampering. Run the full suite with
 `TESTCONTAINERS_RYUK_DISABLED=true`; owned PostgreSQL and Kafka fixtures bind
 explicitly to `127.0.0.1` and stop in `finally`.
+
+Publication scans recognize only the known synthetic UUID tails in the shared
+final-track vector, scoped to that file and rule; other values remain scanned.
+
