@@ -5,6 +5,8 @@ Kafka → Postgres persistence service for nanosamurai's transcript events.
 The opt-in [final-track spike](docs/final-tracks.md) consumes
 `transcripts.final-tracks`, indexes independent final outcomes and deduplicates
 identified primary projections. It defaults off and requires deployment migration 014.
+Opt-in [refinement tracks](docs/refinement-tracks.md) add independent window
+outcomes and idempotent primary rows after migration 015, without extra recordings.
 
 This service replaces direct DB persistence inside the Python workers
 (`whisperx_worker`, `finalizer_worker`) in the `xamurai` monorepo.

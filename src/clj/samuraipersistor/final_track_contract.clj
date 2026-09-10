@@ -5,7 +5,7 @@
            (java.security MessageDigest)
            (java.util UUID HexFormat)
            (org.apache.kafka.clients.consumer ConsumerRecord)
-           (samuraibff.proto FinalTrackResult AudioArtifact SessionTranscript)))
+           (samuraibff.proto FinalTrackResult AudioArtifact SessionTranscript RefinementWindow)))
 
 (def mapper (json/object-mapper {:decode-key-fn keyword :encode-key-fn name}))
 
@@ -43,11 +43,42 @@
 
 (defn identities
   "Return deterministic [run-id result-id] for the selected final recording."
-  [{:keys [tenant-id session-id plan-id source-id source-sha256 track-id profile-id]}]
+  [{:keys [tenant-id session-id plan-id source-id source-sha256 track-id profile-id stage unit-id]}]
   (let [run (uuid5 (UUID/fromString "6ba7b811-9dad-11d1-80b4-00c04fd430c8")
-                   (json/write-value-as-string [tenant-id session-id plan-id source-id source-sha256
-                                                "final" track-id profile-id]))]
-    [(str run) (str (uuid5 run "recording:1"))]))
+                   (json/write-value-as-string
+                    (if (= stage "refined")
+                      [tenant-id session-id plan-id "refined" track-id profile-id]
+                      [tenant-id session-id plan-id source-id source-sha256 "final" track-id profile-id])))]
+    [(str run) (str (uuid5 run (str (if (= stage "refined") unit-id "recording") ":1")))]))
+
+(defn window-metadata
+  "Validate a bounded refinement window and return its range/policy/source metadata."
+  [^FinalTrackResult event]
+  (let [^RefinementWindow window (.getRefinementWindow event)
+        recording (.getRecording window)
+        plan (.getFinalPlan recording)
+        start (.getStartSample window) end (.getEndSample window)
+        size (.getWindowSamples window)
+        unit (str "fixed-" size ":" start ":" end)]
+    (when-not (and (.hasRefinementWindow event) (<= 160000 size 9600000)
+                   (<= 0 start) (< start end) (<= end 9600000) (<= (- end start) size)
+                   (zero? (mod start size)) (= size (.getRefinementWindowSamples plan))
+                   (= 1 (.getSchemaVersion plan))
+                   (= (.getTenantId event) (.getTenantId recording) (.getTenantId plan))
+                   (= (.getSessionId event) (.getSessionId recording) (.getSessionId plan))
+                   (= (.getPlanId event) (.getPlanId plan))
+                   (= (.getSource event) (.getSource recording))
+                   (= (.getRecordingUrl recording) (.getStorageUri (.getSource event)))
+                   (= 16000 (.getSampleRate recording))
+                   (< (Math/abs (- (.getDurationS recording) (/ (- end start) 16000.0))) 0.001)
+                   (= (- end start) (.getSampleCount (.getSource event)))
+                   (contains? #{"slice" "eof" "idle"} (.getFlushReason window))
+                   (or (not= "slice" (.getFlushReason window)) (= size (- end start)))
+                   (= unit (.getUnitId event))
+                   (= (.getArtifactId (.getSource event)) (str (uuid5 (uuid (.getPlanId event)) unit))))
+      (invalid! :refinement-window))
+    {:window-samples size :start-sample start :end-sample end
+     :flush-reason (.getFlushReason window)}))
 
 (defn source-map
   "Extract immutable source metadata from an AudioArtifact protobuf."
@@ -87,24 +118,29 @@
                      :run-id (.getRunId event) :attempt-id (.getAttemptId event)
                      :track-id (.getTrackId event) :profile-id (.getProfileId event)
                      :primary? (.getPrimary event) :status status
+                     :stage (.getStage event) :unit-id (.getUnitId event) :revision (.getRevision event)
                      :result-uri (.getResultUri event) :result-sha256 (.getResultSha256 event)
                      :error-code (.getErrorCode event) :lang (.getLang event)
                      :event-created-at-ns (.getCreatedAtNs event) :event-sha256 (digest value)
                      :capabilities {:segment_timestamps (.getSegmentTimestamps event)
                                     :word_timestamps (.getWordTimestamps event)
                                     :speaker_labels (.getSpeakerLabels event)}
-                     :degradations (vec (.getDegradationsList event))})]
-    (validate-identity! data storage)
+                     :degradations (vec (.getDegradationsList event))})
+        refined? (= "refined" (:stage data))
+        data (if refined? (merge data (window-metadata event)) data)]
+    (validate-identity! data (cond-> storage refined? (assoc :recording-prefix "refinement-windows")))
     (uuid (:attempt-id data))
-    (when-not (and (= 1 (.getSchemaVersion event)) (= "final" (.getStage event))
-                   (= "recording" (.getUnitId event)) (= 1 (.getRevision event))
+    (when-not (and (= 1 (.getSchemaVersion event))
+                   (or refined? (and (= "final" (.getStage event))
+                                     (not (.hasRefinementWindow event)) (= "recording" (.getUnitId event))))
+                   (= 1 (.getRevision event))
                    (= "audio/wav" (.getMediaType (.getSource event)))
                    (contains? #{"succeeded" "failed"} status)
                    (pos? (:event-created-at-ns data)))
       (invalid! :envelope))
     (if (= "succeeded" status)
       (when-not (and (= (:result-uri data)
-                        (str "s3://" (:bucket storage) "/final-tracks/"
+                        (str "s3://" (:bucket storage) (if refined? "/refined-tracks/" "/final-tracks/")
                              (:tenant-id data) "/" (:session-id data) "/" (:source-id data) "/"
                              (:track-id data) "/" (:run-id data) "/" (:attempt-id data) ".transcript.json"))
                      (re-matches #"[a-f0-9]{64}" (:result-sha256 data))

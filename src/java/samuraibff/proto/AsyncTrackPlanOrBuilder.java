@@ -75,4 +75,34 @@ public interface AsyncTrackPlanOrBuilder extends
    */
   samuraibff.proto.AsyncTrackSelectionOrBuilder getFinalTracksOrBuilder(
       int index);
+
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  java.util.List<samuraibff.proto.AsyncTrackSelection> 
+      getRefinementTracksList();
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  samuraibff.proto.AsyncTrackSelection getRefinementTracks(int index);
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  int getRefinementTracksCount();
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  java.util.List<? extends samuraibff.proto.AsyncTrackSelectionOrBuilder> 
+      getRefinementTracksOrBuilderList();
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  samuraibff.proto.AsyncTrackSelectionOrBuilder getRefinementTracksOrBuilder(
+      int index);
+
+  /**
+   * <code>uint64 refinement_window_samples = 7 [json_name = "refinementWindowSamples"];</code>
+   * @return The refinementWindowSamples.
+   */
+  long getRefinementWindowSamples();
 }

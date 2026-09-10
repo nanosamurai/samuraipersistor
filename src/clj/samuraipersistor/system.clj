@@ -45,6 +45,7 @@
 
                  :kafka {:ce-mode? ce-mode
                          :final-tracks-enabled? (env-value "SP_FINAL_TRACKS_ENABLED" parse-bool)
+                         :refinement-tracks-enabled? (env-value "SP_REFINEMENT_TRACKS_ENABLED" parse-bool)
                          :final-source-bucket (env-value "SP_FINAL_SOURCE_BUCKET")
                          :final-recording-prefix (env-value "SP_FINAL_RECORDING_PREFIX")
                          :bootstrap-servers (env-value "SP_KAFKA_BOOTSTRAP_SERVERS")

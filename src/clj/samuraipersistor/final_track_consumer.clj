@@ -14,13 +14,15 @@
            (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common TopicPartition)
            (org.apache.kafka.common.errors WakeupException)
-           (samuraibff.proto SessionTranscript)))
+           (samuraibff.proto SessionTranscript RefinedEvent)))
 
 (defn- consumer-config
   "Build a one-record poll configuration; JDBC work is bounded by statement timeout."
   [config primary?]
   {"bootstrap.servers" (:bootstrap-servers config)
-   "group.id" (if primary? (:final-consumer-group-id config) "samuraipersistor-final-tracks")
+   "group.id" (if (= "refined" (:track-stage config))
+                (if primary? (:refined-consumer-group-id config) "samuraipersistor-refined-tracks")
+                (if primary? (:final-consumer-group-id config) "samuraipersistor-final-tracks"))
    "security.protocol" (or (:security-protocol config) "PLAINTEXT")
    "enable.auto.commit" "false" "auto.offset.reset" "earliest"
    "max.poll.records" "1" "max.poll.interval.ms" "300000"
@@ -32,11 +34,22 @@
   [ds config primary? ^ConsumerRecord record]
   (let [storage {:bucket (:final-source-bucket config)
                  :recording-prefix (or (:final-recording-prefix config) "recordings")}
+        refined? (= "refined" (:track-stage config))
         value (.value record)
         key (when-let [bytes (.key record)] (String. ^bytes bytes "UTF-8"))]
     (when (or (nil? value) (> (alength ^bytes value) (if primary? 1000000 65536)))
       (contract/invalid! :event-size))
-    (if primary?
+    (cond
+      (and primary? refined?)
+      (let [event (RefinedEvent/parseFrom ^bytes value)
+            headers (vec (filter #(= "x-track-outcome" (.key %)) (.headers record)))
+            outcome (when (seq headers)
+                      (when-not (and (= 1 (count headers)) (.value (first headers)))
+                        (contract/invalid! :projection-headers))
+                      (contract/outcome (.value (first headers)) storage))]
+        (when (and outcome (not= key (:session-id outcome))) (contract/invalid! :record-key))
+        (persist/insert-refined! ds event {:source "whisperx_worker" :track-outcome outcome}))
+      primary?
       (let [event (SessionTranscript/parseFrom ^bytes value)
             headers (contract/projection-headers record)]
         (when (and headers (not= (.getSessionId event) key))
@@ -44,8 +57,10 @@
         (persist/insert-final! ds event (merge {:source "finalizer_worker" :model "whisperx"
                                                 :event-created-at-ns (.getCreatedAtNs event)
                                                 :storage storage} headers)))
+      :else
       (let [event (contract/outcome value storage)]
-        (when-not (= (:session-id event) key)
+        (when-not (and (= (:session-id event) key)
+                       (= (if refined? "refined" "final") (:stage event)))
           (contract/invalid! :record-key))
         (tracks/insert-outcome! ds event)))))
 
@@ -65,7 +80,9 @@
   "Start a final consumer. Polling, retries and commits all stay on one thread.
   A rebalance discards pending local ownership; SQL identities make replay safe."
   [config db primary?]
-  (let [topic (if primary? (get-in config [:topics :final]) "transcripts.final-tracks")
+  (let [refined? (= "refined" (:track-stage config))
+        topic (if primary? (get-in config [:topics (if refined? :refined :final)])
+                  (if refined? "transcripts.refined-tracks" "transcripts.final-tracks"))
         consumer (KafkaConsumer. (consumer-config config primary?))
         dlq-topic (get-in config [:topics :dlq])
         dlq (when dlq-topic (common/->producer config))
@@ -117,9 +134,13 @@
 
 (defmethod ig/init-key :samuraipersistor/final-track-consumer
   [_ {:keys [config db]}]
-  (when (true? (get-in config [:kafka :final-tracks-enabled?]))
-    (start! (:kafka config) db false)))
+  {:consumers (cond-> []
+                (true? (get-in config [:kafka :final-tracks-enabled?]))
+                (conj (start! (:kafka config) db false))
+                (true? (get-in config [:kafka :refinement-tracks-enabled?]))
+                (conj (start! (assoc (:kafka config) :track-stage "refined") db false)))})
 
 (defmethod ig/halt-key! :samuraipersistor/final-track-consumer
   [_ component]
-  (when-let [stop! (:stop! component)] (stop!)))
+  (doseq [consumer (:consumers component)]
+    (when-let [stop! (:stop! consumer)] (stop!))))

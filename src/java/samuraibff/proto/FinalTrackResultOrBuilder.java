@@ -283,4 +283,31 @@ public interface FinalTrackResultOrBuilder extends
    */
   com.google.protobuf.ByteString
       getPlanIdBytes();
+
+  /**
+   * <pre>
+   * Present only on transcripts.refined-tracks (stage=refined).
+   * </pre>
+   *
+   * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+   * @return Whether the refinementWindow field is set.
+   */
+  boolean hasRefinementWindow();
+  /**
+   * <pre>
+   * Present only on transcripts.refined-tracks (stage=refined).
+   * </pre>
+   *
+   * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+   * @return The refinementWindow.
+   */
+  samuraibff.proto.RefinementWindow getRefinementWindow();
+  /**
+   * <pre>
+   * Present only on transcripts.refined-tracks (stage=refined).
+   * </pre>
+   *
+   * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+   */
+  samuraibff.proto.RefinementWindowOrBuilder getRefinementWindowOrBuilder();
 }

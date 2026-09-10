@@ -45,6 +45,7 @@
   (apply-sql! ds "migrations/002-transcript-records-append-only.up.sql")
   (jdbc/execute! ds ["ALTER TABLE sessions ADD COLUMN stream_controls jsonb"])
   (apply-sql! ds "final_track_schema.sql")
+  (apply-sql! ds "refinement_track_schema.sql")
   (let [plan (:plan (fixture))]
     (jdbc/execute! ds ["INSERT INTO tenants(id,name) VALUES (?,?)" (contract/uuid (:tenant_id plan)) "fixture"])
     (jdbc/execute! ds ["INSERT INTO sessions(id,tenant_id,session_key,stream_controls) VALUES (?,?,?,?::jsonb)"

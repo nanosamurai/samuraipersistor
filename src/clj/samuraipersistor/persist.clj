@@ -89,7 +89,7 @@
        (remove str/blank?)
        (str/join " ")))
 
-(defn insert-refined!
+(defn- insert-legacy-refined!
   "Persist a RefinedEvent as an append-only transcript record.
 
   `meta` keys (all optional):
@@ -161,6 +161,13 @@
                sup-arr
                event-created-at-ns]))
             :ok))))))
+
+(defn insert-refined!
+  "Persist an identified primary refinement idempotently, or append a legacy event."
+  [ds ^RefinedEvent event metadata]
+  (if-let [outcome (:track-outcome metadata)]
+    (final-tracks/insert-refined-primary! ds event outcome (mapv segment->map (.getSegmentsList event)))
+    (insert-legacy-refined! ds event metadata)))
 
 (defn- insert-legacy-final!
   "Persist a SessionTranscript (final transcript) + recording row + update session status.

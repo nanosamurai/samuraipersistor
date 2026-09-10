@@ -62,6 +62,11 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_AsyncTrackPlan_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_RefinementWindow_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_RefinementWindow_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_AudioArtifact_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -150,39 +155,50 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
       "yncTrackPlanR\tfinalPlan\"i\n\023AsyncTrackSel" +
       "ection\022\031\n\010track_id\030\001 \001(\tR\007trackId\022\035\n\npro" +
       "file_id\030\002 \001(\tR\tprofileId\022\030\n\007primary\030\003 \001(" +
-      "\010R\007primary\"\305\001\n\016AsyncTrackPlan\022%\n\016schema_" +
+      "\010R\007primary\"\304\002\n\016AsyncTrackPlan\022%\n\016schema_" +
       "version\030\001 \001(\rR\rschemaVersion\022\027\n\007plan_id\030" +
       "\002 \001(\tR\006planId\022\033\n\ttenant_id\030\003 \001(\tR\010tenant" +
       "Id\022\035\n\nsession_id\030\004 \001(\tR\tsessionId\0227\n\014fin" +
       "al_tracks\030\005 \003(\0132\024.AsyncTrackSelectionR\013f" +
-      "inalTracks\"\212\002\n\rAudioArtifact\022\037\n\013artifact" +
-      "_id\030\001 \001(\tR\nartifactId\022\037\n\013storage_uri\030\002 \001" +
-      "(\tR\nstorageUri\022\026\n\006sha256\030\003 \001(\tR\006sha256\022\035" +
-      "\n\nsize_bytes\030\004 \001(\004R\tsizeBytes\022\037\n\013sample_" +
-      "rate\030\005 \001(\rR\nsampleRate\022!\n\014sample_count\030\006" +
-      " \001(\004R\013sampleCount\022\035\n\nmedia_type\030\007 \001(\tR\tm" +
-      "ediaType\022\035\n\nversion_id\030\010 \001(\tR\tversionId\"" +
-      "\247\006\n\020FinalTrackResult\022%\n\016schema_version\030\001" +
-      " \001(\rR\rschemaVersion\022\035\n\nsession_id\030\002 \001(\tR" +
-      "\tsessionId\022\033\n\ttenant_id\030\003 \001(\tR\010tenantId\022" +
-      "\024\n\005stage\030\004 \001(\tR\005stage\022\031\n\010track_id\030\005 \001(\tR" +
-      "\007trackId\022\035\n\nprofile_id\030\006 \001(\tR\tprofileId\022" +
-      "\025\n\006run_id\030\007 \001(\tR\005runId\022\035\n\nattempt_id\030\010 \001" +
-      "(\tR\tattemptId\022\033\n\tresult_id\030\t \001(\tR\010result" +
-      "Id\022\027\n\007unit_id\030\n \001(\tR\006unitId\022\032\n\010revision\030" +
-      "\013 \001(\rR\010revision\022\026\n\006status\030\014 \001(\tR\006status\022" +
-      "&\n\006source\030\r \001(\0132\016.AudioArtifactR\006source\022" +
-      "\035\n\nresult_uri\030\016 \001(\tR\tresultUri\022#\n\rresult" +
-      "_sha256\030\017 \001(\tR\014resultSha256\022\030\n\007primary\030\020" +
-      " \001(\010R\007primary\022\035\n\nerror_code\030\021 \001(\tR\terror" +
-      "Code\022\"\n\014degradations\030\022 \003(\tR\014degradations" +
-      "\022-\n\022segment_timestamps\030\023 \001(\010R\021segmentTim" +
-      "estamps\022\'\n\017word_timestamps\030\024 \001(\010R\016wordTi" +
-      "mestamps\022%\n\016speaker_labels\030\025 \001(\010R\rspeake" +
-      "rLabels\022\'\n\017provenance_json\030\026 \001(\tR\016proven" +
-      "anceJson\022\"\n\rcreated_at_ns\030\027 \001(\003R\013created" +
-      "AtNs\022\022\n\004lang\030\030 \001(\tR\004lang\022\027\n\007plan_id\030\031 \001(" +
-      "\tR\006planId\"Q\n\rWordAlignment\022\027\n\007start_s\030\001 " +
+      "inalTracks\022A\n\021refinement_tracks\030\006 \003(\0132\024." +
+      "AsyncTrackSelectionR\020refinementTracks\022:\n" +
+      "\031refinement_window_samples\030\007 \001(\004R\027refine" +
+      "mentWindowSamples\"\366\001\n\020RefinementWindow\0220" +
+      "\n\trecording\030\001 \001(\0132\022.RecordingFinishedR\tr" +
+      "ecording\022!\n\014start_sample\030\002 \001(\004R\013startSam" +
+      "ple\022\035\n\nend_sample\030\003 \001(\004R\tendSample\022%\n\016wi" +
+      "ndow_samples\030\004 \001(\004R\rwindowSamples\022!\n\014flu" +
+      "sh_reason\030\005 \001(\tR\013flushReason\022$\n\016bff_orig" +
+      "in_uri\030\006 \001(\tR\014bffOriginUri\"\212\002\n\rAudioArti" +
+      "fact\022\037\n\013artifact_id\030\001 \001(\tR\nartifactId\022\037\n" +
+      "\013storage_uri\030\002 \001(\tR\nstorageUri\022\026\n\006sha256" +
+      "\030\003 \001(\tR\006sha256\022\035\n\nsize_bytes\030\004 \001(\004R\tsize" +
+      "Bytes\022\037\n\013sample_rate\030\005 \001(\rR\nsampleRate\022!" +
+      "\n\014sample_count\030\006 \001(\004R\013sampleCount\022\035\n\nmed" +
+      "ia_type\030\007 \001(\tR\tmediaType\022\035\n\nversion_id\030\010" +
+      " \001(\tR\tversionId\"\347\006\n\020FinalTrackResult\022%\n\016" +
+      "schema_version\030\001 \001(\rR\rschemaVersion\022\035\n\ns" +
+      "ession_id\030\002 \001(\tR\tsessionId\022\033\n\ttenant_id\030" +
+      "\003 \001(\tR\010tenantId\022\024\n\005stage\030\004 \001(\tR\005stage\022\031\n" +
+      "\010track_id\030\005 \001(\tR\007trackId\022\035\n\nprofile_id\030\006" +
+      " \001(\tR\tprofileId\022\025\n\006run_id\030\007 \001(\tR\005runId\022\035" +
+      "\n\nattempt_id\030\010 \001(\tR\tattemptId\022\033\n\tresult_" +
+      "id\030\t \001(\tR\010resultId\022\027\n\007unit_id\030\n \001(\tR\006uni" +
+      "tId\022\032\n\010revision\030\013 \001(\rR\010revision\022\026\n\006statu" +
+      "s\030\014 \001(\tR\006status\022&\n\006source\030\r \001(\0132\016.AudioA" +
+      "rtifactR\006source\022\035\n\nresult_uri\030\016 \001(\tR\tres" +
+      "ultUri\022#\n\rresult_sha256\030\017 \001(\tR\014resultSha" +
+      "256\022\030\n\007primary\030\020 \001(\010R\007primary\022\035\n\nerror_c" +
+      "ode\030\021 \001(\tR\terrorCode\022\"\n\014degradations\030\022 \003" +
+      "(\tR\014degradations\022-\n\022segment_timestamps\030\023" +
+      " \001(\010R\021segmentTimestamps\022\'\n\017word_timestam" +
+      "ps\030\024 \001(\010R\016wordTimestamps\022%\n\016speaker_labe" +
+      "ls\030\025 \001(\010R\rspeakerLabels\022\'\n\017provenance_js" +
+      "on\030\026 \001(\tR\016provenanceJson\022\"\n\rcreated_at_n" +
+      "s\030\027 \001(\003R\013createdAtNs\022\022\n\004lang\030\030 \001(\tR\004lang" +
+      "\022\027\n\007plan_id\030\031 \001(\tR\006planId\022>\n\021refinement_" +
+      "window\030\032 \001(\0132\021.RefinementWindowR\020refinem" +
+      "entWindow\"Q\n\rWordAlignment\022\027\n\007start_s\030\001 " +
       "\001(\001R\006startS\022\023\n\005end_s\030\002 \001(\001R\004endS\022\022\n\004text" +
       "\030\003 \001(\tR\004text\"\301\001\n\nFinalEvent\022\035\n\nsession_i" +
       "d\030\001 \001(\tR\tsessionId\022\027\n\007start_s\030\002 \001(\001R\006sta" +
@@ -274,51 +290,57 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     internal_static_AsyncTrackPlan_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AsyncTrackPlan_descriptor,
-        new java.lang.String[] { "SchemaVersion", "PlanId", "TenantId", "SessionId", "FinalTracks", });
-    internal_static_AudioArtifact_descriptor =
+        new java.lang.String[] { "SchemaVersion", "PlanId", "TenantId", "SessionId", "FinalTracks", "RefinementTracks", "RefinementWindowSamples", });
+    internal_static_RefinementWindow_descriptor =
       getDescriptor().getMessageType(7);
+    internal_static_RefinementWindow_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_RefinementWindow_descriptor,
+        new java.lang.String[] { "Recording", "StartSample", "EndSample", "WindowSamples", "FlushReason", "BffOriginUri", });
+    internal_static_AudioArtifact_descriptor =
+      getDescriptor().getMessageType(8);
     internal_static_AudioArtifact_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AudioArtifact_descriptor,
         new java.lang.String[] { "ArtifactId", "StorageUri", "Sha256", "SizeBytes", "SampleRate", "SampleCount", "MediaType", "VersionId", });
     internal_static_FinalTrackResult_descriptor =
-      getDescriptor().getMessageType(8);
+      getDescriptor().getMessageType(9);
     internal_static_FinalTrackResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_FinalTrackResult_descriptor,
-        new java.lang.String[] { "SchemaVersion", "SessionId", "TenantId", "Stage", "TrackId", "ProfileId", "RunId", "AttemptId", "ResultId", "UnitId", "Revision", "Status", "Source", "ResultUri", "ResultSha256", "Primary", "ErrorCode", "Degradations", "SegmentTimestamps", "WordTimestamps", "SpeakerLabels", "ProvenanceJson", "CreatedAtNs", "Lang", "PlanId", });
+        new java.lang.String[] { "SchemaVersion", "SessionId", "TenantId", "Stage", "TrackId", "ProfileId", "RunId", "AttemptId", "ResultId", "UnitId", "Revision", "Status", "Source", "ResultUri", "ResultSha256", "Primary", "ErrorCode", "Degradations", "SegmentTimestamps", "WordTimestamps", "SpeakerLabels", "ProvenanceJson", "CreatedAtNs", "Lang", "PlanId", "RefinementWindow", });
     internal_static_WordAlignment_descriptor =
-      getDescriptor().getMessageType(9);
+      getDescriptor().getMessageType(10);
     internal_static_WordAlignment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_WordAlignment_descriptor,
         new java.lang.String[] { "StartS", "EndS", "Text", });
     internal_static_FinalEvent_descriptor =
-      getDescriptor().getMessageType(10);
+      getDescriptor().getMessageType(11);
     internal_static_FinalEvent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_FinalEvent_descriptor,
         new java.lang.String[] { "SessionId", "StartS", "EndS", "Text", "Speaker", "Lang", "Words", });
     internal_static_RealtimeCapabilitiesRequest_descriptor =
-      getDescriptor().getMessageType(11);
+      getDescriptor().getMessageType(12);
     internal_static_RealtimeCapabilitiesRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_RealtimeCapabilitiesRequest_descriptor,
         new java.lang.String[] { });
     internal_static_RealtimeCapabilities_descriptor =
-      getDescriptor().getMessageType(12);
+      getDescriptor().getMessageType(13);
     internal_static_RealtimeCapabilities_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_RealtimeCapabilities_descriptor,
         new java.lang.String[] { "ProviderProfileId", "WindowedRealtime", "NativeStreaming", "Batch", "SegmentTimestamps", "WordTimestamps", "LanguageDetection", "SupportedLanguages", "Stateful", "PreferredSampleRate", "MaximumAudioSeconds", "MaximumConcurrentSessions", "Runtime", "ModelRevision", "ModelDigest", "ImplementationRevision", "SpeakerLabels", "AlignedDiarizedLanguages", });
     internal_static_SessionTranscriptSegment_descriptor =
-      getDescriptor().getMessageType(13);
+      getDescriptor().getMessageType(14);
     internal_static_SessionTranscriptSegment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SessionTranscriptSegment_descriptor,
         new java.lang.String[] { "StartS", "EndS", "Text", "Speaker", "Words", });
     internal_static_SessionTranscript_descriptor =
-      getDescriptor().getMessageType(14);
+      getDescriptor().getMessageType(15);
     internal_static_SessionTranscript_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SessionTranscript_descriptor,

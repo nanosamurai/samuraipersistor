@@ -31,9 +31,9 @@ exactly-once delivery claim. Transcript bodies, audio locations and raw rejected
 payloads are not included in the new consumer's logs or DLQ records.
 
 The feature defaults off and starts in Community Edition mode when enabled.
-The existing refined lane is unchanged. This is a local spike, not production
-promotion: shared source/artifact cleanup, broader failure scheduling, a second
-real profile and windowed refinement remain later work. The standalone
+Refinement opt-in is described in [refinement tracks](refinement-tracks.md).
+This is a local spike, not production promotion: shared source/artifact cleanup,
+broader failure scheduling and a second real profile remain later work. The standalone
 `nanosamurai` Compose harness verifies real Kafka, S3 and PostgreSQL behavior.
 
 Tests include a synthetic Python-generated protobuf/header vector, two SQL

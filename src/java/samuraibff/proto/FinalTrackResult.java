@@ -831,6 +831,44 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int REFINEMENT_WINDOW_FIELD_NUMBER = 26;
+  private samuraibff.proto.RefinementWindow refinementWindow_;
+  /**
+   * <pre>
+   * Present only on transcripts.refined-tracks (stage=refined).
+   * </pre>
+   *
+   * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+   * @return Whether the refinementWindow field is set.
+   */
+  @java.lang.Override
+  public boolean hasRefinementWindow() {
+    return ((bitField0_ & 0x00000002) != 0);
+  }
+  /**
+   * <pre>
+   * Present only on transcripts.refined-tracks (stage=refined).
+   * </pre>
+   *
+   * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+   * @return The refinementWindow.
+   */
+  @java.lang.Override
+  public samuraibff.proto.RefinementWindow getRefinementWindow() {
+    return refinementWindow_ == null ? samuraibff.proto.RefinementWindow.getDefaultInstance() : refinementWindow_;
+  }
+  /**
+   * <pre>
+   * Present only on transcripts.refined-tracks (stage=refined).
+   * </pre>
+   *
+   * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.RefinementWindowOrBuilder getRefinementWindowOrBuilder() {
+    return refinementWindow_ == null ? samuraibff.proto.RefinementWindow.getDefaultInstance() : refinementWindow_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -919,6 +957,9 @@ private static final long serialVersionUID = 0L;
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(planId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 25, planId_);
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      output.writeMessage(26, getRefinementWindow());
     }
     getUnknownFields().writeTo(output);
   }
@@ -1017,6 +1058,10 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(planId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(25, planId_);
     }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(26, getRefinementWindow());
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -1085,6 +1130,11 @@ private static final long serialVersionUID = 0L;
         .equals(other.getLang())) return false;
     if (!getPlanId()
         .equals(other.getPlanId())) return false;
+    if (hasRefinementWindow() != other.hasRefinementWindow()) return false;
+    if (hasRefinementWindow()) {
+      if (!getRefinementWindow()
+          .equals(other.getRefinementWindow())) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -1155,6 +1205,10 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getLang().hashCode();
     hash = (37 * hash) + PLAN_ID_FIELD_NUMBER;
     hash = (53 * hash) + getPlanId().hashCode();
+    if (hasRefinementWindow()) {
+      hash = (37 * hash) + REFINEMENT_WINDOW_FIELD_NUMBER;
+      hash = (53 * hash) + getRefinementWindow().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -1291,6 +1345,7 @@ private static final long serialVersionUID = 0L;
       if (com.google.protobuf.GeneratedMessage
               .alwaysUseFieldBuilders) {
         internalGetSourceFieldBuilder();
+        internalGetRefinementWindowFieldBuilder();
       }
     }
     @java.lang.Override
@@ -1327,6 +1382,11 @@ private static final long serialVersionUID = 0L;
       createdAtNs_ = 0L;
       lang_ = "";
       planId_ = "";
+      refinementWindow_ = null;
+      if (refinementWindowBuilder_ != null) {
+        refinementWindowBuilder_.dispose();
+        refinementWindowBuilder_ = null;
+      }
       return this;
     }
 
@@ -1439,6 +1499,12 @@ private static final long serialVersionUID = 0L;
       }
       if (((from_bitField0_ & 0x01000000) != 0)) {
         result.planId_ = planId_;
+      }
+      if (((from_bitField0_ & 0x02000000) != 0)) {
+        result.refinementWindow_ = refinementWindowBuilder_ == null
+            ? refinementWindow_
+            : refinementWindowBuilder_.build();
+        to_bitField0_ |= 0x00000002;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -1568,6 +1634,9 @@ private static final long serialVersionUID = 0L;
         planId_ = other.planId_;
         bitField0_ |= 0x01000000;
         onChanged();
+      }
+      if (other.hasRefinementWindow()) {
+        mergeRefinementWindow(other.getRefinementWindow());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -1723,6 +1792,13 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x01000000;
               break;
             } // case 202
+            case 210: {
+              input.readMessage(
+                  internalGetRefinementWindowFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              bitField0_ |= 0x02000000;
+              break;
+            } // case 210
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -3346,6 +3422,163 @@ private static final long serialVersionUID = 0L;
       bitField0_ |= 0x01000000;
       onChanged();
       return this;
+    }
+
+    private samuraibff.proto.RefinementWindow refinementWindow_;
+    private com.google.protobuf.SingleFieldBuilder<
+        samuraibff.proto.RefinementWindow, samuraibff.proto.RefinementWindow.Builder, samuraibff.proto.RefinementWindowOrBuilder> refinementWindowBuilder_;
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     * @return Whether the refinementWindow field is set.
+     */
+    public boolean hasRefinementWindow() {
+      return ((bitField0_ & 0x02000000) != 0);
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     * @return The refinementWindow.
+     */
+    public samuraibff.proto.RefinementWindow getRefinementWindow() {
+      if (refinementWindowBuilder_ == null) {
+        return refinementWindow_ == null ? samuraibff.proto.RefinementWindow.getDefaultInstance() : refinementWindow_;
+      } else {
+        return refinementWindowBuilder_.getMessage();
+      }
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     */
+    public Builder setRefinementWindow(samuraibff.proto.RefinementWindow value) {
+      if (refinementWindowBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        refinementWindow_ = value;
+      } else {
+        refinementWindowBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x02000000;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     */
+    public Builder setRefinementWindow(
+        samuraibff.proto.RefinementWindow.Builder builderForValue) {
+      if (refinementWindowBuilder_ == null) {
+        refinementWindow_ = builderForValue.build();
+      } else {
+        refinementWindowBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x02000000;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     */
+    public Builder mergeRefinementWindow(samuraibff.proto.RefinementWindow value) {
+      if (refinementWindowBuilder_ == null) {
+        if (((bitField0_ & 0x02000000) != 0) &&
+          refinementWindow_ != null &&
+          refinementWindow_ != samuraibff.proto.RefinementWindow.getDefaultInstance()) {
+          getRefinementWindowBuilder().mergeFrom(value);
+        } else {
+          refinementWindow_ = value;
+        }
+      } else {
+        refinementWindowBuilder_.mergeFrom(value);
+      }
+      if (refinementWindow_ != null) {
+        bitField0_ |= 0x02000000;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     */
+    public Builder clearRefinementWindow() {
+      bitField0_ = (bitField0_ & ~0x02000000);
+      refinementWindow_ = null;
+      if (refinementWindowBuilder_ != null) {
+        refinementWindowBuilder_.dispose();
+        refinementWindowBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     */
+    public samuraibff.proto.RefinementWindow.Builder getRefinementWindowBuilder() {
+      bitField0_ |= 0x02000000;
+      onChanged();
+      return internalGetRefinementWindowFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     */
+    public samuraibff.proto.RefinementWindowOrBuilder getRefinementWindowOrBuilder() {
+      if (refinementWindowBuilder_ != null) {
+        return refinementWindowBuilder_.getMessageOrBuilder();
+      } else {
+        return refinementWindow_ == null ?
+            samuraibff.proto.RefinementWindow.getDefaultInstance() : refinementWindow_;
+      }
+    }
+    /**
+     * <pre>
+     * Present only on transcripts.refined-tracks (stage=refined).
+     * </pre>
+     *
+     * <code>.RefinementWindow refinement_window = 26 [json_name = "refinementWindow"];</code>
+     */
+    private com.google.protobuf.SingleFieldBuilder<
+        samuraibff.proto.RefinementWindow, samuraibff.proto.RefinementWindow.Builder, samuraibff.proto.RefinementWindowOrBuilder> 
+        internalGetRefinementWindowFieldBuilder() {
+      if (refinementWindowBuilder_ == null) {
+        refinementWindowBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+            samuraibff.proto.RefinementWindow, samuraibff.proto.RefinementWindow.Builder, samuraibff.proto.RefinementWindowOrBuilder>(
+                getRefinementWindow(),
+                getParentForChildren(),
+                isClean());
+        refinementWindow_ = null;
+      }
+      return refinementWindowBuilder_;
     }
 
     // @@protoc_insertion_point(builder_scope:FinalTrackResult)

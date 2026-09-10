@@ -32,6 +32,7 @@ private static final long serialVersionUID = 0L;
     tenantId_ = "";
     sessionId_ = "";
     finalTracks_ = java.util.Collections.emptyList();
+    refinementTracks_ = java.util.Collections.emptyList();
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -216,6 +217,58 @@ private static final long serialVersionUID = 0L;
     return finalTracks_.get(index);
   }
 
+  public static final int REFINEMENT_TRACKS_FIELD_NUMBER = 6;
+  @SuppressWarnings("serial")
+  private java.util.List<samuraibff.proto.AsyncTrackSelection> refinementTracks_;
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  @java.lang.Override
+  public java.util.List<samuraibff.proto.AsyncTrackSelection> getRefinementTracksList() {
+    return refinementTracks_;
+  }
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  @java.lang.Override
+  public java.util.List<? extends samuraibff.proto.AsyncTrackSelectionOrBuilder> 
+      getRefinementTracksOrBuilderList() {
+    return refinementTracks_;
+  }
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  @java.lang.Override
+  public int getRefinementTracksCount() {
+    return refinementTracks_.size();
+  }
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.AsyncTrackSelection getRefinementTracks(int index) {
+    return refinementTracks_.get(index);
+  }
+  /**
+   * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.AsyncTrackSelectionOrBuilder getRefinementTracksOrBuilder(
+      int index) {
+    return refinementTracks_.get(index);
+  }
+
+  public static final int REFINEMENT_WINDOW_SAMPLES_FIELD_NUMBER = 7;
+  private long refinementWindowSamples_ = 0L;
+  /**
+   * <code>uint64 refinement_window_samples = 7 [json_name = "refinementWindowSamples"];</code>
+   * @return The refinementWindowSamples.
+   */
+  @java.lang.Override
+  public long getRefinementWindowSamples() {
+    return refinementWindowSamples_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -245,6 +298,12 @@ private static final long serialVersionUID = 0L;
     for (int i = 0; i < finalTracks_.size(); i++) {
       output.writeMessage(5, finalTracks_.get(i));
     }
+    for (int i = 0; i < refinementTracks_.size(); i++) {
+      output.writeMessage(6, refinementTracks_.get(i));
+    }
+    if (refinementWindowSamples_ != 0L) {
+      output.writeUInt64(7, refinementWindowSamples_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -271,6 +330,14 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(5, finalTracks_.get(i));
     }
+    for (int i = 0; i < refinementTracks_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(6, refinementTracks_.get(i));
+    }
+    if (refinementWindowSamples_ != 0L) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeUInt64Size(7, refinementWindowSamples_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -296,6 +363,10 @@ private static final long serialVersionUID = 0L;
         .equals(other.getSessionId())) return false;
     if (!getFinalTracksList()
         .equals(other.getFinalTracksList())) return false;
+    if (!getRefinementTracksList()
+        .equals(other.getRefinementTracksList())) return false;
+    if (getRefinementWindowSamples()
+        != other.getRefinementWindowSamples()) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -319,6 +390,13 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + FINAL_TRACKS_FIELD_NUMBER;
       hash = (53 * hash) + getFinalTracksList().hashCode();
     }
+    if (getRefinementTracksCount() > 0) {
+      hash = (37 * hash) + REFINEMENT_TRACKS_FIELD_NUMBER;
+      hash = (53 * hash) + getRefinementTracksList().hashCode();
+    }
+    hash = (37 * hash) + REFINEMENT_WINDOW_SAMPLES_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getRefinementWindowSamples());
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -461,6 +539,14 @@ private static final long serialVersionUID = 0L;
         finalTracksBuilder_.clear();
       }
       bitField0_ = (bitField0_ & ~0x00000010);
+      if (refinementTracksBuilder_ == null) {
+        refinementTracks_ = java.util.Collections.emptyList();
+      } else {
+        refinementTracks_ = null;
+        refinementTracksBuilder_.clear();
+      }
+      bitField0_ = (bitField0_ & ~0x00000020);
+      refinementWindowSamples_ = 0L;
       return this;
     }
 
@@ -503,6 +589,15 @@ private static final long serialVersionUID = 0L;
       } else {
         result.finalTracks_ = finalTracksBuilder_.build();
       }
+      if (refinementTracksBuilder_ == null) {
+        if (((bitField0_ & 0x00000020) != 0)) {
+          refinementTracks_ = java.util.Collections.unmodifiableList(refinementTracks_);
+          bitField0_ = (bitField0_ & ~0x00000020);
+        }
+        result.refinementTracks_ = refinementTracks_;
+      } else {
+        result.refinementTracks_ = refinementTracksBuilder_.build();
+      }
     }
 
     private void buildPartial0(samuraibff.proto.AsyncTrackPlan result) {
@@ -518,6 +613,9 @@ private static final long serialVersionUID = 0L;
       }
       if (((from_bitField0_ & 0x00000008) != 0)) {
         result.sessionId_ = sessionId_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.refinementWindowSamples_ = refinementWindowSamples_;
       }
     }
 
@@ -576,6 +674,35 @@ private static final long serialVersionUID = 0L;
             finalTracksBuilder_.addAllMessages(other.finalTracks_);
           }
         }
+      }
+      if (refinementTracksBuilder_ == null) {
+        if (!other.refinementTracks_.isEmpty()) {
+          if (refinementTracks_.isEmpty()) {
+            refinementTracks_ = other.refinementTracks_;
+            bitField0_ = (bitField0_ & ~0x00000020);
+          } else {
+            ensureRefinementTracksIsMutable();
+            refinementTracks_.addAll(other.refinementTracks_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.refinementTracks_.isEmpty()) {
+          if (refinementTracksBuilder_.isEmpty()) {
+            refinementTracksBuilder_.dispose();
+            refinementTracksBuilder_ = null;
+            refinementTracks_ = other.refinementTracks_;
+            bitField0_ = (bitField0_ & ~0x00000020);
+            refinementTracksBuilder_ = 
+              com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                 internalGetRefinementTracksFieldBuilder() : null;
+          } else {
+            refinementTracksBuilder_.addAllMessages(other.refinementTracks_);
+          }
+        }
+      }
+      if (other.getRefinementWindowSamples() != 0L) {
+        setRefinementWindowSamples(other.getRefinementWindowSamples());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -636,6 +763,24 @@ private static final long serialVersionUID = 0L;
               }
               break;
             } // case 42
+            case 50: {
+              samuraibff.proto.AsyncTrackSelection m =
+                  input.readMessage(
+                      samuraibff.proto.AsyncTrackSelection.parser(),
+                      extensionRegistry);
+              if (refinementTracksBuilder_ == null) {
+                ensureRefinementTracksIsMutable();
+                refinementTracks_.add(m);
+              } else {
+                refinementTracksBuilder_.addMessage(m);
+              }
+              break;
+            } // case 50
+            case 56: {
+              refinementWindowSamples_ = input.readUInt64();
+              bitField0_ |= 0x00000040;
+              break;
+            } // case 56
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -1139,6 +1284,278 @@ private static final long serialVersionUID = 0L;
         finalTracks_ = null;
       }
       return finalTracksBuilder_;
+    }
+
+    private java.util.List<samuraibff.proto.AsyncTrackSelection> refinementTracks_ =
+      java.util.Collections.emptyList();
+    private void ensureRefinementTracksIsMutable() {
+      if (!((bitField0_ & 0x00000020) != 0)) {
+        refinementTracks_ = new java.util.ArrayList<samuraibff.proto.AsyncTrackSelection>(refinementTracks_);
+        bitField0_ |= 0x00000020;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.AsyncTrackSelection, samuraibff.proto.AsyncTrackSelection.Builder, samuraibff.proto.AsyncTrackSelectionOrBuilder> refinementTracksBuilder_;
+
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public java.util.List<samuraibff.proto.AsyncTrackSelection> getRefinementTracksList() {
+      if (refinementTracksBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(refinementTracks_);
+      } else {
+        return refinementTracksBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public int getRefinementTracksCount() {
+      if (refinementTracksBuilder_ == null) {
+        return refinementTracks_.size();
+      } else {
+        return refinementTracksBuilder_.getCount();
+      }
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public samuraibff.proto.AsyncTrackSelection getRefinementTracks(int index) {
+      if (refinementTracksBuilder_ == null) {
+        return refinementTracks_.get(index);
+      } else {
+        return refinementTracksBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder setRefinementTracks(
+        int index, samuraibff.proto.AsyncTrackSelection value) {
+      if (refinementTracksBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureRefinementTracksIsMutable();
+        refinementTracks_.set(index, value);
+        onChanged();
+      } else {
+        refinementTracksBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder setRefinementTracks(
+        int index, samuraibff.proto.AsyncTrackSelection.Builder builderForValue) {
+      if (refinementTracksBuilder_ == null) {
+        ensureRefinementTracksIsMutable();
+        refinementTracks_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        refinementTracksBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder addRefinementTracks(samuraibff.proto.AsyncTrackSelection value) {
+      if (refinementTracksBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureRefinementTracksIsMutable();
+        refinementTracks_.add(value);
+        onChanged();
+      } else {
+        refinementTracksBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder addRefinementTracks(
+        int index, samuraibff.proto.AsyncTrackSelection value) {
+      if (refinementTracksBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureRefinementTracksIsMutable();
+        refinementTracks_.add(index, value);
+        onChanged();
+      } else {
+        refinementTracksBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder addRefinementTracks(
+        samuraibff.proto.AsyncTrackSelection.Builder builderForValue) {
+      if (refinementTracksBuilder_ == null) {
+        ensureRefinementTracksIsMutable();
+        refinementTracks_.add(builderForValue.build());
+        onChanged();
+      } else {
+        refinementTracksBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder addRefinementTracks(
+        int index, samuraibff.proto.AsyncTrackSelection.Builder builderForValue) {
+      if (refinementTracksBuilder_ == null) {
+        ensureRefinementTracksIsMutable();
+        refinementTracks_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        refinementTracksBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder addAllRefinementTracks(
+        java.lang.Iterable<? extends samuraibff.proto.AsyncTrackSelection> values) {
+      if (refinementTracksBuilder_ == null) {
+        ensureRefinementTracksIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, refinementTracks_);
+        onChanged();
+      } else {
+        refinementTracksBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder clearRefinementTracks() {
+      if (refinementTracksBuilder_ == null) {
+        refinementTracks_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        onChanged();
+      } else {
+        refinementTracksBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public Builder removeRefinementTracks(int index) {
+      if (refinementTracksBuilder_ == null) {
+        ensureRefinementTracksIsMutable();
+        refinementTracks_.remove(index);
+        onChanged();
+      } else {
+        refinementTracksBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public samuraibff.proto.AsyncTrackSelection.Builder getRefinementTracksBuilder(
+        int index) {
+      return internalGetRefinementTracksFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public samuraibff.proto.AsyncTrackSelectionOrBuilder getRefinementTracksOrBuilder(
+        int index) {
+      if (refinementTracksBuilder_ == null) {
+        return refinementTracks_.get(index);  } else {
+        return refinementTracksBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public java.util.List<? extends samuraibff.proto.AsyncTrackSelectionOrBuilder> 
+         getRefinementTracksOrBuilderList() {
+      if (refinementTracksBuilder_ != null) {
+        return refinementTracksBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(refinementTracks_);
+      }
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public samuraibff.proto.AsyncTrackSelection.Builder addRefinementTracksBuilder() {
+      return internalGetRefinementTracksFieldBuilder().addBuilder(
+          samuraibff.proto.AsyncTrackSelection.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public samuraibff.proto.AsyncTrackSelection.Builder addRefinementTracksBuilder(
+        int index) {
+      return internalGetRefinementTracksFieldBuilder().addBuilder(
+          index, samuraibff.proto.AsyncTrackSelection.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .AsyncTrackSelection refinement_tracks = 6 [json_name = "refinementTracks"];</code>
+     */
+    public java.util.List<samuraibff.proto.AsyncTrackSelection.Builder> 
+         getRefinementTracksBuilderList() {
+      return internalGetRefinementTracksFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.AsyncTrackSelection, samuraibff.proto.AsyncTrackSelection.Builder, samuraibff.proto.AsyncTrackSelectionOrBuilder> 
+        internalGetRefinementTracksFieldBuilder() {
+      if (refinementTracksBuilder_ == null) {
+        refinementTracksBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+            samuraibff.proto.AsyncTrackSelection, samuraibff.proto.AsyncTrackSelection.Builder, samuraibff.proto.AsyncTrackSelectionOrBuilder>(
+                refinementTracks_,
+                ((bitField0_ & 0x00000020) != 0),
+                getParentForChildren(),
+                isClean());
+        refinementTracks_ = null;
+      }
+      return refinementTracksBuilder_;
+    }
+
+    private long refinementWindowSamples_ ;
+    /**
+     * <code>uint64 refinement_window_samples = 7 [json_name = "refinementWindowSamples"];</code>
+     * @return The refinementWindowSamples.
+     */
+    @java.lang.Override
+    public long getRefinementWindowSamples() {
+      return refinementWindowSamples_;
+    }
+    /**
+     * <code>uint64 refinement_window_samples = 7 [json_name = "refinementWindowSamples"];</code>
+     * @param value The refinementWindowSamples to set.
+     * @return This builder for chaining.
+     */
+    public Builder setRefinementWindowSamples(long value) {
+
+      refinementWindowSamples_ = value;
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>uint64 refinement_window_samples = 7 [json_name = "refinementWindowSamples"];</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearRefinementWindowSamples() {
+      bitField0_ = (bitField0_ & ~0x00000040);
+      refinementWindowSamples_ = 0L;
+      onChanged();
+      return this;
     }
 
     // @@protoc_insertion_point(builder_scope:AsyncTrackPlan)
