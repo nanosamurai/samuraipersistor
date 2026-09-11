@@ -67,7 +67,7 @@ The `clj-paren-repair` tool exhibits the following behavior:
 
 The Community Edition consists of:
 
-- **SamuraiBFF** (https://github.com/mikub/samuraibff): API, browser UI,
+- **SamuraiBFF** (https://github.com/nanosamurai/samuraibff): API, browser UI,
   authentication, and orchestration.
 - **xamurai** (https://github.com/nanosamurai/xamurai): speech-to-text and
   speaker-diarization workers.
