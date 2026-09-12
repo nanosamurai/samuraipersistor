@@ -41,18 +41,6 @@ public interface FinalTrackResultOrBuilder extends
       getTenantIdBytes();
 
   /**
-   * <code>string stage = 4 [json_name = "stage"];</code>
-   * @return The stage.
-   */
-  java.lang.String getStage();
-  /**
-   * <code>string stage = 4 [json_name = "stage"];</code>
-   * @return The bytes for stage.
-   */
-  com.google.protobuf.ByteString
-      getStageBytes();
-
-  /**
    * <code>string track_id = 5 [json_name = "trackId"];</code>
    * @return The trackId.
    */
@@ -77,30 +65,6 @@ public interface FinalTrackResultOrBuilder extends
       getProfileIdBytes();
 
   /**
-   * <code>string run_id = 7 [json_name = "runId"];</code>
-   * @return The runId.
-   */
-  java.lang.String getRunId();
-  /**
-   * <code>string run_id = 7 [json_name = "runId"];</code>
-   * @return The bytes for runId.
-   */
-  com.google.protobuf.ByteString
-      getRunIdBytes();
-
-  /**
-   * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-   * @return The attemptId.
-   */
-  java.lang.String getAttemptId();
-  /**
-   * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-   * @return The bytes for attemptId.
-   */
-  com.google.protobuf.ByteString
-      getAttemptIdBytes();
-
-  /**
    * <code>string result_id = 9 [json_name = "resultId"];</code>
    * @return The resultId.
    */
@@ -111,24 +75,6 @@ public interface FinalTrackResultOrBuilder extends
    */
   com.google.protobuf.ByteString
       getResultIdBytes();
-
-  /**
-   * <code>string unit_id = 10 [json_name = "unitId"];</code>
-   * @return The unitId.
-   */
-  java.lang.String getUnitId();
-  /**
-   * <code>string unit_id = 10 [json_name = "unitId"];</code>
-   * @return The bytes for unitId.
-   */
-  com.google.protobuf.ByteString
-      getUnitIdBytes();
-
-  /**
-   * <code>uint32 revision = 11 [json_name = "revision"];</code>
-   * @return The revision.
-   */
-  int getRevision();
 
   /**
    * <code>string status = 12 [json_name = "status"];</code>
@@ -156,36 +102,6 @@ public interface FinalTrackResultOrBuilder extends
    * <code>.AudioArtifact source = 13 [json_name = "source"];</code>
    */
   samuraibff.proto.AudioArtifactOrBuilder getSourceOrBuilder();
-
-  /**
-   * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-   * @return The resultUri.
-   */
-  java.lang.String getResultUri();
-  /**
-   * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-   * @return The bytes for resultUri.
-   */
-  com.google.protobuf.ByteString
-      getResultUriBytes();
-
-  /**
-   * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-   * @return The resultSha256.
-   */
-  java.lang.String getResultSha256();
-  /**
-   * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-   * @return The bytes for resultSha256.
-   */
-  com.google.protobuf.ByteString
-      getResultSha256Bytes();
-
-  /**
-   * <code>bool primary = 16 [json_name = "primary"];</code>
-   * @return The primary.
-   */
-  boolean getPrimary();
 
   /**
    * <code>string error_code = 17 [json_name = "errorCode"];</code>
@@ -243,18 +159,6 @@ public interface FinalTrackResultOrBuilder extends
   boolean getSpeakerLabels();
 
   /**
-   * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-   * @return The provenanceJson.
-   */
-  java.lang.String getProvenanceJson();
-  /**
-   * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-   * @return The bytes for provenanceJson.
-   */
-  com.google.protobuf.ByteString
-      getProvenanceJsonBytes();
-
-  /**
    * <code>int64 created_at_ns = 23 [json_name = "createdAtNs"];</code>
    * @return The createdAtNs.
    */
@@ -283,4 +187,48 @@ public interface FinalTrackResultOrBuilder extends
    */
   com.google.protobuf.ByteString
       getPlanIdBytes();
+
+  /**
+   * <pre>
+   * Tag 26 belongs to refinement_window in the preserved refinement draft.
+   * </pre>
+   *
+   * <code>string full_text = 27 [json_name = "fullText"];</code>
+   * @return The fullText.
+   */
+  java.lang.String getFullText();
+  /**
+   * <pre>
+   * Tag 26 belongs to refinement_window in the preserved refinement draft.
+   * </pre>
+   *
+   * <code>string full_text = 27 [json_name = "fullText"];</code>
+   * @return The bytes for fullText.
+   */
+  com.google.protobuf.ByteString
+      getFullTextBytes();
+
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  java.util.List<samuraibff.proto.SessionTranscriptSegment> 
+      getSegmentsList();
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  samuraibff.proto.SessionTranscriptSegment getSegments(int index);
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  int getSegmentsCount();
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+      getSegmentsOrBuilderList();
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
+      int index);
 }

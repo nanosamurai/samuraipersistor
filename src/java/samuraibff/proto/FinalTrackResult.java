@@ -7,8 +7,8 @@ package samuraibff.proto;
 
 /**
  * <pre>
- * Bounded envelope on transcripts.final-tracks. Transcript JSON is in S3.
- * Delivery may repeat; result_id identifies one immutable logical outcome.
+ * Inline terminal outcome on transcripts.final-tracks (schema_version = 2).
+ * Persistor accepts the first result in Postgres and publishes the legacy primary.
  * </pre>
  *
  * Protobuf type {@code FinalTrackResult}
@@ -35,22 +35,17 @@ private static final long serialVersionUID = 0L;
   private FinalTrackResult() {
     sessionId_ = "";
     tenantId_ = "";
-    stage_ = "";
     trackId_ = "";
     profileId_ = "";
-    runId_ = "";
-    attemptId_ = "";
     resultId_ = "";
-    unitId_ = "";
     status_ = "";
-    resultUri_ = "";
-    resultSha256_ = "";
     errorCode_ = "";
     degradations_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
-    provenanceJson_ = "";
     lang_ = "";
     planId_ = "";
+    fullText_ = "";
+    segments_ = java.util.Collections.emptyList();
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -156,45 +151,6 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int STAGE_FIELD_NUMBER = 4;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object stage_ = "";
-  /**
-   * <code>string stage = 4 [json_name = "stage"];</code>
-   * @return The stage.
-   */
-  @java.lang.Override
-  public java.lang.String getStage() {
-    java.lang.Object ref = stage_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      stage_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string stage = 4 [json_name = "stage"];</code>
-   * @return The bytes for stage.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getStageBytes() {
-    java.lang.Object ref = stage_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      stage_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
   public static final int TRACK_ID_FIELD_NUMBER = 5;
   @SuppressWarnings("serial")
   private volatile java.lang.Object trackId_ = "";
@@ -273,84 +229,6 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int RUN_ID_FIELD_NUMBER = 7;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object runId_ = "";
-  /**
-   * <code>string run_id = 7 [json_name = "runId"];</code>
-   * @return The runId.
-   */
-  @java.lang.Override
-  public java.lang.String getRunId() {
-    java.lang.Object ref = runId_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      runId_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string run_id = 7 [json_name = "runId"];</code>
-   * @return The bytes for runId.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getRunIdBytes() {
-    java.lang.Object ref = runId_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      runId_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int ATTEMPT_ID_FIELD_NUMBER = 8;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object attemptId_ = "";
-  /**
-   * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-   * @return The attemptId.
-   */
-  @java.lang.Override
-  public java.lang.String getAttemptId() {
-    java.lang.Object ref = attemptId_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      attemptId_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-   * @return The bytes for attemptId.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getAttemptIdBytes() {
-    java.lang.Object ref = attemptId_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      attemptId_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
   public static final int RESULT_ID_FIELD_NUMBER = 9;
   @SuppressWarnings("serial")
   private volatile java.lang.Object resultId_ = "";
@@ -388,56 +266,6 @@ private static final long serialVersionUID = 0L;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
-  }
-
-  public static final int UNIT_ID_FIELD_NUMBER = 10;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object unitId_ = "";
-  /**
-   * <code>string unit_id = 10 [json_name = "unitId"];</code>
-   * @return The unitId.
-   */
-  @java.lang.Override
-  public java.lang.String getUnitId() {
-    java.lang.Object ref = unitId_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      unitId_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string unit_id = 10 [json_name = "unitId"];</code>
-   * @return The bytes for unitId.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getUnitIdBytes() {
-    java.lang.Object ref = unitId_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      unitId_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int REVISION_FIELD_NUMBER = 11;
-  private int revision_ = 0;
-  /**
-   * <code>uint32 revision = 11 [json_name = "revision"];</code>
-   * @return The revision.
-   */
-  @java.lang.Override
-  public int getRevision() {
-    return revision_;
   }
 
   public static final int STATUS_FIELD_NUMBER = 12;
@@ -503,95 +331,6 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public samuraibff.proto.AudioArtifactOrBuilder getSourceOrBuilder() {
     return source_ == null ? samuraibff.proto.AudioArtifact.getDefaultInstance() : source_;
-  }
-
-  public static final int RESULT_URI_FIELD_NUMBER = 14;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object resultUri_ = "";
-  /**
-   * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-   * @return The resultUri.
-   */
-  @java.lang.Override
-  public java.lang.String getResultUri() {
-    java.lang.Object ref = resultUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      resultUri_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-   * @return The bytes for resultUri.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getResultUriBytes() {
-    java.lang.Object ref = resultUri_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      resultUri_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int RESULT_SHA256_FIELD_NUMBER = 15;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object resultSha256_ = "";
-  /**
-   * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-   * @return The resultSha256.
-   */
-  @java.lang.Override
-  public java.lang.String getResultSha256() {
-    java.lang.Object ref = resultSha256_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      resultSha256_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-   * @return The bytes for resultSha256.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getResultSha256Bytes() {
-    java.lang.Object ref = resultSha256_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      resultSha256_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int PRIMARY_FIELD_NUMBER = 16;
-  private boolean primary_ = false;
-  /**
-   * <code>bool primary = 16 [json_name = "primary"];</code>
-   * @return The primary.
-   */
-  @java.lang.Override
-  public boolean getPrimary() {
-    return primary_;
   }
 
   public static final int ERROR_CODE_FIELD_NUMBER = 17;
@@ -703,45 +442,6 @@ private static final long serialVersionUID = 0L;
     return speakerLabels_;
   }
 
-  public static final int PROVENANCE_JSON_FIELD_NUMBER = 22;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object provenanceJson_ = "";
-  /**
-   * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-   * @return The provenanceJson.
-   */
-  @java.lang.Override
-  public java.lang.String getProvenanceJson() {
-    java.lang.Object ref = provenanceJson_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      provenanceJson_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-   * @return The bytes for provenanceJson.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getProvenanceJsonBytes() {
-    java.lang.Object ref = provenanceJson_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      provenanceJson_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
   public static final int CREATED_AT_NS_FIELD_NUMBER = 23;
   private long createdAtNs_ = 0L;
   /**
@@ -831,6 +531,94 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int FULL_TEXT_FIELD_NUMBER = 27;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object fullText_ = "";
+  /**
+   * <pre>
+   * Tag 26 belongs to refinement_window in the preserved refinement draft.
+   * </pre>
+   *
+   * <code>string full_text = 27 [json_name = "fullText"];</code>
+   * @return The fullText.
+   */
+  @java.lang.Override
+  public java.lang.String getFullText() {
+    java.lang.Object ref = fullText_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      fullText_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * Tag 26 belongs to refinement_window in the preserved refinement draft.
+   * </pre>
+   *
+   * <code>string full_text = 27 [json_name = "fullText"];</code>
+   * @return The bytes for fullText.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getFullTextBytes() {
+    java.lang.Object ref = fullText_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      fullText_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SEGMENTS_FIELD_NUMBER = 28;
+  @SuppressWarnings("serial")
+  private java.util.List<samuraibff.proto.SessionTranscriptSegment> segments_;
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  @java.lang.Override
+  public java.util.List<samuraibff.proto.SessionTranscriptSegment> getSegmentsList() {
+    return segments_;
+  }
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  @java.lang.Override
+  public java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+      getSegmentsOrBuilderList() {
+    return segments_;
+  }
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  @java.lang.Override
+  public int getSegmentsCount() {
+    return segments_.size();
+  }
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.SessionTranscriptSegment getSegments(int index) {
+    return segments_.get(index);
+  }
+  /**
+   * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+   */
+  @java.lang.Override
+  public samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
+      int index) {
+    return segments_.get(index);
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -854,44 +642,20 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(tenantId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 3, tenantId_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(stage_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 4, stage_);
-    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(trackId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 5, trackId_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(profileId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 6, profileId_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(runId_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 7, runId_);
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(attemptId_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 8, attemptId_);
-    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(resultId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 9, resultId_);
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(unitId_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 10, unitId_);
-    }
-    if (revision_ != 0) {
-      output.writeUInt32(11, revision_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(status_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 12, status_);
     }
     if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(13, getSource());
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(resultUri_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 14, resultUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(resultSha256_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 15, resultSha256_);
-    }
-    if (primary_ != false) {
-      output.writeBool(16, primary_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(errorCode_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 17, errorCode_);
@@ -908,9 +672,6 @@ private static final long serialVersionUID = 0L;
     if (speakerLabels_ != false) {
       output.writeBool(21, speakerLabels_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(provenanceJson_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 22, provenanceJson_);
-    }
     if (createdAtNs_ != 0L) {
       output.writeInt64(23, createdAtNs_);
     }
@@ -919,6 +680,12 @@ private static final long serialVersionUID = 0L;
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(planId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 25, planId_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(fullText_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 27, fullText_);
+    }
+    for (int i = 0; i < segments_.size(); i++) {
+      output.writeMessage(28, segments_.get(i));
     }
     getUnknownFields().writeTo(output);
   }
@@ -939,30 +706,14 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(tenantId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(3, tenantId_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(stage_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(4, stage_);
-    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(trackId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(5, trackId_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(profileId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(6, profileId_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(runId_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(7, runId_);
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(attemptId_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(8, attemptId_);
-    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(resultId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(9, resultId_);
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(unitId_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(10, unitId_);
-    }
-    if (revision_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeUInt32Size(11, revision_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(status_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(12, status_);
@@ -970,16 +721,6 @@ private static final long serialVersionUID = 0L;
     if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(13, getSource());
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(resultUri_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(14, resultUri_);
-    }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(resultSha256_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(15, resultSha256_);
-    }
-    if (primary_ != false) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(16, primary_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(errorCode_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(17, errorCode_);
@@ -1004,9 +745,6 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(21, speakerLabels_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(provenanceJson_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(22, provenanceJson_);
-    }
     if (createdAtNs_ != 0L) {
       size += com.google.protobuf.CodedOutputStream
         .computeInt64Size(23, createdAtNs_);
@@ -1016,6 +754,13 @@ private static final long serialVersionUID = 0L;
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(planId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(25, planId_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(fullText_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(27, fullText_);
+    }
+    for (int i = 0; i < segments_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(28, segments_.get(i));
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -1038,22 +783,12 @@ private static final long serialVersionUID = 0L;
         .equals(other.getSessionId())) return false;
     if (!getTenantId()
         .equals(other.getTenantId())) return false;
-    if (!getStage()
-        .equals(other.getStage())) return false;
     if (!getTrackId()
         .equals(other.getTrackId())) return false;
     if (!getProfileId()
         .equals(other.getProfileId())) return false;
-    if (!getRunId()
-        .equals(other.getRunId())) return false;
-    if (!getAttemptId()
-        .equals(other.getAttemptId())) return false;
     if (!getResultId()
         .equals(other.getResultId())) return false;
-    if (!getUnitId()
-        .equals(other.getUnitId())) return false;
-    if (getRevision()
-        != other.getRevision()) return false;
     if (!getStatus()
         .equals(other.getStatus())) return false;
     if (hasSource() != other.hasSource()) return false;
@@ -1061,12 +796,6 @@ private static final long serialVersionUID = 0L;
       if (!getSource()
           .equals(other.getSource())) return false;
     }
-    if (!getResultUri()
-        .equals(other.getResultUri())) return false;
-    if (!getResultSha256()
-        .equals(other.getResultSha256())) return false;
-    if (getPrimary()
-        != other.getPrimary()) return false;
     if (!getErrorCode()
         .equals(other.getErrorCode())) return false;
     if (!getDegradationsList()
@@ -1077,14 +806,16 @@ private static final long serialVersionUID = 0L;
         != other.getWordTimestamps()) return false;
     if (getSpeakerLabels()
         != other.getSpeakerLabels()) return false;
-    if (!getProvenanceJson()
-        .equals(other.getProvenanceJson())) return false;
     if (getCreatedAtNs()
         != other.getCreatedAtNs()) return false;
     if (!getLang()
         .equals(other.getLang())) return false;
     if (!getPlanId()
         .equals(other.getPlanId())) return false;
+    if (!getFullText()
+        .equals(other.getFullText())) return false;
+    if (!getSegmentsList()
+        .equals(other.getSegmentsList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -1102,35 +833,18 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getSessionId().hashCode();
     hash = (37 * hash) + TENANT_ID_FIELD_NUMBER;
     hash = (53 * hash) + getTenantId().hashCode();
-    hash = (37 * hash) + STAGE_FIELD_NUMBER;
-    hash = (53 * hash) + getStage().hashCode();
     hash = (37 * hash) + TRACK_ID_FIELD_NUMBER;
     hash = (53 * hash) + getTrackId().hashCode();
     hash = (37 * hash) + PROFILE_ID_FIELD_NUMBER;
     hash = (53 * hash) + getProfileId().hashCode();
-    hash = (37 * hash) + RUN_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getRunId().hashCode();
-    hash = (37 * hash) + ATTEMPT_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getAttemptId().hashCode();
     hash = (37 * hash) + RESULT_ID_FIELD_NUMBER;
     hash = (53 * hash) + getResultId().hashCode();
-    hash = (37 * hash) + UNIT_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getUnitId().hashCode();
-    hash = (37 * hash) + REVISION_FIELD_NUMBER;
-    hash = (53 * hash) + getRevision();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
     hash = (53 * hash) + getStatus().hashCode();
     if (hasSource()) {
       hash = (37 * hash) + SOURCE_FIELD_NUMBER;
       hash = (53 * hash) + getSource().hashCode();
     }
-    hash = (37 * hash) + RESULT_URI_FIELD_NUMBER;
-    hash = (53 * hash) + getResultUri().hashCode();
-    hash = (37 * hash) + RESULT_SHA256_FIELD_NUMBER;
-    hash = (53 * hash) + getResultSha256().hashCode();
-    hash = (37 * hash) + PRIMARY_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getPrimary());
     hash = (37 * hash) + ERROR_CODE_FIELD_NUMBER;
     hash = (53 * hash) + getErrorCode().hashCode();
     if (getDegradationsCount() > 0) {
@@ -1146,8 +860,6 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + SPEAKER_LABELS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getSpeakerLabels());
-    hash = (37 * hash) + PROVENANCE_JSON_FIELD_NUMBER;
-    hash = (53 * hash) + getProvenanceJson().hashCode();
     hash = (37 * hash) + CREATED_AT_NS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getCreatedAtNs());
@@ -1155,6 +867,12 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getLang().hashCode();
     hash = (37 * hash) + PLAN_ID_FIELD_NUMBER;
     hash = (53 * hash) + getPlanId().hashCode();
+    hash = (37 * hash) + FULL_TEXT_FIELD_NUMBER;
+    hash = (53 * hash) + getFullText().hashCode();
+    if (getSegmentsCount() > 0) {
+      hash = (37 * hash) + SEGMENTS_FIELD_NUMBER;
+      hash = (53 * hash) + getSegmentsList().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -1254,8 +972,8 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Bounded envelope on transcripts.final-tracks. Transcript JSON is in S3.
-   * Delivery may repeat; result_id identifies one immutable logical outcome.
+   * Inline terminal outcome on transcripts.final-tracks (schema_version = 2).
+   * Persistor accepts the first result in Postgres and publishes the legacy primary.
    * </pre>
    *
    * Protobuf type {@code FinalTrackResult}
@@ -1291,6 +1009,7 @@ private static final long serialVersionUID = 0L;
       if (com.google.protobuf.GeneratedMessage
               .alwaysUseFieldBuilders) {
         internalGetSourceFieldBuilder();
+        internalGetSegmentsFieldBuilder();
       }
     }
     @java.lang.Override
@@ -1300,33 +1019,32 @@ private static final long serialVersionUID = 0L;
       schemaVersion_ = 0;
       sessionId_ = "";
       tenantId_ = "";
-      stage_ = "";
       trackId_ = "";
       profileId_ = "";
-      runId_ = "";
-      attemptId_ = "";
       resultId_ = "";
-      unitId_ = "";
-      revision_ = 0;
       status_ = "";
       source_ = null;
       if (sourceBuilder_ != null) {
         sourceBuilder_.dispose();
         sourceBuilder_ = null;
       }
-      resultUri_ = "";
-      resultSha256_ = "";
-      primary_ = false;
       errorCode_ = "";
       degradations_ =
           com.google.protobuf.LazyStringArrayList.emptyList();
       segmentTimestamps_ = false;
       wordTimestamps_ = false;
       speakerLabels_ = false;
-      provenanceJson_ = "";
       createdAtNs_ = 0L;
       lang_ = "";
       planId_ = "";
+      fullText_ = "";
+      if (segmentsBuilder_ == null) {
+        segments_ = java.util.Collections.emptyList();
+      } else {
+        segments_ = null;
+        segmentsBuilder_.clear();
+      }
+      bitField0_ = (bitField0_ & ~0x00020000);
       return this;
     }
 
@@ -1353,9 +1071,22 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public samuraibff.proto.FinalTrackResult buildPartial() {
       samuraibff.proto.FinalTrackResult result = new samuraibff.proto.FinalTrackResult(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(samuraibff.proto.FinalTrackResult result) {
+      if (segmentsBuilder_ == null) {
+        if (((bitField0_ & 0x00020000) != 0)) {
+          segments_ = java.util.Collections.unmodifiableList(segments_);
+          bitField0_ = (bitField0_ & ~0x00020000);
+        }
+        result.segments_ = segments_;
+      } else {
+        result.segments_ = segmentsBuilder_.build();
+      }
     }
 
     private void buildPartial0(samuraibff.proto.FinalTrackResult result) {
@@ -1370,75 +1101,51 @@ private static final long serialVersionUID = 0L;
         result.tenantId_ = tenantId_;
       }
       if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.stage_ = stage_;
-      }
-      if (((from_bitField0_ & 0x00000010) != 0)) {
         result.trackId_ = trackId_;
       }
-      if (((from_bitField0_ & 0x00000020) != 0)) {
+      if (((from_bitField0_ & 0x00000010) != 0)) {
         result.profileId_ = profileId_;
       }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.runId_ = runId_;
-      }
-      if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.attemptId_ = attemptId_;
-      }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
+      if (((from_bitField0_ & 0x00000020) != 0)) {
         result.resultId_ = resultId_;
       }
-      if (((from_bitField0_ & 0x00000200) != 0)) {
-        result.unitId_ = unitId_;
-      }
-      if (((from_bitField0_ & 0x00000400) != 0)) {
-        result.revision_ = revision_;
-      }
-      if (((from_bitField0_ & 0x00000800) != 0)) {
+      if (((from_bitField0_ & 0x00000040) != 0)) {
         result.status_ = status_;
       }
       int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00001000) != 0)) {
+      if (((from_bitField0_ & 0x00000080) != 0)) {
         result.source_ = sourceBuilder_ == null
             ? source_
             : sourceBuilder_.build();
         to_bitField0_ |= 0x00000001;
       }
-      if (((from_bitField0_ & 0x00002000) != 0)) {
-        result.resultUri_ = resultUri_;
-      }
-      if (((from_bitField0_ & 0x00004000) != 0)) {
-        result.resultSha256_ = resultSha256_;
-      }
-      if (((from_bitField0_ & 0x00008000) != 0)) {
-        result.primary_ = primary_;
-      }
-      if (((from_bitField0_ & 0x00010000) != 0)) {
+      if (((from_bitField0_ & 0x00000100) != 0)) {
         result.errorCode_ = errorCode_;
       }
-      if (((from_bitField0_ & 0x00020000) != 0)) {
+      if (((from_bitField0_ & 0x00000200) != 0)) {
         degradations_.makeImmutable();
         result.degradations_ = degradations_;
       }
-      if (((from_bitField0_ & 0x00040000) != 0)) {
+      if (((from_bitField0_ & 0x00000400) != 0)) {
         result.segmentTimestamps_ = segmentTimestamps_;
       }
-      if (((from_bitField0_ & 0x00080000) != 0)) {
+      if (((from_bitField0_ & 0x00000800) != 0)) {
         result.wordTimestamps_ = wordTimestamps_;
       }
-      if (((from_bitField0_ & 0x00100000) != 0)) {
+      if (((from_bitField0_ & 0x00001000) != 0)) {
         result.speakerLabels_ = speakerLabels_;
       }
-      if (((from_bitField0_ & 0x00200000) != 0)) {
-        result.provenanceJson_ = provenanceJson_;
-      }
-      if (((from_bitField0_ & 0x00400000) != 0)) {
+      if (((from_bitField0_ & 0x00002000) != 0)) {
         result.createdAtNs_ = createdAtNs_;
       }
-      if (((from_bitField0_ & 0x00800000) != 0)) {
+      if (((from_bitField0_ & 0x00004000) != 0)) {
         result.lang_ = lang_;
       }
-      if (((from_bitField0_ & 0x01000000) != 0)) {
+      if (((from_bitField0_ & 0x00008000) != 0)) {
         result.planId_ = planId_;
+      }
+      if (((from_bitField0_ & 0x00010000) != 0)) {
+        result.fullText_ = fullText_;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -1468,74 +1175,38 @@ private static final long serialVersionUID = 0L;
         bitField0_ |= 0x00000004;
         onChanged();
       }
-      if (!other.getStage().isEmpty()) {
-        stage_ = other.stage_;
-        bitField0_ |= 0x00000008;
-        onChanged();
-      }
       if (!other.getTrackId().isEmpty()) {
         trackId_ = other.trackId_;
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       if (!other.getProfileId().isEmpty()) {
         profileId_ = other.profileId_;
-        bitField0_ |= 0x00000020;
-        onChanged();
-      }
-      if (!other.getRunId().isEmpty()) {
-        runId_ = other.runId_;
-        bitField0_ |= 0x00000040;
-        onChanged();
-      }
-      if (!other.getAttemptId().isEmpty()) {
-        attemptId_ = other.attemptId_;
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000010;
         onChanged();
       }
       if (!other.getResultId().isEmpty()) {
         resultId_ = other.resultId_;
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000020;
         onChanged();
-      }
-      if (!other.getUnitId().isEmpty()) {
-        unitId_ = other.unitId_;
-        bitField0_ |= 0x00000200;
-        onChanged();
-      }
-      if (other.getRevision() != 0) {
-        setRevision(other.getRevision());
       }
       if (!other.getStatus().isEmpty()) {
         status_ = other.status_;
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00000040;
         onChanged();
       }
       if (other.hasSource()) {
         mergeSource(other.getSource());
       }
-      if (!other.getResultUri().isEmpty()) {
-        resultUri_ = other.resultUri_;
-        bitField0_ |= 0x00002000;
-        onChanged();
-      }
-      if (!other.getResultSha256().isEmpty()) {
-        resultSha256_ = other.resultSha256_;
-        bitField0_ |= 0x00004000;
-        onChanged();
-      }
-      if (other.getPrimary() != false) {
-        setPrimary(other.getPrimary());
-      }
       if (!other.getErrorCode().isEmpty()) {
         errorCode_ = other.errorCode_;
-        bitField0_ |= 0x00010000;
+        bitField0_ |= 0x00000100;
         onChanged();
       }
       if (!other.degradations_.isEmpty()) {
         if (degradations_.isEmpty()) {
           degradations_ = other.degradations_;
-          bitField0_ |= 0x00020000;
+          bitField0_ |= 0x00000200;
         } else {
           ensureDegradationsIsMutable();
           degradations_.addAll(other.degradations_);
@@ -1551,23 +1222,49 @@ private static final long serialVersionUID = 0L;
       if (other.getSpeakerLabels() != false) {
         setSpeakerLabels(other.getSpeakerLabels());
       }
-      if (!other.getProvenanceJson().isEmpty()) {
-        provenanceJson_ = other.provenanceJson_;
-        bitField0_ |= 0x00200000;
-        onChanged();
-      }
       if (other.getCreatedAtNs() != 0L) {
         setCreatedAtNs(other.getCreatedAtNs());
       }
       if (!other.getLang().isEmpty()) {
         lang_ = other.lang_;
-        bitField0_ |= 0x00800000;
+        bitField0_ |= 0x00004000;
         onChanged();
       }
       if (!other.getPlanId().isEmpty()) {
         planId_ = other.planId_;
-        bitField0_ |= 0x01000000;
+        bitField0_ |= 0x00008000;
         onChanged();
+      }
+      if (!other.getFullText().isEmpty()) {
+        fullText_ = other.fullText_;
+        bitField0_ |= 0x00010000;
+        onChanged();
+      }
+      if (segmentsBuilder_ == null) {
+        if (!other.segments_.isEmpty()) {
+          if (segments_.isEmpty()) {
+            segments_ = other.segments_;
+            bitField0_ = (bitField0_ & ~0x00020000);
+          } else {
+            ensureSegmentsIsMutable();
+            segments_.addAll(other.segments_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.segments_.isEmpty()) {
+          if (segmentsBuilder_.isEmpty()) {
+            segmentsBuilder_.dispose();
+            segmentsBuilder_ = null;
+            segments_ = other.segments_;
+            bitField0_ = (bitField0_ & ~0x00020000);
+            segmentsBuilder_ = 
+              com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                 internalGetSegmentsFieldBuilder() : null;
+          } else {
+            segmentsBuilder_.addAllMessages(other.segments_);
+          }
+        }
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -1610,76 +1307,36 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000004;
               break;
             } // case 26
-            case 34: {
-              stage_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000008;
-              break;
-            } // case 34
             case 42: {
               trackId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000008;
               break;
             } // case 42
             case 50: {
               profileId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000020;
+              bitField0_ |= 0x00000010;
               break;
             } // case 50
-            case 58: {
-              runId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000040;
-              break;
-            } // case 58
-            case 66: {
-              attemptId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000080;
-              break;
-            } // case 66
             case 74: {
               resultId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000100;
+              bitField0_ |= 0x00000020;
               break;
             } // case 74
-            case 82: {
-              unitId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000200;
-              break;
-            } // case 82
-            case 88: {
-              revision_ = input.readUInt32();
-              bitField0_ |= 0x00000400;
-              break;
-            } // case 88
             case 98: {
               status_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000800;
+              bitField0_ |= 0x00000040;
               break;
             } // case 98
             case 106: {
               input.readMessage(
                   internalGetSourceFieldBuilder().getBuilder(),
                   extensionRegistry);
-              bitField0_ |= 0x00001000;
+              bitField0_ |= 0x00000080;
               break;
             } // case 106
-            case 114: {
-              resultUri_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00002000;
-              break;
-            } // case 114
-            case 122: {
-              resultSha256_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00004000;
-              break;
-            } // case 122
-            case 128: {
-              primary_ = input.readBool();
-              bitField0_ |= 0x00008000;
-              break;
-            } // case 128
             case 138: {
               errorCode_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00010000;
+              bitField0_ |= 0x00000100;
               break;
             } // case 138
             case 146: {
@@ -1690,39 +1347,52 @@ private static final long serialVersionUID = 0L;
             } // case 146
             case 152: {
               segmentTimestamps_ = input.readBool();
-              bitField0_ |= 0x00040000;
+              bitField0_ |= 0x00000400;
               break;
             } // case 152
             case 160: {
               wordTimestamps_ = input.readBool();
-              bitField0_ |= 0x00080000;
+              bitField0_ |= 0x00000800;
               break;
             } // case 160
             case 168: {
               speakerLabels_ = input.readBool();
-              bitField0_ |= 0x00100000;
+              bitField0_ |= 0x00001000;
               break;
             } // case 168
-            case 178: {
-              provenanceJson_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00200000;
-              break;
-            } // case 178
             case 184: {
               createdAtNs_ = input.readInt64();
-              bitField0_ |= 0x00400000;
+              bitField0_ |= 0x00002000;
               break;
             } // case 184
             case 194: {
               lang_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00800000;
+              bitField0_ |= 0x00004000;
               break;
             } // case 194
             case 202: {
               planId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x01000000;
+              bitField0_ |= 0x00008000;
               break;
             } // case 202
+            case 218: {
+              fullText_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00010000;
+              break;
+            } // case 218
+            case 226: {
+              samuraibff.proto.SessionTranscriptSegment m =
+                  input.readMessage(
+                      samuraibff.proto.SessionTranscriptSegment.parser(),
+                      extensionRegistry);
+              if (segmentsBuilder_ == null) {
+                ensureSegmentsIsMutable();
+                segments_.add(m);
+              } else {
+                segmentsBuilder_.addMessage(m);
+              }
+              break;
+            } // case 226
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -1916,78 +1586,6 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object stage_ = "";
-    /**
-     * <code>string stage = 4 [json_name = "stage"];</code>
-     * @return The stage.
-     */
-    public java.lang.String getStage() {
-      java.lang.Object ref = stage_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        stage_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string stage = 4 [json_name = "stage"];</code>
-     * @return The bytes for stage.
-     */
-    public com.google.protobuf.ByteString
-        getStageBytes() {
-      java.lang.Object ref = stage_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        stage_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string stage = 4 [json_name = "stage"];</code>
-     * @param value The stage to set.
-     * @return This builder for chaining.
-     */
-    public Builder setStage(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      stage_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string stage = 4 [json_name = "stage"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearStage() {
-      stage_ = getDefaultInstance().getStage();
-      bitField0_ = (bitField0_ & ~0x00000008);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string stage = 4 [json_name = "stage"];</code>
-     * @param value The bytes for stage to set.
-     * @return This builder for chaining.
-     */
-    public Builder setStageBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      stage_ = value;
-      bitField0_ |= 0x00000008;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object trackId_ = "";
     /**
      * <code>string track_id = 5 [json_name = "trackId"];</code>
@@ -2031,7 +1629,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       trackId_ = value;
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -2041,7 +1639,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearTrackId() {
       trackId_ = getDefaultInstance().getTrackId();
-      bitField0_ = (bitField0_ & ~0x00000010);
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -2055,7 +1653,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       trackId_ = value;
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -2103,7 +1701,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       profileId_ = value;
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -2113,7 +1711,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearProfileId() {
       profileId_ = getDefaultInstance().getProfileId();
-      bitField0_ = (bitField0_ & ~0x00000020);
+      bitField0_ = (bitField0_ & ~0x00000010);
       onChanged();
       return this;
     }
@@ -2127,151 +1725,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       profileId_ = value;
-      bitField0_ |= 0x00000020;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object runId_ = "";
-    /**
-     * <code>string run_id = 7 [json_name = "runId"];</code>
-     * @return The runId.
-     */
-    public java.lang.String getRunId() {
-      java.lang.Object ref = runId_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        runId_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string run_id = 7 [json_name = "runId"];</code>
-     * @return The bytes for runId.
-     */
-    public com.google.protobuf.ByteString
-        getRunIdBytes() {
-      java.lang.Object ref = runId_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        runId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string run_id = 7 [json_name = "runId"];</code>
-     * @param value The runId to set.
-     * @return This builder for chaining.
-     */
-    public Builder setRunId(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      runId_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string run_id = 7 [json_name = "runId"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearRunId() {
-      runId_ = getDefaultInstance().getRunId();
-      bitField0_ = (bitField0_ & ~0x00000040);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string run_id = 7 [json_name = "runId"];</code>
-     * @param value The bytes for runId to set.
-     * @return This builder for chaining.
-     */
-    public Builder setRunIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      runId_ = value;
-      bitField0_ |= 0x00000040;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object attemptId_ = "";
-    /**
-     * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-     * @return The attemptId.
-     */
-    public java.lang.String getAttemptId() {
-      java.lang.Object ref = attemptId_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        attemptId_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-     * @return The bytes for attemptId.
-     */
-    public com.google.protobuf.ByteString
-        getAttemptIdBytes() {
-      java.lang.Object ref = attemptId_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        attemptId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-     * @param value The attemptId to set.
-     * @return This builder for chaining.
-     */
-    public Builder setAttemptId(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      attemptId_ = value;
-      bitField0_ |= 0x00000080;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearAttemptId() {
-      attemptId_ = getDefaultInstance().getAttemptId();
-      bitField0_ = (bitField0_ & ~0x00000080);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string attempt_id = 8 [json_name = "attemptId"];</code>
-     * @param value The bytes for attemptId to set.
-     * @return This builder for chaining.
-     */
-    public Builder setAttemptIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      attemptId_ = value;
-      bitField0_ |= 0x00000080;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -2319,7 +1773,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       resultId_ = value;
-      bitField0_ |= 0x00000100;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2329,7 +1783,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearResultId() {
       resultId_ = getDefaultInstance().getResultId();
-      bitField0_ = (bitField0_ & ~0x00000100);
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -2343,111 +1797,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       resultId_ = value;
-      bitField0_ |= 0x00000100;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object unitId_ = "";
-    /**
-     * <code>string unit_id = 10 [json_name = "unitId"];</code>
-     * @return The unitId.
-     */
-    public java.lang.String getUnitId() {
-      java.lang.Object ref = unitId_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        unitId_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string unit_id = 10 [json_name = "unitId"];</code>
-     * @return The bytes for unitId.
-     */
-    public com.google.protobuf.ByteString
-        getUnitIdBytes() {
-      java.lang.Object ref = unitId_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        unitId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string unit_id = 10 [json_name = "unitId"];</code>
-     * @param value The unitId to set.
-     * @return This builder for chaining.
-     */
-    public Builder setUnitId(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      unitId_ = value;
-      bitField0_ |= 0x00000200;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string unit_id = 10 [json_name = "unitId"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearUnitId() {
-      unitId_ = getDefaultInstance().getUnitId();
-      bitField0_ = (bitField0_ & ~0x00000200);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string unit_id = 10 [json_name = "unitId"];</code>
-     * @param value The bytes for unitId to set.
-     * @return This builder for chaining.
-     */
-    public Builder setUnitIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      unitId_ = value;
-      bitField0_ |= 0x00000200;
-      onChanged();
-      return this;
-    }
-
-    private int revision_ ;
-    /**
-     * <code>uint32 revision = 11 [json_name = "revision"];</code>
-     * @return The revision.
-     */
-    @java.lang.Override
-    public int getRevision() {
-      return revision_;
-    }
-    /**
-     * <code>uint32 revision = 11 [json_name = "revision"];</code>
-     * @param value The revision to set.
-     * @return This builder for chaining.
-     */
-    public Builder setRevision(int value) {
-
-      revision_ = value;
-      bitField0_ |= 0x00000400;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>uint32 revision = 11 [json_name = "revision"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearRevision() {
-      bitField0_ = (bitField0_ & ~0x00000400);
-      revision_ = 0;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2495,7 +1845,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       status_ = value;
-      bitField0_ |= 0x00000800;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -2505,7 +1855,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearStatus() {
       status_ = getDefaultInstance().getStatus();
-      bitField0_ = (bitField0_ & ~0x00000800);
+      bitField0_ = (bitField0_ & ~0x00000040);
       onChanged();
       return this;
     }
@@ -2519,7 +1869,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       status_ = value;
-      bitField0_ |= 0x00000800;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -2532,7 +1882,7 @@ private static final long serialVersionUID = 0L;
      * @return Whether the source field is set.
      */
     public boolean hasSource() {
-      return ((bitField0_ & 0x00001000) != 0);
+      return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>.AudioArtifact source = 13 [json_name = "source"];</code>
@@ -2557,7 +1907,7 @@ private static final long serialVersionUID = 0L;
       } else {
         sourceBuilder_.setMessage(value);
       }
-      bitField0_ |= 0x00001000;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -2571,7 +1921,7 @@ private static final long serialVersionUID = 0L;
       } else {
         sourceBuilder_.setMessage(builderForValue.build());
       }
-      bitField0_ |= 0x00001000;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -2580,7 +1930,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder mergeSource(samuraibff.proto.AudioArtifact value) {
       if (sourceBuilder_ == null) {
-        if (((bitField0_ & 0x00001000) != 0) &&
+        if (((bitField0_ & 0x00000080) != 0) &&
           source_ != null &&
           source_ != samuraibff.proto.AudioArtifact.getDefaultInstance()) {
           getSourceBuilder().mergeFrom(value);
@@ -2591,7 +1941,7 @@ private static final long serialVersionUID = 0L;
         sourceBuilder_.mergeFrom(value);
       }
       if (source_ != null) {
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00000080;
         onChanged();
       }
       return this;
@@ -2600,7 +1950,7 @@ private static final long serialVersionUID = 0L;
      * <code>.AudioArtifact source = 13 [json_name = "source"];</code>
      */
     public Builder clearSource() {
-      bitField0_ = (bitField0_ & ~0x00001000);
+      bitField0_ = (bitField0_ & ~0x00000080);
       source_ = null;
       if (sourceBuilder_ != null) {
         sourceBuilder_.dispose();
@@ -2613,7 +1963,7 @@ private static final long serialVersionUID = 0L;
      * <code>.AudioArtifact source = 13 [json_name = "source"];</code>
      */
     public samuraibff.proto.AudioArtifact.Builder getSourceBuilder() {
-      bitField0_ |= 0x00001000;
+      bitField0_ |= 0x00000080;
       onChanged();
       return internalGetSourceFieldBuilder().getBuilder();
     }
@@ -2643,182 +1993,6 @@ private static final long serialVersionUID = 0L;
         source_ = null;
       }
       return sourceBuilder_;
-    }
-
-    private java.lang.Object resultUri_ = "";
-    /**
-     * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-     * @return The resultUri.
-     */
-    public java.lang.String getResultUri() {
-      java.lang.Object ref = resultUri_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        resultUri_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-     * @return The bytes for resultUri.
-     */
-    public com.google.protobuf.ByteString
-        getResultUriBytes() {
-      java.lang.Object ref = resultUri_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        resultUri_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-     * @param value The resultUri to set.
-     * @return This builder for chaining.
-     */
-    public Builder setResultUri(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      resultUri_ = value;
-      bitField0_ |= 0x00002000;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearResultUri() {
-      resultUri_ = getDefaultInstance().getResultUri();
-      bitField0_ = (bitField0_ & ~0x00002000);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string result_uri = 14 [json_name = "resultUri"];</code>
-     * @param value The bytes for resultUri to set.
-     * @return This builder for chaining.
-     */
-    public Builder setResultUriBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      resultUri_ = value;
-      bitField0_ |= 0x00002000;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object resultSha256_ = "";
-    /**
-     * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-     * @return The resultSha256.
-     */
-    public java.lang.String getResultSha256() {
-      java.lang.Object ref = resultSha256_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        resultSha256_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-     * @return The bytes for resultSha256.
-     */
-    public com.google.protobuf.ByteString
-        getResultSha256Bytes() {
-      java.lang.Object ref = resultSha256_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        resultSha256_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-     * @param value The resultSha256 to set.
-     * @return This builder for chaining.
-     */
-    public Builder setResultSha256(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      resultSha256_ = value;
-      bitField0_ |= 0x00004000;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearResultSha256() {
-      resultSha256_ = getDefaultInstance().getResultSha256();
-      bitField0_ = (bitField0_ & ~0x00004000);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string result_sha256 = 15 [json_name = "resultSha256"];</code>
-     * @param value The bytes for resultSha256 to set.
-     * @return This builder for chaining.
-     */
-    public Builder setResultSha256Bytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      resultSha256_ = value;
-      bitField0_ |= 0x00004000;
-      onChanged();
-      return this;
-    }
-
-    private boolean primary_ ;
-    /**
-     * <code>bool primary = 16 [json_name = "primary"];</code>
-     * @return The primary.
-     */
-    @java.lang.Override
-    public boolean getPrimary() {
-      return primary_;
-    }
-    /**
-     * <code>bool primary = 16 [json_name = "primary"];</code>
-     * @param value The primary to set.
-     * @return This builder for chaining.
-     */
-    public Builder setPrimary(boolean value) {
-
-      primary_ = value;
-      bitField0_ |= 0x00008000;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>bool primary = 16 [json_name = "primary"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearPrimary() {
-      bitField0_ = (bitField0_ & ~0x00008000);
-      primary_ = false;
-      onChanged();
-      return this;
     }
 
     private java.lang.Object errorCode_ = "";
@@ -2864,7 +2038,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       errorCode_ = value;
-      bitField0_ |= 0x00010000;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -2874,7 +2048,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearErrorCode() {
       errorCode_ = getDefaultInstance().getErrorCode();
-      bitField0_ = (bitField0_ & ~0x00010000);
+      bitField0_ = (bitField0_ & ~0x00000100);
       onChanged();
       return this;
     }
@@ -2888,7 +2062,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       errorCode_ = value;
-      bitField0_ |= 0x00010000;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -2899,7 +2073,7 @@ private static final long serialVersionUID = 0L;
       if (!degradations_.isModifiable()) {
         degradations_ = new com.google.protobuf.LazyStringArrayList(degradations_);
       }
-      bitField0_ |= 0x00020000;
+      bitField0_ |= 0x00000200;
     }
     /**
      * <code>repeated string degradations = 18 [json_name = "degradations"];</code>
@@ -2945,7 +2119,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       ensureDegradationsIsMutable();
       degradations_.set(index, value);
-      bitField0_ |= 0x00020000;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2959,7 +2133,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       ensureDegradationsIsMutable();
       degradations_.add(value);
-      bitField0_ |= 0x00020000;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2973,7 +2147,7 @@ private static final long serialVersionUID = 0L;
       ensureDegradationsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, degradations_);
-      bitField0_ |= 0x00020000;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2984,7 +2158,7 @@ private static final long serialVersionUID = 0L;
     public Builder clearDegradations() {
       degradations_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
-      bitField0_ = (bitField0_ & ~0x00020000);;
+      bitField0_ = (bitField0_ & ~0x00000200);;
       onChanged();
       return this;
     }
@@ -2999,7 +2173,7 @@ private static final long serialVersionUID = 0L;
       checkByteStringIsUtf8(value);
       ensureDegradationsIsMutable();
       degradations_.add(value);
-      bitField0_ |= 0x00020000;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -3021,7 +2195,7 @@ private static final long serialVersionUID = 0L;
     public Builder setSegmentTimestamps(boolean value) {
 
       segmentTimestamps_ = value;
-      bitField0_ |= 0x00040000;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -3030,7 +2204,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearSegmentTimestamps() {
-      bitField0_ = (bitField0_ & ~0x00040000);
+      bitField0_ = (bitField0_ & ~0x00000400);
       segmentTimestamps_ = false;
       onChanged();
       return this;
@@ -3053,7 +2227,7 @@ private static final long serialVersionUID = 0L;
     public Builder setWordTimestamps(boolean value) {
 
       wordTimestamps_ = value;
-      bitField0_ |= 0x00080000;
+      bitField0_ |= 0x00000800;
       onChanged();
       return this;
     }
@@ -3062,7 +2236,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearWordTimestamps() {
-      bitField0_ = (bitField0_ & ~0x00080000);
+      bitField0_ = (bitField0_ & ~0x00000800);
       wordTimestamps_ = false;
       onChanged();
       return this;
@@ -3085,7 +2259,7 @@ private static final long serialVersionUID = 0L;
     public Builder setSpeakerLabels(boolean value) {
 
       speakerLabels_ = value;
-      bitField0_ |= 0x00100000;
+      bitField0_ |= 0x00001000;
       onChanged();
       return this;
     }
@@ -3094,80 +2268,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearSpeakerLabels() {
-      bitField0_ = (bitField0_ & ~0x00100000);
+      bitField0_ = (bitField0_ & ~0x00001000);
       speakerLabels_ = false;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object provenanceJson_ = "";
-    /**
-     * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-     * @return The provenanceJson.
-     */
-    public java.lang.String getProvenanceJson() {
-      java.lang.Object ref = provenanceJson_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        provenanceJson_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-     * @return The bytes for provenanceJson.
-     */
-    public com.google.protobuf.ByteString
-        getProvenanceJsonBytes() {
-      java.lang.Object ref = provenanceJson_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        provenanceJson_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-     * @param value The provenanceJson to set.
-     * @return This builder for chaining.
-     */
-    public Builder setProvenanceJson(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      provenanceJson_ = value;
-      bitField0_ |= 0x00200000;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearProvenanceJson() {
-      provenanceJson_ = getDefaultInstance().getProvenanceJson();
-      bitField0_ = (bitField0_ & ~0x00200000);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string provenance_json = 22 [json_name = "provenanceJson"];</code>
-     * @param value The bytes for provenanceJson to set.
-     * @return This builder for chaining.
-     */
-    public Builder setProvenanceJsonBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      provenanceJson_ = value;
-      bitField0_ |= 0x00200000;
       onChanged();
       return this;
     }
@@ -3189,7 +2291,7 @@ private static final long serialVersionUID = 0L;
     public Builder setCreatedAtNs(long value) {
 
       createdAtNs_ = value;
-      bitField0_ |= 0x00400000;
+      bitField0_ |= 0x00002000;
       onChanged();
       return this;
     }
@@ -3198,7 +2300,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearCreatedAtNs() {
-      bitField0_ = (bitField0_ & ~0x00400000);
+      bitField0_ = (bitField0_ & ~0x00002000);
       createdAtNs_ = 0L;
       onChanged();
       return this;
@@ -3247,7 +2349,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       lang_ = value;
-      bitField0_ |= 0x00800000;
+      bitField0_ |= 0x00004000;
       onChanged();
       return this;
     }
@@ -3257,7 +2359,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearLang() {
       lang_ = getDefaultInstance().getLang();
-      bitField0_ = (bitField0_ & ~0x00800000);
+      bitField0_ = (bitField0_ & ~0x00004000);
       onChanged();
       return this;
     }
@@ -3271,7 +2373,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       lang_ = value;
-      bitField0_ |= 0x00800000;
+      bitField0_ |= 0x00004000;
       onChanged();
       return this;
     }
@@ -3319,7 +2421,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       planId_ = value;
-      bitField0_ |= 0x01000000;
+      bitField0_ |= 0x00008000;
       onChanged();
       return this;
     }
@@ -3329,7 +2431,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearPlanId() {
       planId_ = getDefaultInstance().getPlanId();
-      bitField0_ = (bitField0_ & ~0x01000000);
+      bitField0_ = (bitField0_ & ~0x00008000);
       onChanged();
       return this;
     }
@@ -3343,9 +2445,341 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       planId_ = value;
-      bitField0_ |= 0x01000000;
+      bitField0_ |= 0x00008000;
       onChanged();
       return this;
+    }
+
+    private java.lang.Object fullText_ = "";
+    /**
+     * <pre>
+     * Tag 26 belongs to refinement_window in the preserved refinement draft.
+     * </pre>
+     *
+     * <code>string full_text = 27 [json_name = "fullText"];</code>
+     * @return The fullText.
+     */
+    public java.lang.String getFullText() {
+      java.lang.Object ref = fullText_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fullText_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Tag 26 belongs to refinement_window in the preserved refinement draft.
+     * </pre>
+     *
+     * <code>string full_text = 27 [json_name = "fullText"];</code>
+     * @return The bytes for fullText.
+     */
+    public com.google.protobuf.ByteString
+        getFullTextBytes() {
+      java.lang.Object ref = fullText_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fullText_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Tag 26 belongs to refinement_window in the preserved refinement draft.
+     * </pre>
+     *
+     * <code>string full_text = 27 [json_name = "fullText"];</code>
+     * @param value The fullText to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFullText(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      fullText_ = value;
+      bitField0_ |= 0x00010000;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Tag 26 belongs to refinement_window in the preserved refinement draft.
+     * </pre>
+     *
+     * <code>string full_text = 27 [json_name = "fullText"];</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearFullText() {
+      fullText_ = getDefaultInstance().getFullText();
+      bitField0_ = (bitField0_ & ~0x00010000);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Tag 26 belongs to refinement_window in the preserved refinement draft.
+     * </pre>
+     *
+     * <code>string full_text = 27 [json_name = "fullText"];</code>
+     * @param value The bytes for fullText to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFullTextBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      fullText_ = value;
+      bitField0_ |= 0x00010000;
+      onChanged();
+      return this;
+    }
+
+    private java.util.List<samuraibff.proto.SessionTranscriptSegment> segments_ =
+      java.util.Collections.emptyList();
+    private void ensureSegmentsIsMutable() {
+      if (!((bitField0_ & 0x00020000) != 0)) {
+        segments_ = new java.util.ArrayList<samuraibff.proto.SessionTranscriptSegment>(segments_);
+        bitField0_ |= 0x00020000;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder> segmentsBuilder_;
+
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public java.util.List<samuraibff.proto.SessionTranscriptSegment> getSegmentsList() {
+      if (segmentsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(segments_);
+      } else {
+        return segmentsBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public int getSegmentsCount() {
+      if (segmentsBuilder_ == null) {
+        return segments_.size();
+      } else {
+        return segmentsBuilder_.getCount();
+      }
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment getSegments(int index) {
+      if (segmentsBuilder_ == null) {
+        return segments_.get(index);
+      } else {
+        return segmentsBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder setSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment value) {
+      if (segmentsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureSegmentsIsMutable();
+        segments_.set(index, value);
+        onChanged();
+      } else {
+        segmentsBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder setSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        segmentsBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder addSegments(samuraibff.proto.SessionTranscriptSegment value) {
+      if (segmentsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureSegmentsIsMutable();
+        segments_.add(value);
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder addSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment value) {
+      if (segmentsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureSegmentsIsMutable();
+        segments_.add(index, value);
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder addSegments(
+        samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.add(builderForValue.build());
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder addSegments(
+        int index, samuraibff.proto.SessionTranscriptSegment.Builder builderForValue) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        segmentsBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder addAllSegments(
+        java.lang.Iterable<? extends samuraibff.proto.SessionTranscriptSegment> values) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, segments_);
+        onChanged();
+      } else {
+        segmentsBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder clearSegments() {
+      if (segmentsBuilder_ == null) {
+        segments_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00020000);
+        onChanged();
+      } else {
+        segmentsBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public Builder removeSegments(int index) {
+      if (segmentsBuilder_ == null) {
+        ensureSegmentsIsMutable();
+        segments_.remove(index);
+        onChanged();
+      } else {
+        segmentsBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment.Builder getSegmentsBuilder(
+        int index) {
+      return internalGetSegmentsFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegmentOrBuilder getSegmentsOrBuilder(
+        int index) {
+      if (segmentsBuilder_ == null) {
+        return segments_.get(index);  } else {
+        return segmentsBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public java.util.List<? extends samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+         getSegmentsOrBuilderList() {
+      if (segmentsBuilder_ != null) {
+        return segmentsBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(segments_);
+      }
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment.Builder addSegmentsBuilder() {
+      return internalGetSegmentsFieldBuilder().addBuilder(
+          samuraibff.proto.SessionTranscriptSegment.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public samuraibff.proto.SessionTranscriptSegment.Builder addSegmentsBuilder(
+        int index) {
+      return internalGetSegmentsFieldBuilder().addBuilder(
+          index, samuraibff.proto.SessionTranscriptSegment.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .SessionTranscriptSegment segments = 28 [json_name = "segments"];</code>
+     */
+    public java.util.List<samuraibff.proto.SessionTranscriptSegment.Builder> 
+         getSegmentsBuilderList() {
+      return internalGetSegmentsFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilder<
+        samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder> 
+        internalGetSegmentsFieldBuilder() {
+      if (segmentsBuilder_ == null) {
+        segmentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+            samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder>(
+                segments_,
+                ((bitField0_ & 0x00020000) != 0),
+                getParentForChildren(),
+                isClean());
+        segments_ = null;
+      }
+      return segmentsBuilder_;
     }
 
     // @@protoc_insertion_point(builder_scope:FinalTrackResult)

@@ -162,72 +162,71 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
       "rate\030\005 \001(\rR\nsampleRate\022!\n\014sample_count\030\006" +
       " \001(\004R\013sampleCount\022\035\n\nmedia_type\030\007 \001(\tR\tm" +
       "ediaType\022\035\n\nversion_id\030\010 \001(\tR\tversionId\"" +
-      "\247\006\n\020FinalTrackResult\022%\n\016schema_version\030\001" +
+      "\214\006\n\020FinalTrackResult\022%\n\016schema_version\030\001" +
       " \001(\rR\rschemaVersion\022\035\n\nsession_id\030\002 \001(\tR" +
       "\tsessionId\022\033\n\ttenant_id\030\003 \001(\tR\010tenantId\022" +
-      "\024\n\005stage\030\004 \001(\tR\005stage\022\031\n\010track_id\030\005 \001(\tR" +
-      "\007trackId\022\035\n\nprofile_id\030\006 \001(\tR\tprofileId\022" +
-      "\025\n\006run_id\030\007 \001(\tR\005runId\022\035\n\nattempt_id\030\010 \001" +
-      "(\tR\tattemptId\022\033\n\tresult_id\030\t \001(\tR\010result" +
-      "Id\022\027\n\007unit_id\030\n \001(\tR\006unitId\022\032\n\010revision\030" +
-      "\013 \001(\rR\010revision\022\026\n\006status\030\014 \001(\tR\006status\022" +
-      "&\n\006source\030\r \001(\0132\016.AudioArtifactR\006source\022" +
-      "\035\n\nresult_uri\030\016 \001(\tR\tresultUri\022#\n\rresult" +
-      "_sha256\030\017 \001(\tR\014resultSha256\022\030\n\007primary\030\020" +
-      " \001(\010R\007primary\022\035\n\nerror_code\030\021 \001(\tR\terror" +
-      "Code\022\"\n\014degradations\030\022 \003(\tR\014degradations" +
-      "\022-\n\022segment_timestamps\030\023 \001(\010R\021segmentTim" +
-      "estamps\022\'\n\017word_timestamps\030\024 \001(\010R\016wordTi" +
-      "mestamps\022%\n\016speaker_labels\030\025 \001(\010R\rspeake" +
-      "rLabels\022\'\n\017provenance_json\030\026 \001(\tR\016proven" +
-      "anceJson\022\"\n\rcreated_at_ns\030\027 \001(\003R\013created" +
-      "AtNs\022\022\n\004lang\030\030 \001(\tR\004lang\022\027\n\007plan_id\030\031 \001(" +
-      "\tR\006planId\"Q\n\rWordAlignment\022\027\n\007start_s\030\001 " +
-      "\001(\001R\006startS\022\023\n\005end_s\030\002 \001(\001R\004endS\022\022\n\004text" +
-      "\030\003 \001(\tR\004text\"\301\001\n\nFinalEvent\022\035\n\nsession_i" +
-      "d\030\001 \001(\tR\tsessionId\022\027\n\007start_s\030\002 \001(\001R\006sta" +
-      "rtS\022\023\n\005end_s\030\003 \001(\001R\004endS\022\022\n\004text\030\004 \001(\tR\004" +
-      "text\022\030\n\007speaker\030\005 \001(\tR\007speaker\022\022\n\004lang\030\006" +
-      " \001(\tR\004lang\022$\n\005words\030\007 \003(\0132\016.WordAlignmen" +
-      "tR\005words\"\035\n\033RealtimeCapabilitiesRequest\"" +
-      "\262\006\n\024RealtimeCapabilities\022.\n\023provider_pro" +
-      "file_id\030\001 \001(\tR\021providerProfileId\022+\n\021wind" +
-      "owed_realtime\030\002 \001(\010R\020windowedRealtime\022)\n" +
-      "\020native_streaming\030\003 \001(\010R\017nativeStreaming" +
-      "\022\024\n\005batch\030\004 \001(\010R\005batch\022-\n\022segment_timest" +
-      "amps\030\005 \001(\010R\021segmentTimestamps\022\'\n\017word_ti" +
-      "mestamps\030\006 \001(\010R\016wordTimestamps\022-\n\022langua" +
-      "ge_detection\030\007 \001(\010R\021languageDetection\022/\n" +
-      "\023supported_languages\030\010 \003(\tR\022supportedLan" +
-      "guages\022\032\n\010stateful\030\t \001(\010R\010stateful\0222\n\025pr" +
-      "eferred_sample_rate\030\n \001(\rR\023preferredSamp" +
-      "leRate\0222\n\025maximum_audio_seconds\030\013 \001(\001R\023m" +
-      "aximumAudioSeconds\022>\n\033maximum_concurrent" +
-      "_sessions\030\014 \001(\rR\031maximumConcurrentSessio" +
-      "ns\022\030\n\007runtime\030\r \001(\tR\007runtime\022%\n\016model_re" +
-      "vision\030\016 \001(\tR\rmodelRevision\022!\n\014model_dig" +
-      "est\030\017 \001(\tR\013modelDigest\0227\n\027implementation" +
-      "_revision\030\020 \001(\tR\026implementationRevision\022" +
-      "%\n\016speaker_labels\030\021 \001(\010R\rspeakerLabels\022<" +
-      "\n\032aligned_diarized_languages\030\022 \003(\tR\030alig" +
-      "nedDiarizedLanguages\"\234\001\n\030SessionTranscri" +
-      "ptSegment\022\027\n\007start_s\030\001 \001(\001R\006startS\022\023\n\005en" +
-      "d_s\030\002 \001(\001R\004endS\022\022\n\004text\030\003 \001(\tR\004text\022\030\n\007s" +
-      "peaker\030\004 \001(\tR\007speaker\022$\n\005words\030\005 \003(\0132\016.W" +
-      "ordAlignmentR\005words\"\237\002\n\021SessionTranscrip" +
-      "t\022\035\n\nsession_id\030\001 \001(\tR\tsessionId\022#\n\rreco" +
-      "rding_url\030\002 \001(\tR\014recordingUrl\022\022\n\004lang\030\003 " +
-      "\001(\tR\004lang\022\035\n\nduration_s\030\004 \001(\002R\tdurationS" +
-      "\0225\n\010segments\030\005 \003(\0132\031.SessionTranscriptSe" +
-      "gmentR\010segments\022\033\n\tfull_text\030\006 \001(\tR\010full" +
-      "Text\022\033\n\ttenant_id\030\007 \001(\tR\010tenantId\022\"\n\rcre" +
-      "ated_at_ns\030\010 \001(\004R\013createdAtNs*7\n\007AsrType" +
-      "\022\013\n\007PARTIAL\020\000\022\t\n\005FINAL\020\001\022\024\n\020SESSION_ACCE" +
-      "PTED\020\0022{\n\013RealtimeASR\022F\n\017GetCapabilities" +
-      "\022\034.RealtimeCapabilitiesRequest\032\025.Realtim" +
-      "eCapabilities\022$\n\006Stream\022\013.AudioChunk\032\t.A" +
-      "srEvent(\0010\001B!\n\020samuraibff.protoB\013StreamP" +
-      "rotoP\001b\006proto3"
+      "\031\n\010track_id\030\005 \001(\tR\007trackId\022\035\n\nprofile_id" +
+      "\030\006 \001(\tR\tprofileId\022\033\n\tresult_id\030\t \001(\tR\010re" +
+      "sultId\022\026\n\006status\030\014 \001(\tR\006status\022&\n\006source" +
+      "\030\r \001(\0132\016.AudioArtifactR\006source\022\035\n\nerror_" +
+      "code\030\021 \001(\tR\terrorCode\022\"\n\014degradations\030\022 " +
+      "\003(\tR\014degradations\022-\n\022segment_timestamps\030" +
+      "\023 \001(\010R\021segmentTimestamps\022\'\n\017word_timesta" +
+      "mps\030\024 \001(\010R\016wordTimestamps\022%\n\016speaker_lab" +
+      "els\030\025 \001(\010R\rspeakerLabels\022\"\n\rcreated_at_n" +
+      "s\030\027 \001(\003R\013createdAtNs\022\022\n\004lang\030\030 \001(\tR\004lang" +
+      "\022\027\n\007plan_id\030\031 \001(\tR\006planId\022\033\n\tfull_text\030\033" +
+      " \001(\tR\010fullText\0225\n\010segments\030\034 \003(\0132\031.Sessi" +
+      "onTranscriptSegmentR\010segmentsJ\004\010\004\020\005J\004\010\007\020" +
+      "\010J\004\010\010\020\tJ\004\010\n\020\013J\004\010\013\020\014J\004\010\016\020\017J\004\010\017\020\020J\004\010\020\020\021J\004\010" +
+      "\026\020\027R\005stageR\006run_idR\nattempt_idR\007unit_idR" +
+      "\010revisionR\nresult_uriR\rresult_sha256R\007pr" +
+      "imaryR\017provenance_json\"Q\n\rWordAlignment\022" +
+      "\027\n\007start_s\030\001 \001(\001R\006startS\022\023\n\005end_s\030\002 \001(\001R" +
+      "\004endS\022\022\n\004text\030\003 \001(\tR\004text\"\301\001\n\nFinalEvent" +
+      "\022\035\n\nsession_id\030\001 \001(\tR\tsessionId\022\027\n\007start" +
+      "_s\030\002 \001(\001R\006startS\022\023\n\005end_s\030\003 \001(\001R\004endS\022\022\n" +
+      "\004text\030\004 \001(\tR\004text\022\030\n\007speaker\030\005 \001(\tR\007spea" +
+      "ker\022\022\n\004lang\030\006 \001(\tR\004lang\022$\n\005words\030\007 \003(\0132\016" +
+      ".WordAlignmentR\005words\"\035\n\033RealtimeCapabil" +
+      "itiesRequest\"\262\006\n\024RealtimeCapabilities\022.\n" +
+      "\023provider_profile_id\030\001 \001(\tR\021providerProf" +
+      "ileId\022+\n\021windowed_realtime\030\002 \001(\010R\020window" +
+      "edRealtime\022)\n\020native_streaming\030\003 \001(\010R\017na" +
+      "tiveStreaming\022\024\n\005batch\030\004 \001(\010R\005batch\022-\n\022s" +
+      "egment_timestamps\030\005 \001(\010R\021segmentTimestam" +
+      "ps\022\'\n\017word_timestamps\030\006 \001(\010R\016wordTimesta" +
+      "mps\022-\n\022language_detection\030\007 \001(\010R\021languag" +
+      "eDetection\022/\n\023supported_languages\030\010 \003(\tR" +
+      "\022supportedLanguages\022\032\n\010stateful\030\t \001(\010R\010s" +
+      "tateful\0222\n\025preferred_sample_rate\030\n \001(\rR\023" +
+      "preferredSampleRate\0222\n\025maximum_audio_sec" +
+      "onds\030\013 \001(\001R\023maximumAudioSeconds\022>\n\033maxim" +
+      "um_concurrent_sessions\030\014 \001(\rR\031maximumCon" +
+      "currentSessions\022\030\n\007runtime\030\r \001(\tR\007runtim" +
+      "e\022%\n\016model_revision\030\016 \001(\tR\rmodelRevision" +
+      "\022!\n\014model_digest\030\017 \001(\tR\013modelDigest\0227\n\027i" +
+      "mplementation_revision\030\020 \001(\tR\026implementa" +
+      "tionRevision\022%\n\016speaker_labels\030\021 \001(\010R\rsp" +
+      "eakerLabels\022<\n\032aligned_diarized_language" +
+      "s\030\022 \003(\tR\030alignedDiarizedLanguages\"\234\001\n\030Se" +
+      "ssionTranscriptSegment\022\027\n\007start_s\030\001 \001(\001R" +
+      "\006startS\022\023\n\005end_s\030\002 \001(\001R\004endS\022\022\n\004text\030\003 \001" +
+      "(\tR\004text\022\030\n\007speaker\030\004 \001(\tR\007speaker\022$\n\005wo" +
+      "rds\030\005 \003(\0132\016.WordAlignmentR\005words\"\237\002\n\021Ses" +
+      "sionTranscript\022\035\n\nsession_id\030\001 \001(\tR\tsess" +
+      "ionId\022#\n\rrecording_url\030\002 \001(\tR\014recordingU" +
+      "rl\022\022\n\004lang\030\003 \001(\tR\004lang\022\035\n\nduration_s\030\004 \001" +
+      "(\002R\tdurationS\0225\n\010segments\030\005 \003(\0132\031.Sessio" +
+      "nTranscriptSegmentR\010segments\022\033\n\tfull_tex" +
+      "t\030\006 \001(\tR\010fullText\022\033\n\ttenant_id\030\007 \001(\tR\010te" +
+      "nantId\022\"\n\rcreated_at_ns\030\010 \001(\004R\013createdAt" +
+      "Ns*7\n\007AsrType\022\013\n\007PARTIAL\020\000\022\t\n\005FINAL\020\001\022\024\n" +
+      "\020SESSION_ACCEPTED\020\0022{\n\013RealtimeASR\022F\n\017Ge" +
+      "tCapabilities\022\034.RealtimeCapabilitiesRequ" +
+      "est\032\025.RealtimeCapabilities\022$\n\006Stream\022\013.A" +
+      "udioChunk\032\t.AsrEvent(\0010\001B!\n\020samuraibff.p" +
+      "rotoB\013StreamProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -286,7 +285,7 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     internal_static_FinalTrackResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_FinalTrackResult_descriptor,
-        new java.lang.String[] { "SchemaVersion", "SessionId", "TenantId", "Stage", "TrackId", "ProfileId", "RunId", "AttemptId", "ResultId", "UnitId", "Revision", "Status", "Source", "ResultUri", "ResultSha256", "Primary", "ErrorCode", "Degradations", "SegmentTimestamps", "WordTimestamps", "SpeakerLabels", "ProvenanceJson", "CreatedAtNs", "Lang", "PlanId", });
+        new java.lang.String[] { "SchemaVersion", "SessionId", "TenantId", "TrackId", "ProfileId", "ResultId", "Status", "Source", "ErrorCode", "Degradations", "SegmentTimestamps", "WordTimestamps", "SpeakerLabels", "CreatedAtNs", "Lang", "PlanId", "FullText", "Segments", });
     internal_static_WordAlignment_descriptor =
       getDescriptor().getMessageType(9);
     internal_static_WordAlignment_fieldAccessorTable = new
