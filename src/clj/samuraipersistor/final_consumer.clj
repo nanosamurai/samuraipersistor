@@ -5,7 +5,8 @@
             [samuraipersistor.kafka.common :as kcommon]
             [samuraipersistor.otel.traceparent :as tp]
             [samuraipersistor.persist :as persist])
-  (:require [samuraipersistor.final-track-consumer :as final-tracks])
+  (:require [samuraipersistor.final-track-consumer :as final-tracks]
+            [samuraipersistor.final-track-contract :as contract])
   (:import (java.util.concurrent LinkedBlockingQueue)
            (org.apache.kafka.clients.consumer ConsumerRecord)
            (org.apache.kafka.clients.producer KafkaProducer)
@@ -68,10 +69,11 @@
                                       res (persist/insert-final!
                                            (:ds db)
                                            ev
-                                           {:source "finalizer_worker"
+                                           (merge {:source "finalizer_worker"
                                             :model "whisperx"
                                             :event-created-at-ns (when (pos? (.getCreatedAtNs ev))
-                                                                   (.getCreatedAtNs ev))})]
+                                                                   (.getCreatedAtNs ev))}
+                                                  (contract/projection-headers rec)))]
                                   (when (= res :missing-session)
                                     (when dlq-producer
                                       (kcommon/send-dlq!

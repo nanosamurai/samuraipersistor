@@ -24,17 +24,36 @@
    "security.protocol" (or (:security-protocol config) "PLAINTEXT")
    "enable.auto.commit" "false" "auto.offset.reset" "earliest"
    "max.poll.records" "1" "max.poll.interval.ms" "300000"
+   "max.partition.fetch.bytes" "1048576" "fetch.max.bytes" "5242880"
    "key.deserializer" "org.apache.kafka.common.serialization.ByteArrayDeserializer"
    "value.deserializer" "org.apache.kafka.common.serialization.ByteArrayDeserializer"})
 
+(defn publish-primary!
+  "Acknowledge legacy primary publication from committed Postgres content.
+  A crash after delivery can repeat publication; consumers must tolerate duplicates."
+  [producer topic accepted ^ConsumerRecord input]
+  (when-let [transcript (tracks/primary-projection accepted)]
+    (let [record (ProducerRecord. topic (.getBytes (str (:session_id accepted)) "UTF-8")
+                                  (.toByteArray transcript))]
+      (.add (.headers record) "x-result-id" (.getBytes (str (:result_id accepted)) "UTF-8"))
+      (.add (.headers record) "x-final-track-contract" (.getBytes "2" "UTF-8"))
+      (doseq [header (.headers input)
+              :when (and (contains? #{"traceparent" "tracestate"} (.key header))
+                         (.value header) (<= (alength ^bytes (.value header)) 512))]
+        (.add (.headers record) header))
+      (.get (.send producer record) 30 TimeUnit/SECONDS))))
+
 (defn persist-record!
-  "Validate ownership/key/contract and persist one canonical or primary record."
-  [ds config primary? ^ConsumerRecord record]
+  "Accept one result, then acknowledge primary publication before the input commit."
+  [ds config primary? ^ConsumerRecord record producer]
   (let [storage {:bucket (:final-source-bucket config)
                  :recording-prefix (or (:final-recording-prefix config) "recordings")}
         value (.value record)
         key (when-let [bytes (.key record)] (String. ^bytes bytes "UTF-8"))]
-    (when (or (nil? value) (> (alength ^bytes value) (if primary? 1000000 65536)))
+    (when (or (nil? value) (> (alength ^bytes value) (if primary? 1000000 contract/max-result-bytes))
+              (> (+ (alength ^bytes value) (if-let [key (.key record)] (alength ^bytes key) 0)
+                    (reduce + 128 (map #(+ (count (.key %)) 10 (if-let [v (.value %)] (alength ^bytes v) 0))
+                                       (.headers record)))) contract/max-record-bytes))
       (contract/invalid! :event-size))
     (if primary?
       (let [event (SessionTranscript/parseFrom ^bytes value)
@@ -47,7 +66,10 @@
       (let [event (contract/outcome value storage)]
         (when-not (= (:session-id event) key)
           (contract/invalid! :record-key))
-        (tracks/insert-outcome! ds event)))))
+        (let [accepted (tracks/insert-outcome! ds event)]
+          (when (map? accepted)
+            (publish-primary! producer (get-in config [:topics :final]) accepted record))
+          accepted)))))
 
 (defn- reject-record!
   "Acknowledge a metadata-only DLQ record before allowing the input commit."
@@ -69,6 +91,7 @@
         consumer (KafkaConsumer. (consumer-config config primary?))
         dlq-topic (get-in config [:topics :dlq])
         dlq (when dlq-topic (common/->producer config))
+        publisher (when-not primary? (common/->producer config))
         stop? (atom false)
         pending (atom nil)
         thread (Thread.
@@ -88,7 +111,7 @@
                           (.pause consumer (.assignment consumer))
                           (try
                             (let [result (try
-                                           (persist-record! (:ds db) config primary? record)
+                                           (persist-record! (:ds db) config primary? record publisher)
                                            (catch InvalidProtocolBufferException _ :invalid-contract)
                                            (catch clojure.lang.ExceptionInfo error
                                              (if (= :samuraipersistor.final-track-contract/invalid (:type (ex-data error)))
@@ -109,6 +132,7 @@
                     (finally
                       (.close consumer)
                       (when dlq (.close dlq))
+                      (when publisher (.close publisher))
                       (log/info "Final persistence consumer stopped" {:topic topic})))))]
     (.setName thread (str "persist-" topic))
     (.setDaemon thread true)

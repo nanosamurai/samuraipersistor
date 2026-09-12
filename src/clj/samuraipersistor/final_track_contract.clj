@@ -1,11 +1,11 @@
 (ns samuraipersistor.final-track-contract
-  "Validate bounded final-track identities and artifact references before SQL."
+  "Validate bounded final-track identities and inline transcripts before SQL."
   (:require [jsonista.core :as json])
   (:import (java.nio ByteBuffer)
            (java.security MessageDigest)
-           (java.util UUID HexFormat)
+           (java.util UUID)
            (org.apache.kafka.clients.consumer ConsumerRecord)
-           (samuraibff.proto FinalTrackResult AudioArtifact SessionTranscript)))
+           (samuraibff.proto FinalTrackResult AudioArtifact)))
 
 (def mapper (json/object-mapper {:decode-key-fn keyword :encode-key-fn name}))
 
@@ -22,11 +22,6 @@
       (when-not (= (str result) value) (invalid! :identity))
       result)
     (catch IllegalArgumentException _ (invalid! :identity))))
-
-(defn digest
-  "Compute the SHA-256 identity of serialized event bytes."
-  [^bytes value]
-  (.formatHex (HexFormat/of) (.digest (MessageDigest/getInstance "SHA-256") value)))
 
 (defn uuid5
   "Derive an RFC 4122 UUIDv5, matching Python's stable run/result identities."
@@ -59,10 +54,10 @@
 
 (defn validate-identity!
   "Validate all identifiers, deterministic IDs, bounds, and the configured S3 scope."
-  [{:keys [tenant-id session-id plan-id result-id run-id source-id source-uri source-sha256
+  [{:keys [tenant-id session-id plan-id result-id source-id source-uri source-sha256
            source-size sample-count sample-rate track-id profile-id] :as event}
    {:keys [bucket recording-prefix] :or {recording-prefix "recordings"}}]
-  (doseq [value [tenant-id session-id plan-id result-id run-id source-id]] (uuid value))
+  (doseq [value [tenant-id session-id plan-id result-id source-id]] (uuid value))
   (when-not (and (seq bucket) (not (re-find #"[/\\:%]" bucket))
                  (every? #(and (string? %) (re-matches #"[a-z0-9][a-z0-9._-]{0,95}" %))
                          [track-id profile-id])
@@ -71,87 +66,94 @@
                  (<= 44 source-size 19204096)
                  (= source-uri (str "s3://" bucket "/" recording-prefix "/"
                                     tenant-id "/" session-id "/" source-id ".wav"))
-                 (= [run-id result-id] (identities event)))
+                 (= result-id (second (identities event))))
     (invalid! :source-or-run))
   event)
 
+(def max-result-bytes 900000)
+(def max-record-bytes 1000000)
+
+(defn legacy-contract!
+  "Stop old reference-contract input for explicit conversion without committing it."
+  []
+  (throw (ex-info "Convert retained reference-contract input before enabling inline results"
+                  {:type ::legacy-contract})))
+
+(defn segment-map
+  "Decode a segment, omitting timing when the event declares it unavailable."
+  [segment timed?]
+  (cond-> {:text (.getText segment)}
+    timed? (assoc :start_s (.getStartS segment) :end_s (.getEndS segment))
+    (seq (.getSpeaker segment)) (assoc :speaker (.getSpeaker segment))
+    (pos? (.getWordsCount segment))
+    (assoc :words (mapv (fn [word] {:text (.getText word) :start_s (.getStartS word)
+                                    :end_s (.getEndS word)}) (.getWordsList segment)))))
+
+(defn- valid-time?
+  "Check finite recording-relative bounds, allowing an empty segment."
+  [start end duration]
+  (and (number? start) (number? end) (Double/isFinite (double start))
+       (Double/isFinite (double end)) (<= 0 start end (+ duration 0.01))))
+
 (defn outcome
-  "Parse and validate a final-only canonical envelope; return SQL-ready metadata."
+  "Validate schema 2 inline content and identity; old schema requires explicit conversion."
   [^bytes value storage]
-  (when (> (alength value) 65536) (invalid! :event-size))
+  (when (> (alength value) max-result-bytes) (invalid! :event-size))
   (let [^FinalTrackResult event (FinalTrackResult/parseFrom value)
-        status (.getStatus event)
+        _ (when (= 1 (.getSchemaVersion event)) (legacy-contract!))
         data (merge (source-map (.getSource event))
                     {:tenant-id (.getTenantId event) :session-id (.getSessionId event)
                      :plan-id (.getPlanId event) :result-id (.getResultId event)
-                     :run-id (.getRunId event) :attempt-id (.getAttemptId event)
                      :track-id (.getTrackId event) :profile-id (.getProfileId event)
-                     :primary? (.getPrimary event) :status status
-                     :result-uri (.getResultUri event) :result-sha256 (.getResultSha256 event)
-                     :error-code (.getErrorCode event) :lang (.getLang event)
-                     :event-created-at-ns (.getCreatedAtNs event) :event-sha256 (digest value)
+                     :status (.getStatus event) :error-code (.getErrorCode event)
+                     :lang (.getLang event) :event-created-at-ns (.getCreatedAtNs event)
+                     :full-text (.getFullText event)
+                     :segments (mapv #(segment-map % (.getSegmentTimestamps event)) (.getSegmentsList event))
                      :capabilities {:segment_timestamps (.getSegmentTimestamps event)
                                     :word_timestamps (.getWordTimestamps event)
                                     :speaker_labels (.getSpeakerLabels event)}
-                     :degradations (vec (.getDegradationsList event))})]
+                     :degradations (vec (.getDegradationsList event))})
+        duration (/ (:sample-count data) 16000.0)]
     (validate-identity! data storage)
-    (uuid (:attempt-id data))
-    (when-not (and (= 1 (.getSchemaVersion event)) (= "final" (.getStage event))
-                   (= "recording" (.getUnitId event)) (= 1 (.getRevision event))
+    (when-not (and (= 2 (.getSchemaVersion event))
+                   (empty? (.asMap (.getUnknownFields event)))
                    (= "audio/wav" (.getMediaType (.getSource event)))
-                   (contains? #{"succeeded" "failed"} status)
-                   (pos? (:event-created-at-ns data)))
+                   (contains? #{"succeeded" "failed"} (:status data))
+                   (pos? (:event-created-at-ns data)) (<= (count (:lang data)) 32)
+                   (<= (count (:version-id data)) 1024)
+                   (<= (count (:degradations data)) 32)
+                   (every? #(re-matches #"[a-z0-9_]{1,96}" %) (:degradations data)))
       (invalid! :envelope))
-    (if (= "succeeded" status)
-      (when-not (and (= (:result-uri data)
-                        (str "s3://" (:bucket storage) "/final-tracks/"
-                             (:tenant-id data) "/" (:session-id data) "/" (:source-id data) "/"
-                             (:track-id data) "/" (:run-id data) "/" (:attempt-id data) ".transcript.json"))
-                     (re-matches #"[a-f0-9]{64}" (:result-sha256 data))
-                     (empty? (:error-code data)))
-        (invalid! :result-artifact))
-      (when-not (and (empty? (:result-uri data)) (empty? (:result-sha256 data))
+    (if (= "failed" (:status data))
+      (when-not (and (empty? (:full-text data)) (empty? (:segments data))
+                     (every? false? (vals (:capabilities data)))
                      (re-matches #"[a-z_]{1,96}" (:error-code data)))
-        (invalid! :failure)))
-    (let [provenance (try (json/read-value (.getProvenanceJson event) mapper)
-                          (catch Exception _ (invalid! :provenance)))]
-      (when-not (map? provenance) (invalid! :provenance))
-      (assoc data :provenance provenance))))
-
-(def projection-header-names
-  ["x-result-id" "x-asr-plan-id" "x-run-id" "x-final-track-id" "x-final-profile-id"
-   "x-source-artifact-id" "x-source-sha256" "x-source-size-bytes"
-   "x-source-sample-count" "x-source-sample-rate" "x-source-version-id"])
+        (invalid! :failure))
+      (when-not (empty? (:error-code data)) (invalid! :success)))
+    (when-not (and (= (.getWordTimestamps event) (boolean (some :words (:segments data))))
+                   (= (.getSpeakerLabels event) (boolean (some :speaker (:segments data))))
+                   (or (seq (:segments data)) (not (.getSegmentTimestamps event))))
+      (invalid! :availability))
+    (doseq [segment (:segments data)]
+      (when (and (.getSegmentTimestamps event)
+                 (not (valid-time? (:start_s segment) (:end_s segment) duration)))
+        (invalid! :segment-time))
+      (doseq [word (:words segment)]
+        (when-not (and (valid-time? (:start_s word) (:end_s word) duration)
+                       (< (:start_s word) (:end_s word)))
+          (invalid! :word-time))))
+    data))
 
 (defn projection-headers
-  "Read all stable primary-projection headers; partial identity is an error."
+  "Identify Persistor's compatibility events; old headers require explicit conversion."
   [^ConsumerRecord record]
-  (let [selected (filter #(contains? (set projection-header-names) (.key %)) (.headers record))]
-    (when (seq selected)
-      (when-not (and (= (count selected) (count projection-header-names))
-                     (= (set projection-header-names) (set (map #(.key %) selected))))
+  (let [headers (.headers record)
+        ids (vec (.headers headers "x-result-id"))
+        versions (vec (.headers headers "x-final-track-contract"))]
+    (when (or (seq ids) (seq versions))
+      (when-not (seq versions) (legacy-contract!))
+      (when-not (and (= 1 (count ids)) (= 1 (count versions))
+                     (= "2" (String. ^bytes (.value (first versions)) "UTF-8"))
+                     (= 36 (alength ^bytes (.value (first ids)))))
         (invalid! :projection-headers))
-      (let [headers (into {} (map (fn [header]
-                                    (when (or (nil? (.value header)) (> (alength ^bytes (.value header)) 1024))
-                                      (invalid! :projection-headers))
-                                    [(.key header) (String. ^bytes (.value header) "UTF-8")]) selected))]
-        (try
-          {:result-id (headers "x-result-id") :plan-id (headers "x-asr-plan-id")
-           :run-id (headers "x-run-id") :track-id (headers "x-final-track-id")
-           :profile-id (headers "x-final-profile-id") :source-id (headers "x-source-artifact-id")
-           :source-sha256 (headers "x-source-sha256") :version-id (headers "x-source-version-id")
-           :source-size (Long/parseLong (headers "x-source-size-bytes"))
-           :sample-count (Long/parseLong (headers "x-source-sample-count"))
-           :sample-rate (Long/parseLong (headers "x-source-sample-rate"))
-           :event-sha256 (digest (.value record))}
-          (catch NumberFormatException _ (invalid! :projection-headers)))))))
-
-(defn primary
-  "Validate source identity on an identified primary compatibility event."
-  [^SessionTranscript event headers storage]
-  (let [data (merge headers {:tenant-id (.getTenantId event) :session-id (.getSessionId event)
-                             :source-uri (.getRecordingUrl event) :lang (.getLang event) :primary? true})]
-    (validate-identity! data storage)
-    (when (> (Math/abs (- (.getDurationS event) (/ (:sample-count data) 16000.0))) 0.001)
-      (invalid! :duration))
-    data))
+      {:result-id (str (uuid (String. ^bytes (.value (first ids)) "UTF-8")))})))
