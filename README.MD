@@ -93,24 +93,35 @@ and the Kafka offset is committed (so the consumer group does not get stuck).
 
 ## DB migrations
 
-Migrations are managed in this repo using **Migratus** (raw SQL `.up.sql` / `.down.sql`).
+Deployment migrations are owned by the deployment repositories: the Community
+Edition Compose SQL in `nanosamurai/docker/postgres/migrations` and the matching
+enterprise deployment SQL. Apply migration `017-add-final-track-identity.up.sql`
+before this service. Keep those copies identical. This repository's historical
+`resources/migrations` and Migratus commands are retained for compatibility;
+they are not the current deployment migration source and must not be used to
+migrate a running deployment.
 
-Migration files live in:
+The final protobuf adds only `SessionTranscript.track_id = 9`. An empty ID
+maps to `whisperx`. The `model` Kafka header supplies the stored model label;
+missing metadata is `unknown`, not a fabricated WhisperX model. The existing
+transaction reuses the recording by `(session_id, recording_url)` and inserts
+one final row per `(recording_id, track_id)`. Duplicate delivery does nothing;
+the first text, segments and metadata remain unchanged. Old NULL track rows
+remain historical. The final consumer retries a failed database write before
+advancing to another event. Event tenant IDs must match the owning session.
+Persistor publishes no transcript events.
 
-* `resources/migrations/*`
-
-### Run migrations
+Regenerate the checked-in Java messages with protoc 33.4:
 
 ```bash
-clojure -X:migrate :jdbc-url 'jdbc:postgresql://localhost:5432/drsynth' :username 'drsynth' :password 'drsynth'
+protoc -I resources/proto --java_out=src/java resources/proto/stream.proto
+clojure -T:build compile-java
 ```
 
-### Rollback last migration
-
-```bash
-clojure -X:rollback :jdbc-url 'jdbc:postgresql://localhost:5432/drsynth' :username 'drsynth' :password 'drsynth'
-```
-
+Local test containers bind only to localhost. Set
+`TESTCONTAINERS_RYUK_DISABLED=true` for local full-suite runs and allow test
+fixtures to stop their containers. Docker builds exclude `.env` files and
+scratch worktrees.
 ## Configuration
 
 System config is in `resources/system.edn`.
@@ -182,7 +193,7 @@ docker build -t samuraipersistor:local .
 ### Run image (example)
 
 ```bash
-docker run --rm -p 8010:8010 \
+docker run --rm -p 127.0.0.1:8010:8010 \
   -e SP_DB_JDBC_URL=jdbc:postgresql://host.docker.internal:5432/drsynth \
   -e SP_DB_USERNAME=drsynth \
   -e SP_DB_PASSWORD=drsynth \

@@ -1,4 +1,7 @@
 .git
+.tmp
+.env
+.env.*
 .idea
 .cpcache
 .clj-kondo
