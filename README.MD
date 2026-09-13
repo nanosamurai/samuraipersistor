@@ -296,7 +296,9 @@ stack, see the
 
 ## Notes / known follow-ups
 
-* Add Kafka Testcontainers tests (produce protobuf events, assert DB writes + commits).
-* Carry `window_length`, `model`, `source` via Kafka headers (or a future envelope message).
-* Consider adding de-duplication using a unique `(topic, partition, offset)` key in DB.
+* Refinement track identity and replay deduplication belong to the next spike.
+* Final tracks already use the existing `model` header and database uniqueness;
+  no new message envelope or Kafka-offset database key is needed.
+* See [final-track validation](docs/final-tracks-spike.md) for the real Compose
+  Kafka/Postgres replay and database-retry evidence.
 
