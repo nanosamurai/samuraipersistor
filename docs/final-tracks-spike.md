@@ -23,9 +23,10 @@ here are not the deployment ledger. Keep their migration 017/018 SQL copies in
 sync. The repeatable overlay and smoke runbook are in Nanosamurai's
 `docs/final-tracks-spike.md`, mirrored in Nanodeploy.
 
-The first Compose pass used a separate validation DB and separate Persistor
-groups. After explicit approval, migration 018 and a separate local cleanup
-removed the retained DB's obsolete experimental schema, preserving all original
-transcript/recording content. The full Compose smoke passed again against that
-retained DB with the rebuilt image and original Persistor groups. Refinement
-tracks, browser tabs and durable per-track failure reporting are later work.
+The rollout and full smoke now target the original Compose project `nanosamurai`
+and its Postgres 18 database. Migrations 017/018 were applied there, and obsolete
+metadata was backed up before approved cleanup. All 117 original transcripts and
+51 recording records were preserved. Persistor uses its locally rebuilt image
+and the original consumer groups; no offsets were reset. The experimental Compose
+project is stopped. Refinement tracks, browser tabs and durable per-track failure
+reporting remain later work.
