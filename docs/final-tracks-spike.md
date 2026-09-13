@@ -23,8 +23,9 @@ here are not the deployment ledger. Keep their migration 017/018 SQL copies in
 sync. The repeatable overlay and smoke runbook are in Nanosamurai's
 `docs/final-tracks-spike.md`, mirrored in Nanodeploy.
 
-The Compose pass used a separate validation DB and separate Persistor groups in
-the existing infrastructure. The retained DB's obsolete execution-ID check
-requires migration 018; applying it is pending explicit approval after automatic
-review rejected the constraint removal. Historical rows remain intact. Refinement
+The first Compose pass used a separate validation DB and separate Persistor
+groups. After explicit approval, migration 018 and a separate local cleanup
+removed the retained DB's obsolete experimental schema, preserving all original
+transcript/recording content. The full Compose smoke passed again against that
+retained DB with the rebuilt image and original Persistor groups. Refinement
 tracks, browser tabs and durable per-track failure reporting are later work.
