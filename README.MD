@@ -306,3 +306,9 @@ stack, see the
 * See [final-track validation](docs/final-tracks-spike.md) for the real Compose
   Kafka/Postgres replay and database-retry evidence.
 
+
+## Refinement track contract
+
+Refinement tracks add only `RefinedEvent.track_id = 16`; an empty ID means
+`whisperx`. Audio, segment and word message shapes and Kafka keys stay unchanged.
+

@@ -11,6 +11,26 @@ public interface RefinedEventOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
+   * <pre>
+   * deployment-configured refinement track; empty means whisperx
+   * </pre>
+   *
+   * <code>string track_id = 16;</code>
+   * @return The trackId.
+   */
+  java.lang.String getTrackId();
+  /**
+   * <pre>
+   * deployment-configured refinement track; empty means whisperx
+   * </pre>
+   *
+   * <code>string track_id = 16;</code>
+   * @return The bytes for trackId.
+   */
+  com.google.protobuf.ByteString
+      getTrackIdBytes();
+
+  /**
    * <code>string session_id = 1;</code>
    * @return The sessionId.
    */
