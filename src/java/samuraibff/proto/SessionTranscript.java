@@ -34,6 +34,7 @@ private static final long serialVersionUID = 0L;
     segments_ = java.util.Collections.emptyList();
     fullText_ = "";
     tenantId_ = "";
+    trackId_ = "";
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -307,6 +308,45 @@ private static final long serialVersionUID = 0L;
     return createdAtNs_;
   }
 
+  public static final int TRACK_ID_FIELD_NUMBER = 9;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object trackId_ = "";
+  /**
+   * <code>string track_id = 9;</code>
+   * @return The trackId.
+   */
+  @java.lang.Override
+  public java.lang.String getTrackId() {
+    java.lang.Object ref = trackId_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      trackId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string track_id = 9;</code>
+   * @return The bytes for trackId.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTrackIdBytes() {
+    java.lang.Object ref = trackId_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      trackId_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -345,6 +385,9 @@ private static final long serialVersionUID = 0L;
     if (createdAtNs_ != 0L) {
       output.writeUInt64(8, createdAtNs_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(trackId_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 9, trackId_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -381,6 +424,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeUInt64Size(8, createdAtNs_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(trackId_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(9, trackId_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -413,6 +459,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getTenantId())) return false;
     if (getCreatedAtNs()
         != other.getCreatedAtNs()) return false;
+    if (!getTrackId()
+        .equals(other.getTrackId())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -444,6 +492,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + CREATED_AT_NS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getCreatedAtNs());
+    hash = (37 * hash) + TRACK_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getTrackId().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -589,6 +639,7 @@ private static final long serialVersionUID = 0L;
       fullText_ = "";
       tenantId_ = "";
       createdAtNs_ = 0L;
+      trackId_ = "";
       return this;
     }
 
@@ -655,6 +706,9 @@ private static final long serialVersionUID = 0L;
       }
       if (((from_bitField0_ & 0x00000080) != 0)) {
         result.createdAtNs_ = createdAtNs_;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.trackId_ = trackId_;
       }
     }
 
@@ -726,6 +780,11 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getCreatedAtNs() != 0L) {
         setCreatedAtNs(other.getCreatedAtNs());
+      }
+      if (!other.getTrackId().isEmpty()) {
+        trackId_ = other.trackId_;
+        bitField0_ |= 0x00000100;
+        onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -801,6 +860,11 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000080;
               break;
             } // case 64
+            case 74: {
+              trackId_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000100;
+              break;
+            } // case 74
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -1478,6 +1542,78 @@ private static final long serialVersionUID = 0L;
     public Builder clearCreatedAtNs() {
       bitField0_ = (bitField0_ & ~0x00000080);
       createdAtNs_ = 0L;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object trackId_ = "";
+    /**
+     * <code>string track_id = 9;</code>
+     * @return The trackId.
+     */
+    public java.lang.String getTrackId() {
+      java.lang.Object ref = trackId_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        trackId_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string track_id = 9;</code>
+     * @return The bytes for trackId.
+     */
+    public com.google.protobuf.ByteString
+        getTrackIdBytes() {
+      java.lang.Object ref = trackId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        trackId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string track_id = 9;</code>
+     * @param value The trackId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTrackId(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      trackId_ = value;
+      bitField0_ |= 0x00000100;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string track_id = 9;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearTrackId() {
+      trackId_ = getDefaultInstance().getTrackId();
+      bitField0_ = (bitField0_ & ~0x00000100);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string track_id = 9;</code>
+     * @param value The bytes for trackId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTrackIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      trackId_ = value;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }

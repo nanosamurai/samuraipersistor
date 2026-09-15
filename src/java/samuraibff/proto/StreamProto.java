@@ -110,16 +110,16 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
       " \001(\t\022\035\n\005words\030\007 \003(\0132\016.WordAlignment\"x\n\030S" +
       "essionTranscriptSegment\022\017\n\007start_s\030\001 \001(\001" +
       "\022\r\n\005end_s\030\002 \001(\001\022\014\n\004text\030\003 \001(\t\022\017\n\007speaker" +
-      "\030\004 \001(\t\022\035\n\005words\030\005 \003(\0132\016.WordAlignment\"\312\001" +
+      "\030\004 \001(\t\022\035\n\005words\030\005 \003(\0132\016.WordAlignment\"\334\001" +
       "\n\021SessionTranscript\022\022\n\nsession_id\030\001 \001(\t\022" +
       "\025\n\rrecording_url\030\002 \001(\t\022\014\n\004lang\030\003 \001(\t\022\022\n\n" +
       "duration_s\030\004 \001(\002\022+\n\010segments\030\005 \003(\0132\031.Ses" +
       "sionTranscriptSegment\022\021\n\tfull_text\030\006 \001(\t" +
       "\022\021\n\ttenant_id\030\007 \001(\t\022\025\n\rcreated_at_ns\030\010 \001" +
-      "(\004*!\n\007AsrType\022\013\n\007PARTIAL\020\000\022\t\n\005FINAL\020\00123\n" +
-      "\013RealtimeASR\022$\n\006Stream\022\013.AudioChunk\032\t.As" +
-      "rEvent(\0010\001B!\n\020samuraibff.protoB\013StreamPr" +
-      "otoP\001b\006proto3"
+      "(\004\022\020\n\010track_id\030\t \001(\t*!\n\007AsrType\022\013\n\007PARTI" +
+      "AL\020\000\022\t\n\005FINAL\020\00123\n\013RealtimeASR\022$\n\006Stream" +
+      "\022\013.AudioChunk\032\t.AsrEvent(\0010\001B!\n\020samuraib" +
+      "ff.protoB\013StreamProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -178,7 +178,7 @@ public final class StreamProto extends com.google.protobuf.GeneratedFile {
     internal_static_SessionTranscript_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SessionTranscript_descriptor,
-        new java.lang.String[] { "SessionId", "RecordingUrl", "Lang", "DurationS", "Segments", "FullText", "TenantId", "CreatedAtNs", });
+        new java.lang.String[] { "SessionId", "RecordingUrl", "Lang", "DurationS", "Segments", "FullText", "TenantId", "CreatedAtNs", "TrackId", });
     descriptor.resolveAllFeaturesImmutable();
   }
 

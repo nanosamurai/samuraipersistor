@@ -105,4 +105,16 @@ public interface SessionTranscriptOrBuilder extends
    * @return The createdAtNs.
    */
   long getCreatedAtNs();
+
+  /**
+   * <code>string track_id = 9;</code>
+   * @return The trackId.
+   */
+  java.lang.String getTrackId();
+  /**
+   * <code>string track_id = 9;</code>
+   * @return The bytes for trackId.
+   */
+  com.google.protobuf.ByteString
+      getTrackIdBytes();
 }

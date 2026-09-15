@@ -41,66 +41,61 @@
            :lang (.getLang ev)}})
 
 (defn- start-worker!
+  "Persist final records in order, retrying a failed write before taking another.
+  Accepts queue/commit callback/DB/Kafka dependencies; returns thread and stop!."
   [{:keys [queue commit! db dlq-topic kafka-config]}]
   (let [^LinkedBlockingQueue q queue
         ^KafkaProducer dlq-producer (when dlq-topic (kcommon/->producer kafka-config))
         stop? (atom false)
         thread (Thread.
-                 (fn []
-                   (log/info "Final worker started")
-                   (try
-                     (while (not @stop?)
-                       (let [batch-size 20
-                             first-rec (loop/take! q)
-                             recs (transient [first-rec])]
-                         (loop [i 1]
-                           (when (< i batch-size)
-                             (when-let [r (loop/poll! q 10)]
-                               (conj! recs r)
-                               (recur (inc i)))))
-                         (let [records (persistent! recs)
-                               processed (transient [])]
-                           (doseq [^ConsumerRecord rec records]
-                             (try
-                               (tp/with-record-trace rec
-                                 (let [ev (parse-final (.value rec))
-                                       res (persist/insert-final!
-                                             (:ds db)
-                                             ev
-                                             {:source "finalizer_worker"
-                                              :model "whisperx"
-                                              :event-created-at-ns (when (pos? (.getCreatedAtNs ev))
-                                                                    (.getCreatedAtNs ev))})]
-                                   (when (= res :missing-session)
-                                     (when dlq-producer
-                                       (kcommon/send-dlq!
-                                         dlq-producer
-                                         dlq-topic
-                                         (.getSessionId ev)
-                                         (record->dlq-payload rec ev "missing_session"))))
-                                   (conj! processed rec)))
-                               (catch Throwable t
-                                 (log/error t "Failed to persist final transcript" {:topic (.topic rec)
-                                                                                    :partition (.partition rec)
-                                                                                    :offset (.offset rec)}))))
-                           (let [processed (persistent! processed)]
-                             (commit! processed)))))
-                     (catch InterruptedException _
-                       (log/info "Final worker interrupted"))
-                     (catch Throwable t
-                       (log/error t "Final worker crashed"))
-                     (finally
-                       (when dlq-producer
-                         (try (.close dlq-producer) (catch Throwable _)))
-                       (log/info "Final worker stopped")))))]
+                (fn []
+                  (log/info "Final worker started")
+                  (try
+                    (while (not @stop?)
+                      (let [^ConsumerRecord rec (loop/take! q)]
+                        (loop []
+                          (when-not @stop?
+                            (let [stored? (try
+                                            (tp/with-record-trace rec
+                                              (let [ev (parse-final (.value rec))
+                                                    header (.lastHeader (.headers rec) "model")
+                                                    model (when (and header (.value header))
+                                                            (String. ^bytes (.value header) "UTF-8"))
+                                                    res (persist/insert-final!
+                                                         (:ds db) ev
+                                                         {:source "finalizer_worker"
+                                                          :model (or (not-empty model) "unknown")
+                                                          :event-created-at-ns (when (pos? (.getCreatedAtNs ev))
+                                                                                 (.getCreatedAtNs ev))})]
+                                                (when (and (not= res :ok) dlq-producer)
+                                                  (kcommon/send-dlq!
+                                                   dlq-producer dlq-topic (.getSessionId ev)
+                                                   (record->dlq-payload rec ev (name res))))))
+                                            true
+                                            (catch InterruptedException e (throw e))
+                                            (catch Exception e
+                                              (log/warn "Final persistence failed; retrying before advancing"
+                                                        {:partition (.partition rec) :offset (.offset rec)
+                                                         :error-class (.getName (class e))
+                                                         :sql-state (when (instance? java.sql.SQLException e)
+                                                                      (.getSQLState ^java.sql.SQLException e))})
+                                              false))]
+                              (if stored?
+                                (commit! [rec])
+                                (do (Thread/sleep 1000) (recur))))))))
+                    (catch InterruptedException _
+                      (log/info "Final worker interrupted"))
+                    (catch Throwable t
+                      (log/error t "Final worker crashed"))
+                    (finally
+                      (when dlq-producer
+                        (try (.close dlq-producer) (catch Throwable _)))
+                      (log/info "Final worker stopped")))))]
     (.setName thread "final-worker")
     (.setDaemon thread true)
     (.start thread)
     {:thread thread
-     :stop! (fn []
-              (reset! stop? true)
-              (.interrupt thread))}))
-
+     :stop! (fn [] (reset! stop? true) (.interrupt thread))}))
 (defmethod ig/init-key :samuraipersistor/final-consumer
   [_ {:keys [config db]}]
   (let [kcfg (get config :kafka)

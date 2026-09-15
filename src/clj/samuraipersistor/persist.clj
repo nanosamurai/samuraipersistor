@@ -162,80 +162,48 @@
             :ok))))))
 
 (defn insert-final!
-  "Persist a SessionTranscript (final transcript) + recording row + update session status.
+  "Store the first final result per recording/track, reusing the source recording.
 
-  Expects:
-  - the session exists in DB (created by BFF)
-  - `recording-url`, `duration-s`, `sample-rate`, `lang` are provided in the event
-
-  `meta` keys:
-  - :source (string) e.g. 'finalizer_worker'
-  - :model (string)
-  - :event-created-at-ns (long)
-
-  Returns :ok or :missing-session." 
+  Inputs: datasource, SessionTranscript, and source/model/event timestamp metadata.
+  Empty protobuf track IDs mean whisperx. Returns :ok, :missing-session or
+  :tenant-mismatch. Throws on DB errors so the consumer retries the same event."
   [ds ^SessionTranscript ev {:keys [source model event-created-at-ns]}]
-  (let [session-key (.getSessionId ev)
-        row (session-uuid-by-key ds session-key)]
-    (if-not row
-      (do
-        (log/warn "Missing session for final transcript" {:session-key session-key})
-        :missing-session)
-      (let [{:keys [id tenant_id user_id]} row
-            segments (map segment->map (.getSegmentsList ev))
-            segments-json (j/write-value-as-string segments json-writer)
-            recording-id (UUID/randomUUID)
-            transcript-id (UUID/randomUUID)]
-        (jdbc/with-transaction [tx ds]
-          ;; Recording row (if the schema evolves to allow multiple recordings per session,
-          ;; this stays correct; for now it’s 1 per finalization run).
+  (let [row (session-uuid-by-key ds (.getSessionId ev))
+        track-id (if (str/blank? (.getTrackId ev)) "whisperx" (.getTrackId ev))]
+    (cond
+      (nil? row) :missing-session
+      (and (seq (.getTenantId ev))
+           (not= (str (:tenant_id row)) (.getTenantId ev))) :tenant-mismatch
+      :else
+      (jdbc/with-transaction [tx ds]
+        (let [{:keys [id tenant_id user_id]} row
+              recording-id (UUID/randomUUID)
+              lang (not-empty (.getLang ev))]
           (jdbc/execute-one!
-            tx
-            (into
-              ["INSERT INTO recordings (id, session_id, recording_url, duration_s, sample_rate, lang)
-              VALUES (?, ?, ?, ?, ?, ?)"]
-              [recording-id
-               id
-               (.getRecordingUrl ev)
-               (double (.getDurationS ev))
-               ;; sample_rate is not present in SessionTranscript proto currently.
-               ;; DB column is NOT NULL, so we store the system default.
-               16000
-               (let [lang (.getLang ev)] (when (seq lang) lang))]))
-
+           tx
+           ["INSERT INTO recordings (id, session_id, recording_url, duration_s, sample_rate, lang)
+             VALUES (?, ?, ?, ?, 16000, ?) ON CONFLICT (session_id, recording_url) DO NOTHING"
+            recording-id id (.getRecordingUrl ev) (double (.getDurationS ev)) lang])
+          (let [recording (jdbc/execute-one!
+                           tx
+                           ["SELECT id FROM recordings WHERE session_id=? AND recording_url=?"
+                            id (.getRecordingUrl ev)]
+                           {:builder-fn rs/as-unqualified-lower-maps})]
+            (jdbc/execute-one!
+             tx
+             ["INSERT INTO session_transcripts
+                 (id, session_id, recording_id, tenant_id, user_id, full_text, lang,
+                  duration_s, segments, source, type, model, event_created_at_ns, track_id)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?, 'final', ?, ?, ?)
+               ON CONFLICT (recording_id, track_id) WHERE type='final' AND track_id IS NOT NULL
+               DO NOTHING"
+              (UUID/randomUUID) id (:id recording) tenant_id user_id (.getFullText ev) lang
+              (double (.getDurationS ev))
+              (j/write-value-as-string (mapv segment->map (.getSegmentsList ev)) json-writer)
+              (or source "unknown") (or model "unknown") event-created-at-ns track-id]))
           (jdbc/execute-one!
-            tx
-            (into
-              ["INSERT INTO session_transcripts
-                (id, session_id, recording_id, tenant_id, user_id,
-                 full_text, lang, duration_s, segments,
-                 source, type, model, window_length,
-                 segment_start_s, segment_end_s,
-                 supersedes_seq, event_created_at_ns)
-              VALUES
-                (?, ?, ?, ?, ?,
-                 ?, ?, ?, ?::jsonb,
-                 ?, 'final', ?, NULL,
-                 NULL, NULL,
-                 NULL, ?)"]
-              [transcript-id
-               id
-               recording-id
-               tenant_id
-               user_id
-               (.getFullText ev)
-               (let [lang (.getLang ev)] (when (seq lang) lang))
-               (double (.getDurationS ev))
-               segments-json
-               (or source "unknown")
-               (or model "unknown")
-               (when event-created-at-ns (long event-created-at-ns))]))
-
-          (jdbc/execute-one!
-            tx
-            ["UPDATE sessions SET status='finished', ended_at=now() WHERE id=?" id]))
-        :ok))))
-
+           tx ["UPDATE sessions SET status='finished', ended_at=COALESCE(ended_at, now()) WHERE id=?" id])
+          :ok)))))
 (def ^:private webhook-error-detail-max-len
   4096)
 

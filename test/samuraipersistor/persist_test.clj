@@ -27,6 +27,7 @@
                     id uuid PRIMARY KEY,
                     session_id uuid NOT NULL,
                     recording_url text NOT NULL,
+                    UNIQUE (session_id, recording_url),
                     duration_s double precision NOT NULL,
                     sample_rate integer NOT NULL,
                     lang text,
@@ -47,6 +48,7 @@
                     source text NOT NULL,
                     type text NOT NULL,
                     model text,
+                    track_id text,
                     window_length integer,
                     segment_start_s double precision,
                     segment_end_s double precision,
@@ -54,6 +56,10 @@
                     event_created_at_ns bigint,
                     created_at timestamptz NOT NULL DEFAULT now()
                   );"])
+
+  (jdbc/execute! ds ["CREATE UNIQUE INDEX IF NOT EXISTS session_transcripts_recording_final_track_unique
+                     ON session_transcripts (recording_id, track_id)
+                     WHERE type='final' AND track_id IS NOT NULL"])
 
    ;; Workflows (RFC-0003) persistence tables.
    (jdbc/execute! ds
@@ -568,3 +574,31 @@
         (finally
           (log/info "Stopping Postgres testcontainer")
           (tc/stop! pg))))))
+
+(deftest concurrent-final-tracks-and-replays-test
+  (let [pg (tc/start-postgres!)
+        ds (jdbc/get-datasource {:jdbcUrl (.getJdbcUrl pg) :user "drsynth" :password "drsynth"})]
+    (try
+      (create-minimal-schema! ds)
+      (let [tenant (UUID/randomUUID)
+            session (UUID/randomUUID)
+            _ (jdbc/execute! ds ["INSERT INTO sessions(id,tenant_id,session_key) VALUES (?,?,?)"
+                                 session tenant (str session)])
+            event (-> (SessionTranscript/newBuilder)
+                      (.setSessionId (str session)) (.setTenantId (str tenant))
+                      (.setRecordingUrl "file://fixture.wav") (.setFullText "first")
+                      (.setTrackId "whisperx") (.build))
+            shadow (-> (.toBuilder event) (.setTrackId "test-shadow") (.build))
+            results (mapv (fn [ev] (future (persist/insert-final! ds ev {:model "medium"})))
+                          [event shadow event shadow])]
+        (is (= [:ok :ok :ok :ok] (mapv deref results)))
+        (is (= :ok (persist/insert-final! ds (-> (.toBuilder event) (.setFullText "replay") (.build)) {})))
+        (is (= :tenant-mismatch
+               (persist/insert-final! ds (-> (.toBuilder event) (.setTenantId (str (UUID/randomUUID))) (.build)) {})))
+        (is (= 1 (:n (jdbc/execute-one! ds ["SELECT count(*) AS n FROM recordings"]))))
+        (is (= 2 (:n (jdbc/execute-one! ds ["SELECT count(*) AS n FROM session_transcripts"]))))
+        (is (= ["first" "first"]
+               (mapv :session_transcripts/full_text (jdbc/execute! ds ["SELECT full_text FROM session_transcripts"]))))
+        (is (= ["medium" "medium"]
+               (mapv :session_transcripts/model (jdbc/execute! ds ["SELECT model FROM session_transcripts"])))))
+      (finally (tc/stop! pg)))))
