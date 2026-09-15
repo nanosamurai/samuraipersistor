@@ -5,8 +5,7 @@
             [samuraipersistor.kafka.common :as kcommon]
             [samuraipersistor.otel.traceparent :as tp]
             [samuraipersistor.persist :as persist])
-  (:import (java.nio ByteBuffer)
-           (java.util.concurrent LinkedBlockingQueue)
+  (:import (java.util.concurrent LinkedBlockingQueue)
            (org.apache.kafka.clients.consumer ConsumerRecord)
            (org.apache.kafka.clients.producer KafkaProducer)
            (samuraibff.proto RefinedEvent)))
@@ -44,6 +43,8 @@
            :lang (.getLang ev)}})
 
 (defn- start-worker!
+  "Persist refined records in order, retrying a failed write before taking another.
+  Accepts queue/commit callback/DB/Kafka dependencies; returns thread and stop!."
   [{:keys [queue commit! db dlq-topic kafka-config]}]
   (let [^LinkedBlockingQueue q queue
         ^KafkaProducer dlq-producer (when dlq-topic (kcommon/->producer kafka-config))
@@ -53,44 +54,31 @@
                    (log/info "Refined worker started")
                    (try
                      (while (not @stop?)
-                       ;; mini-batch: take 1 blocking, then drain up to N quickly
-                       (let [batch-size 200
-                             first-rec (loop/take! q)
-                             recs (transient [first-rec])]
-                         (loop [i 1]
-                           (when (< i batch-size)
-                             (when-let [r (loop/poll! q 5)]
-                               (conj! recs r)
-                               (recur (inc i)))))
-                         (let [records (persistent! recs)
-                               processed (transient [])]
-                           (doseq [^ConsumerRecord rec records]
-                             (try
+                      (let [^ConsumerRecord rec (loop/take! q)]
+                        (loop []
+                          (when-not @stop?
+                            (let [stored? (try
                                (tp/with-record-trace rec
                                  (let [ev (parse-refined (.value rec))
                                        res (persist/insert-refined!
-                                             (:ds db)
-                                             ev
-                                             {:window-length nil
-                                              ;; TODO: carry from worker via headers later.
-                                              :model "whisperx"
-                                              :source "whisperx_worker"
-                                              :event-created-at-ns nil})]
-                                   (when (= res :missing-session)
-                                     (when dlq-producer
+                                                         (:ds db) ev
+                                                         {:source "whisperx_worker"})]
+                                                (when (and (not= res :ok) dlq-producer)
                                        (kcommon/send-dlq!
-                                         dlq-producer
-                                         dlq-topic
-                                         (.getSessionId ev)
-                                         (record->dlq-payload rec ev "missing_session"))))
-                                   (conj! processed rec)))
-                               (catch Throwable t
-                                 (log/error t "Failed to persist refined event" {:topic (.topic rec)
-                                                                                 :partition (.partition rec)
-                                                                                 :offset (.offset rec)}))))
-                           ;; commit whatever we attempted (we chose to not block on poison pills)
-                           (let [processed (persistent! processed)]
-                             (commit! processed)))))
+                                                   dlq-producer dlq-topic (.getSessionId ev)
+                                                   (record->dlq-payload rec ev (name res))))))
+                                            true
+                                            (catch InterruptedException e (throw e))
+                                            (catch Exception e
+                                              (log/warn "Refined persistence failed; retrying before advancing"
+                                                        {:partition (.partition rec) :offset (.offset rec)
+                                                         :error-class (.getName (class e))
+                                                         :sql-state (when (instance? java.sql.SQLException e)
+                                                                      (.getSQLState ^java.sql.SQLException e))})
+                                              false))]
+                              (if stored?
+                                (commit! [rec])
+                                (do (Thread/sleep 1000) (recur))))))))
                      (catch InterruptedException _
                        (log/info "Refined worker interrupted"))
                      (catch Throwable t
@@ -103,10 +91,7 @@
     (.setDaemon thread true)
     (.start thread)
     {:thread thread
-     :stop! (fn []
-              (reset! stop? true)
-              (.interrupt thread))}))
-
+     :stop! (fn [] (reset! stop? true) (.interrupt thread))}))
 (defmethod ig/init-key :samuraipersistor/refined-consumer
   [_ {:keys [config db]}]
   (let [kcfg (get config :kafka)

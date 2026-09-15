@@ -60,6 +60,10 @@
   (jdbc/execute! ds ["CREATE UNIQUE INDEX IF NOT EXISTS session_transcripts_recording_final_track_unique
                      ON session_transcripts (recording_id, track_id)
                      WHERE type='final' AND track_id IS NOT NULL"])
+  (jdbc/execute! ds ["CREATE UNIQUE INDEX IF NOT EXISTS session_transcripts_refined_track_window_unique
+                     ON session_transcripts
+                       (tenant_id, session_id, track_id, window_length, segment_start_s, segment_end_s)
+                     NULLS NOT DISTINCT WHERE type='refined' AND track_id IS NOT NULL"])
 
    ;; Workflows (RFC-0003) persistence tables.
    (jdbc/execute! ds
@@ -601,4 +605,45 @@
                (mapv :session_transcripts/full_text (jdbc/execute! ds ["SELECT full_text FROM session_transcripts"]))))
         (is (= ["medium" "medium"]
                (mapv :session_transcripts/model (jdbc/execute! ds ["SELECT model FROM session_transcripts"])))))
+      (finally (tc/stop! pg)))))
+
+(deftest refinement-tracks-preserve-first-window
+  (let [pg (tc/start-postgres!)
+        ds (jdbc/get-datasource {:dbtype "postgresql" :host "localhost" :port 15432
+                                 :dbname "drsynth" :user "drsynth" :password "drsynth"})
+        session (UUID/randomUUID)
+        tenant (UUID/randomUUID)
+        other-session (UUID/randomUUID)]
+    (try
+      (create-minimal-schema! ds)
+      (clean-db! ds)
+      (doseq [id [session other-session]]
+        (jdbc/execute! ds ["INSERT INTO sessions(id,tenant_id,session_key) VALUES (?,?,?)" id tenant (str id)]))
+      (let [word (-> (WordAlignment/newBuilder) (.setStartS 10.5) (.setEndS 11.0) (.setText "first") .build)
+            segment (-> (SessionTranscriptSegment/newBuilder)
+                        (.setStartS 10.5) (.setEndS 11.0) (.setText "first") (.addWords word) .build)
+            event (-> (RefinedEvent/newBuilder)
+                      (.setSessionId (str session)) (.setTenantId (str tenant))
+                      (.setTrackId "whisperx") (.setStartS 10.0) (.setEndS 20.0) (.setWindowSec 10)
+                      (.setText "first") (.setRefinementModel "medium") (.addSegments segment) .build)
+            replay (-> (.toBuilder event) (.setText "replay") (.setRefinementModel "changed") .build)]
+        (is (= :ok (persist/insert-refined! ds event {})))
+        (is (= [:ok :ok] (mapv deref [(future (persist/insert-refined! ds replay {}))
+                                      (future (persist/insert-refined! ds replay {}))])))
+        (doseq [variant [(-> (.toBuilder event) (.setTrackId "test-shadow") .build)
+                         (-> (.toBuilder event) (.setStartS 20.0) (.setEndS 23.125) .build)
+                         (-> (.toBuilder event) (.setWindowSec 20) .build)
+                         (-> (.toBuilder event) (.setSessionId (str other-session)) .build)]]
+          (is (= :ok (persist/insert-refined! ds variant {}))))
+        (is (= :tenant-mismatch
+               (persist/insert-refined! ds (-> (.toBuilder event) (.setTenantId (str (UUID/randomUUID))) .build) {})))
+        (is (= 5 (:n (jdbc/execute-one! ds ["SELECT count(*) AS n FROM session_transcripts"]))))
+        (let [row (jdbc/execute-one! ds
+                                     ["SELECT full_text,model,segments #>> '{0,words,0,start_s}' AS word_start
+                     FROM session_transcripts WHERE session_id=? AND track_id='whisperx'
+                       AND window_length=10 AND segment_start_s=10" session]
+                                     {:builder-fn rs/as-unqualified-lower-maps})]
+          (is (= "first" (:full_text row)))
+          (is (= "medium" (:model row)))
+          (is (= "10.5" (:word_start row)))))
       (finally (tc/stop! pg)))))

@@ -300,9 +300,32 @@ stack, see the
 
 ## Notes / known follow-ups
 
-* Refinement track identity and replay deduplication belong to the next spike.
+* Refinement identity, replay deduplication and ordered database retry are
+  qualified in [the refinement spike](docs/refinement-tracks-spike.md).
 * Final tracks already use the existing `model` header and database uniqueness;
   no new message envelope or Kafka-offset database key is needed.
 * See [final-track validation](docs/final-tracks-spike.md) for the real Compose
   Kafka/Postgres replay and database-retry evidence.
 
+
+## Refinement track contract
+
+Refinement tracks add only `RefinedEvent.track_id = 16`; an empty ID means
+`whisperx`. Audio, segment and word message shapes and Kafka keys stay unchanged.
+
+
+Apply deployment migration `019-add-refinement-track-identity.up.sql` before
+running this version. It is owned by Nanosamurai and Nanodeploy, not this
+repository's historical Migratus migrations. Keep their SQL copies identical.
+
+Refined rows use the existing `track_id` column and `type='refined'`. Empty
+protobuf IDs map to WhisperX; historical NULL rows stay untouched. The first
+row per tenant/session/track/window length/start/end wins, including concurrent
+and replayed deliveries. Model metadata comes from `RefinedEvent.refinement_model`,
+not a hardcoded worker name. Segment and word JSON retain their original shape
+and session-relative timing. Event tenant IDs must match the owning session.
+
+The refined consumer retries failed writes before taking another record, then
+requests commits through the existing polling thread. Missing/foreign sessions
+use the existing DLQ path; transcript events are never republished. See
+`docs/refinement-tracks-spike.md` for the database and Compose qualification.

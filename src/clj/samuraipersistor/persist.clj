@@ -100,14 +100,17 @@
   When `meta` doesn't contain some values, we try to fall back to new
   RefinedEvent fields (window_sec/created_at_ns/refinement_model).
 
-  Returns :ok, :missing-session, or throws on DB errors." 
+  Empty track IDs mean whisperx. First delivery wins per tenant/session/track/
+  window length/bounds. Returns :ok, :missing-session, :tenant-mismatch, or
+  throws on DB errors so the consumer can retry."
   [ds ^RefinedEvent ev {:keys [window-length model source event-created-at-ns]}]
   (let [session-key (.getSessionId ev)
         row (session-uuid-by-key ds session-key)]
-    (if-not row
-      (do
-        (log/warn "Missing session for refined event" {:session-key session-key})
-        :missing-session)
+    (cond
+      (nil? row) :missing-session
+      (and (seq (.getTenantId ev))
+           (not= (str (:tenant_id row)) (.getTenantId ev))) :tenant-mismatch
+      :else
       (let [{:keys [id tenant_id user_id]} row
             segments (refined-event->segments ev)
             segments-json (j/write-value-as-string segments json-writer)
@@ -138,13 +141,15 @@
              full_text, lang, duration_s, segments,
              source, type, model, window_length,
              segment_start_s, segment_end_s,
-             supersedes_seq, event_created_at_ns)
+             supersedes_seq, event_created_at_ns, track_id)
           VALUES
             (?, ?, NULL, ?, ?,
              ?, ?, NULL, ?::jsonb,
              ?, 'refined', ?, ?,
              ?, ?,
-             ?, ?)"]
+             ?, ?, ?)
+          ON CONFLICT (tenant_id, session_id, track_id, window_length, segment_start_s, segment_end_s)
+            WHERE type='refined' AND track_id IS NOT NULL DO NOTHING"]
                 [(UUID/randomUUID)
                  id
                  tenant_id
@@ -158,7 +163,8 @@
                  (double (.getStartS ev))
                  (double (.getEndS ev))
                  sup-arr
-                 event-created-at-ns]))
+               event-created-at-ns
+               (or (not-empty (.getTrackId ev)) "whisperx")]))
             :ok))))))
 
 (defn insert-final!

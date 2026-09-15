@@ -28,6 +28,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private RefinedEvent() {
+    trackId_ = "";
     sessionId_ = "";
     text_ = "";
     speaker_ = "";
@@ -51,6 +52,53 @@ private static final long serialVersionUID = 0L;
     return samuraibff.proto.StreamProto.internal_static_RefinedEvent_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             samuraibff.proto.RefinedEvent.class, samuraibff.proto.RefinedEvent.Builder.class);
+  }
+
+  public static final int TRACK_ID_FIELD_NUMBER = 16;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object trackId_ = "";
+  /**
+   * <pre>
+   * deployment-configured refinement track; empty means whisperx
+   * </pre>
+   *
+   * <code>string track_id = 16;</code>
+   * @return The trackId.
+   */
+  @java.lang.Override
+  public java.lang.String getTrackId() {
+    java.lang.Object ref = trackId_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs =
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      trackId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * deployment-configured refinement track; empty means whisperx
+   * </pre>
+   *
+   * <code>string track_id = 16;</code>
+   * @return The bytes for trackId.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTrackIdBytes() {
+    java.lang.Object ref = trackId_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      trackId_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   public static final int SESSION_ID_FIELD_NUMBER = 1;
@@ -644,6 +692,9 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(refinementModel_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 15, refinementModel_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(trackId_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 16, trackId_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -715,6 +766,9 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(refinementModel_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(15, refinementModel_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(trackId_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(16, trackId_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -730,6 +784,8 @@ private static final long serialVersionUID = 0L;
     }
     samuraibff.proto.RefinedEvent other = (samuraibff.proto.RefinedEvent) obj;
 
+    if (!getTrackId()
+        .equals(other.getTrackId())) return false;
     if (!getSessionId()
         .equals(other.getSessionId())) return false;
     if (java.lang.Double.doubleToLongBits(getStartS())
@@ -774,6 +830,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + TRACK_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getTrackId().hashCode();
     hash = (37 * hash) + SESSION_ID_FIELD_NUMBER;
     hash = (53 * hash) + getSessionId().hashCode();
     hash = (37 * hash) + START_S_FIELD_NUMBER;
@@ -943,6 +1001,7 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
+      trackId_ = "";
       sessionId_ = "";
       startS_ = 0D;
       endS_ = 0D;
@@ -961,7 +1020,7 @@ private static final long serialVersionUID = 0L;
         segments_ = null;
         segmentsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00001000);
+      bitField0_ = (bitField0_ & ~0x00002000);
       createdAtNs_ = 0L;
       refinementModel_ = "";
       return this;
@@ -998,9 +1057,9 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartialRepeatedFields(samuraibff.proto.RefinedEvent result) {
       if (segmentsBuilder_ == null) {
-        if (((bitField0_ & 0x00001000) != 0)) {
+        if (((bitField0_ & 0x00002000) != 0)) {
           segments_ = java.util.Collections.unmodifiableList(segments_);
-          bitField0_ = (bitField0_ & ~0x00001000);
+          bitField0_ = (bitField0_ & ~0x00002000);
         }
         result.segments_ = segments_;
       } else {
@@ -1011,46 +1070,49 @@ private static final long serialVersionUID = 0L;
     private void buildPartial0(samuraibff.proto.RefinedEvent result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.sessionId_ = sessionId_;
+        result.trackId_ = trackId_;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.startS_ = startS_;
+        result.sessionId_ = sessionId_;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.endS_ = endS_;
+        result.startS_ = startS_;
       }
       if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.text_ = text_;
+        result.endS_ = endS_;
       }
       if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.speaker_ = speaker_;
+        result.text_ = text_;
       }
       if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.speaker_ = speaker_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
         supersedesSeq_.makeImmutable();
         result.supersedesSeq_ = supersedesSeq_;
       }
-      if (((from_bitField0_ & 0x00000040) != 0)) {
+      if (((from_bitField0_ & 0x00000080) != 0)) {
         result.lang_ = lang_;
       }
-      if (((from_bitField0_ & 0x00000080) != 0)) {
+      if (((from_bitField0_ & 0x00000100) != 0)) {
         result.bffOriginUri_ = bffOriginUri_;
       }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
+      if (((from_bitField0_ & 0x00000200) != 0)) {
         result.tenantId_ = tenantId_;
       }
-      if (((from_bitField0_ & 0x00000200) != 0)) {
+      if (((from_bitField0_ & 0x00000400) != 0)) {
         result.windowSec_ = windowSec_;
       }
-      if (((from_bitField0_ & 0x00000400) != 0)) {
+      if (((from_bitField0_ & 0x00000800) != 0)) {
         result.sliceIndex_ = sliceIndex_;
       }
-      if (((from_bitField0_ & 0x00000800) != 0)) {
+      if (((from_bitField0_ & 0x00001000) != 0)) {
         result.flushReason_ = flushReason_;
       }
-      if (((from_bitField0_ & 0x00002000) != 0)) {
+      if (((from_bitField0_ & 0x00004000) != 0)) {
         result.createdAtNs_ = createdAtNs_;
       }
-      if (((from_bitField0_ & 0x00004000) != 0)) {
+      if (((from_bitField0_ & 0x00008000) != 0)) {
         result.refinementModel_ = refinementModel_;
       }
     }
@@ -1067,9 +1129,14 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(samuraibff.proto.RefinedEvent other) {
       if (other == samuraibff.proto.RefinedEvent.getDefaultInstance()) return this;
+      if (!other.getTrackId().isEmpty()) {
+        trackId_ = other.trackId_;
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
       if (!other.getSessionId().isEmpty()) {
         sessionId_ = other.sessionId_;
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (java.lang.Double.doubleToRawLongBits(other.getStartS()) != 0) {
@@ -1080,19 +1147,19 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getText().isEmpty()) {
         text_ = other.text_;
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         onChanged();
       }
       if (!other.getSpeaker().isEmpty()) {
         speaker_ = other.speaker_;
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         onChanged();
       }
       if (!other.supersedesSeq_.isEmpty()) {
         if (supersedesSeq_.isEmpty()) {
           supersedesSeq_ = other.supersedesSeq_;
           supersedesSeq_.makeImmutable();
-          bitField0_ |= 0x00000020;
+          bitField0_ |= 0x00000040;
         } else {
           ensureSupersedesSeqIsMutable();
           supersedesSeq_.addAll(other.supersedesSeq_);
@@ -1101,17 +1168,17 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getLang().isEmpty()) {
         lang_ = other.lang_;
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000080;
         onChanged();
       }
       if (!other.getBffOriginUri().isEmpty()) {
         bffOriginUri_ = other.bffOriginUri_;
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000100;
         onChanged();
       }
       if (!other.getTenantId().isEmpty()) {
         tenantId_ = other.tenantId_;
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000200;
         onChanged();
       }
       if (java.lang.Double.doubleToRawLongBits(other.getWindowSec()) != 0) {
@@ -1122,14 +1189,14 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getFlushReason().isEmpty()) {
         flushReason_ = other.flushReason_;
-        bitField0_ |= 0x00000800;
+        bitField0_ |= 0x00001000;
         onChanged();
       }
       if (segmentsBuilder_ == null) {
         if (!other.segments_.isEmpty()) {
           if (segments_.isEmpty()) {
             segments_ = other.segments_;
-            bitField0_ = (bitField0_ & ~0x00001000);
+            bitField0_ = (bitField0_ & ~0x00002000);
           } else {
             ensureSegmentsIsMutable();
             segments_.addAll(other.segments_);
@@ -1142,7 +1209,7 @@ private static final long serialVersionUID = 0L;
             segmentsBuilder_.dispose();
             segmentsBuilder_ = null;
             segments_ = other.segments_;
-            bitField0_ = (bitField0_ & ~0x00001000);
+            bitField0_ = (bitField0_ & ~0x00002000);
             segmentsBuilder_ = 
               com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                  internalGetSegmentsFieldBuilder() : null;
@@ -1156,7 +1223,7 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getRefinementModel().isEmpty()) {
         refinementModel_ = other.refinementModel_;
-        bitField0_ |= 0x00004000;
+        bitField0_ |= 0x00008000;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -1187,27 +1254,27 @@ private static final long serialVersionUID = 0L;
               break;
             case 10: {
               sessionId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000001;
+              bitField0_ |= 0x00000002;
               break;
             } // case 10
             case 17: {
               startS_ = input.readDouble();
-              bitField0_ |= 0x00000002;
+              bitField0_ |= 0x00000004;
               break;
             } // case 17
             case 25: {
               endS_ = input.readDouble();
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000008;
               break;
             } // case 25
             case 34: {
               text_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               break;
             } // case 34
             case 42: {
               speaker_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000020;
               break;
             } // case 42
             case 48: {
@@ -1228,32 +1295,32 @@ private static final long serialVersionUID = 0L;
             } // case 50
             case 58: {
               lang_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000040;
+              bitField0_ |= 0x00000080;
               break;
             } // case 58
             case 66: {
               bffOriginUri_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000080;
+              bitField0_ |= 0x00000100;
               break;
             } // case 66
             case 74: {
               tenantId_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000100;
+              bitField0_ |= 0x00000200;
               break;
             } // case 74
             case 81: {
               windowSec_ = input.readDouble();
-              bitField0_ |= 0x00000200;
+              bitField0_ |= 0x00000400;
               break;
             } // case 81
             case 88: {
               sliceIndex_ = input.readUInt32();
-              bitField0_ |= 0x00000400;
+              bitField0_ |= 0x00000800;
               break;
             } // case 88
             case 98: {
               flushReason_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000800;
+              bitField0_ |= 0x00001000;
               break;
             } // case 98
             case 106: {
@@ -1271,14 +1338,19 @@ private static final long serialVersionUID = 0L;
             } // case 106
             case 112: {
               createdAtNs_ = input.readUInt64();
-              bitField0_ |= 0x00002000;
+              bitField0_ |= 0x00004000;
               break;
             } // case 112
             case 122: {
               refinementModel_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00004000;
+              bitField0_ |= 0x00008000;
               break;
             } // case 122
+            case 130: {
+              trackId_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000001;
+              break;
+            } // case 130
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -1295,6 +1367,98 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     private int bitField0_;
+
+    private java.lang.Object trackId_ = "";
+    /**
+     * <pre>
+     * deployment-configured refinement track; empty means whisperx
+     * </pre>
+     *
+     * <code>string track_id = 16;</code>
+     * @return The trackId.
+     */
+    public java.lang.String getTrackId() {
+      java.lang.Object ref = trackId_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        trackId_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * deployment-configured refinement track; empty means whisperx
+     * </pre>
+     *
+     * <code>string track_id = 16;</code>
+     * @return The bytes for trackId.
+     */
+    public com.google.protobuf.ByteString
+        getTrackIdBytes() {
+      java.lang.Object ref = trackId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        trackId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * deployment-configured refinement track; empty means whisperx
+     * </pre>
+     *
+     * <code>string track_id = 16;</code>
+     * @param value The trackId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTrackId(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      trackId_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * deployment-configured refinement track; empty means whisperx
+     * </pre>
+     *
+     * <code>string track_id = 16;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearTrackId() {
+      trackId_ = getDefaultInstance().getTrackId();
+      bitField0_ = (bitField0_ & ~0x00000001);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * deployment-configured refinement track; empty means whisperx
+     * </pre>
+     *
+     * <code>string track_id = 16;</code>
+     * @param value The bytes for trackId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTrackIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      trackId_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
 
     private java.lang.Object sessionId_ = "";
     /**
@@ -1339,7 +1503,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       sessionId_ = value;
-      bitField0_ |= 0x00000001;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1349,7 +1513,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearSessionId() {
       sessionId_ = getDefaultInstance().getSessionId();
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1363,7 +1527,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       sessionId_ = value;
-      bitField0_ |= 0x00000001;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1385,7 +1549,7 @@ private static final long serialVersionUID = 0L;
     public Builder setStartS(double value) {
 
       startS_ = value;
-      bitField0_ |= 0x00000002;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1394,7 +1558,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearStartS() {
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000004);
       startS_ = 0D;
       onChanged();
       return this;
@@ -1417,7 +1581,7 @@ private static final long serialVersionUID = 0L;
     public Builder setEndS(double value) {
 
       endS_ = value;
-      bitField0_ |= 0x00000004;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1426,7 +1590,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearEndS() {
-      bitField0_ = (bitField0_ & ~0x00000004);
+      bitField0_ = (bitField0_ & ~0x00000008);
       endS_ = 0D;
       onChanged();
       return this;
@@ -1475,7 +1639,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       text_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1485,7 +1649,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearText() {
       text_ = getDefaultInstance().getText();
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000010);
       onChanged();
       return this;
     }
@@ -1499,7 +1663,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       text_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1559,7 +1723,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       speaker_ = value;
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -1573,7 +1737,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearSpeaker() {
       speaker_ = getDefaultInstance().getSpeaker();
-      bitField0_ = (bitField0_ & ~0x00000010);
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -1591,7 +1755,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       speaker_ = value;
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -1601,7 +1765,7 @@ private static final long serialVersionUID = 0L;
       if (!supersedesSeq_.isModifiable()) {
         supersedesSeq_ = makeMutableCopy(supersedesSeq_);
       }
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000040;
     }
     /**
      * <pre>
@@ -1654,7 +1818,7 @@ private static final long serialVersionUID = 0L;
 
       ensureSupersedesSeqIsMutable();
       supersedesSeq_.setLong(index, value);
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1671,7 +1835,7 @@ private static final long serialVersionUID = 0L;
 
       ensureSupersedesSeqIsMutable();
       supersedesSeq_.addLong(value);
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1689,7 +1853,7 @@ private static final long serialVersionUID = 0L;
       ensureSupersedesSeqIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, supersedesSeq_);
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1703,7 +1867,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearSupersedesSeq() {
       supersedesSeq_ = emptyLongList();
-      bitField0_ = (bitField0_ & ~0x00000020);
+      bitField0_ = (bitField0_ & ~0x00000040);
       onChanged();
       return this;
     }
@@ -1751,7 +1915,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       lang_ = value;
-      bitField0_ |= 0x00000040;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -1761,7 +1925,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearLang() {
       lang_ = getDefaultInstance().getLang();
-      bitField0_ = (bitField0_ & ~0x00000040);
+      bitField0_ = (bitField0_ & ~0x00000080);
       onChanged();
       return this;
     }
@@ -1775,7 +1939,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       lang_ = value;
-      bitField0_ |= 0x00000040;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -1838,7 +2002,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       bffOriginUri_ = value;
-      bitField0_ |= 0x00000080;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -1853,7 +2017,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearBffOriginUri() {
       bffOriginUri_ = getDefaultInstance().getBffOriginUri();
-      bitField0_ = (bitField0_ & ~0x00000080);
+      bitField0_ = (bitField0_ & ~0x00000100);
       onChanged();
       return this;
     }
@@ -1872,7 +2036,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       bffOriginUri_ = value;
-      bitField0_ |= 0x00000080;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -1935,7 +2099,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       tenantId_ = value;
-      bitField0_ |= 0x00000100;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -1950,7 +2114,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearTenantId() {
       tenantId_ = getDefaultInstance().getTenantId();
-      bitField0_ = (bitField0_ & ~0x00000100);
+      bitField0_ = (bitField0_ & ~0x00000200);
       onChanged();
       return this;
     }
@@ -1969,7 +2133,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       tenantId_ = value;
-      bitField0_ |= 0x00000100;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2001,7 +2165,7 @@ private static final long serialVersionUID = 0L;
     public Builder setWindowSec(double value) {
 
       windowSec_ = value;
-      bitField0_ |= 0x00000200;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -2015,7 +2179,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearWindowSec() {
-      bitField0_ = (bitField0_ & ~0x00000200);
+      bitField0_ = (bitField0_ & ~0x00000400);
       windowSec_ = 0D;
       onChanged();
       return this;
@@ -2046,7 +2210,7 @@ private static final long serialVersionUID = 0L;
     public Builder setSliceIndex(int value) {
 
       sliceIndex_ = value;
-      bitField0_ |= 0x00000400;
+      bitField0_ |= 0x00000800;
       onChanged();
       return this;
     }
@@ -2059,7 +2223,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearSliceIndex() {
-      bitField0_ = (bitField0_ & ~0x00000400);
+      bitField0_ = (bitField0_ & ~0x00000800);
       sliceIndex_ = 0;
       onChanged();
       return this;
@@ -2120,7 +2284,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       flushReason_ = value;
-      bitField0_ |= 0x00000800;
+      bitField0_ |= 0x00001000;
       onChanged();
       return this;
     }
@@ -2134,7 +2298,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearFlushReason() {
       flushReason_ = getDefaultInstance().getFlushReason();
-      bitField0_ = (bitField0_ & ~0x00000800);
+      bitField0_ = (bitField0_ & ~0x00001000);
       onChanged();
       return this;
     }
@@ -2152,7 +2316,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       flushReason_ = value;
-      bitField0_ |= 0x00000800;
+      bitField0_ |= 0x00001000;
       onChanged();
       return this;
     }
@@ -2160,9 +2324,9 @@ private static final long serialVersionUID = 0L;
     private java.util.List<samuraibff.proto.SessionTranscriptSegment> segments_ =
       java.util.Collections.emptyList();
     private void ensureSegmentsIsMutable() {
-      if (!((bitField0_ & 0x00001000) != 0)) {
+      if (!((bitField0_ & 0x00002000) != 0)) {
         segments_ = new java.util.ArrayList<samuraibff.proto.SessionTranscriptSegment>(segments_);
-        bitField0_ |= 0x00001000;
+        bitField0_ |= 0x00002000;
        }
     }
 
@@ -2356,7 +2520,7 @@ private static final long serialVersionUID = 0L;
     public Builder clearSegments() {
       if (segmentsBuilder_ == null) {
         segments_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00001000);
+        bitField0_ = (bitField0_ & ~0x00002000);
         onChanged();
       } else {
         segmentsBuilder_.clear();
@@ -2461,7 +2625,7 @@ private static final long serialVersionUID = 0L;
         segmentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
             samuraibff.proto.SessionTranscriptSegment, samuraibff.proto.SessionTranscriptSegment.Builder, samuraibff.proto.SessionTranscriptSegmentOrBuilder>(
                 segments_,
-                ((bitField0_ & 0x00001000) != 0),
+                ((bitField0_ & 0x00002000) != 0),
                 getParentForChildren(),
                 isClean());
         segments_ = null;
@@ -2494,7 +2658,7 @@ private static final long serialVersionUID = 0L;
     public Builder setCreatedAtNs(long value) {
 
       createdAtNs_ = value;
-      bitField0_ |= 0x00002000;
+      bitField0_ |= 0x00004000;
       onChanged();
       return this;
     }
@@ -2507,7 +2671,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearCreatedAtNs() {
-      bitField0_ = (bitField0_ & ~0x00002000);
+      bitField0_ = (bitField0_ & ~0x00004000);
       createdAtNs_ = 0L;
       onChanged();
       return this;
@@ -2568,7 +2732,7 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       refinementModel_ = value;
-      bitField0_ |= 0x00004000;
+      bitField0_ |= 0x00008000;
       onChanged();
       return this;
     }
@@ -2582,7 +2746,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearRefinementModel() {
       refinementModel_ = getDefaultInstance().getRefinementModel();
-      bitField0_ = (bitField0_ & ~0x00004000);
+      bitField0_ = (bitField0_ & ~0x00008000);
       onChanged();
       return this;
     }
@@ -2600,7 +2764,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       refinementModel_ = value;
-      bitField0_ |= 0x00004000;
+      bitField0_ |= 0x00008000;
       onChanged();
       return this;
     }
