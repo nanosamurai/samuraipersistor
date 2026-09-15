@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - master
+      - implement-lean-final-tracks
   workflow_call:
 
 permissions:

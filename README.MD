@@ -2,6 +2,10 @@
 
 Kafka → Postgres persistence service for nanosamurai's transcript events.
 
+CI and full-history secret scanning also run for PRs targeting
+`implement-lean-final-tracks`, so the stacked refinement spike receives the
+same checks as a PR targeting `master`.
+
 This service replaces direct DB persistence inside the Python workers
 (`whisperx_worker`, `finalizer_worker`) in the `xamurai` monorepo.
 
