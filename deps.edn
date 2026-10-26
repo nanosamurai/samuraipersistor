@@ -18,9 +18,21 @@
 
   ;; --- JSON (DLQ payloads, segments JSONB) ---
   metosin/jsonista                  {:mvn/version "0.3.13"}
+  ;; Align Jackson 2.x independently of Jsonista's older transitive versions.
+  com.fasterxml.jackson.core/jackson-core {:mvn/version "2.21.8"}
+  com.fasterxml.jackson.core/jackson-databind {:mvn/version "2.21.8"}
+  com.fasterxml.jackson.core/jackson-annotations {:mvn/version "2.21"}
+  com.fasterxml.jackson.datatype/jackson-datatype-jsr310 {:mvn/version "2.21.8"}
 
   ;; --- Logging ---
   com.github.seancorfield/logging4j2 {:mvn/version "1.0.6"}
+  org.apache.logging.log4j/log4j-api {:mvn/version "2.25.5"}
+  org.apache.logging.log4j/log4j-core {:mvn/version "2.25.5"}
+  org.apache.logging.log4j/log4j-slf4j2-impl {:mvn/version "2.25.5"}
+  org.apache.logging.log4j/log4j-slf4j-impl {:mvn/version "2.25.5"}
+  org.apache.logging.log4j/log4j-jul {:mvn/version "2.25.5"}
+  org.apache.logging.log4j/log4j-1.2-api {:mvn/version "2.25.5"}
+  org.apache.logging.log4j/log4j-jcl {:mvn/version "2.25.5"}
 
   ;; --- DB (Postgres) ---
   com.github.seancorfield/next.jdbc {:mvn/version "1.3.1086"}
@@ -40,12 +52,13 @@
   io.opentelemetry/opentelemetry-api {:mvn/version "1.45.0"}
 
   ;; --- Kafka (Java client) ---
-  org.apache.kafka/kafka-clients    {:mvn/version "4.1.1"}
+  org.apache.kafka/kafka-clients    {:mvn/version "4.1.2"
+                                     :exclusions [org.lz4/lz4-java]}
+  at.yawk.lz4/lz4-java             {:mvn/version "1.11.4"}
 
-  ;; --- gRPC runtime (required to compile generated proto stubs we vendor) ---
-  io.grpc/grpc-netty-shaded         {:mvn/version "1.77.0"}
-  io.grpc/grpc-protobuf             {:mvn/version "1.77.0"}
-  io.grpc/grpc-stub                 {:mvn/version "1.77.0"}
+  ;; --- Generated proto stubs require protocol APIs, not a gRPC transport. ---
+  io.grpc/grpc-protobuf             {:mvn/version "1.85.0"}
+  io.grpc/grpc-stub                 {:mvn/version "1.85.0"}
 
   ;; --- Protobuf runtime (used by generated java sources) ---
   com.google.protobuf/protobuf-java {:mvn/version "4.33.4"}}

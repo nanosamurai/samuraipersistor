@@ -188,6 +188,9 @@ clojure -M:run
 
 ## Docker / k8s
 
+See [runtime dependency maintenance](docs/runtime-security.md) for the pinned
+JRE, aligned libraries, intentionally omitted gRPC transport and release checks.
+
 ### Build image
 
 ```bash
