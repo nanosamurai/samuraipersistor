@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM clojure:temurin-21-tools-deps AS builder
+FROM clojure:temurin-21-tools-deps-1.12.6.1673-noble@sha256:fe266a8cd883065e8611e155ac884f58beb61427c3a064c361cd37bdc0fc4767 AS builder
 
 WORKDIR /app
 
