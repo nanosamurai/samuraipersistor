@@ -4,6 +4,15 @@ FROM clojure:temurin-21-tools-deps-1.12.6.1673-noble@sha256:fe266a8cd883065e8611
 
 WORKDIR /app
 
+# The builder JDK downloads dependencies over TLS; refuse eMudhra roots removed
+# by Temurin 21.0.13+9. https://ops.java/emudhra
+RUN set -eux; \
+    keytool -list -v -cacerts -storepass changeit > /tmp/builder-cacerts.txt; \
+    if grep -E 'Owner: CN=(emSign (ECC Root CA - G3|Root CA - G2)|AAA Certificate Services),' /tmp/builder-cacerts.txt; then \
+      echo 'Disallowed root remains in the builder Java truststore' >&2; exit 1; \
+    fi; \
+    rm /tmp/builder-cacerts.txt
+
 COPY deps.edn build.clj ./
 RUN clojure -P
 
