@@ -33,18 +33,20 @@ The Community Edition consists of:
 
 Optional audit lane:
 
-* `webhook.delivery_outcome` (JSON, emitted by an external non-CE integration)
+* `webhook.delivery_outcome` (JSON, emitted by a webhook delivery service)
 
 Workflows (RFC-0003):
 
-* `workflow.result` (JSON, emitted by an external non-CE integration)
-* `workflow.outcome` (JSON audit lane, emitted by an external non-CE integration)
+* `workflow.result` (JSON, emitted by a workflow runner)
+* `workflow.outcome` (JSON audit lane, emitted by a workflow runner)
 
   Note: although the v1 contract documents `created_at` as ISO-8601, in practice it may arrive as an **epoch numeric** timestamp (seconds, sometimes in scientific notation). Persistor accepts both formats.
 
-Community Edition mode is enabled by default and starts only the STT transcript consumers.
-Set `SAMURAIPERSISTOR_CE_MODE=false` for deployments that should also consume
-workflow/webhook outcome topics.
+By default only the STT transcript consumers start. Each optional lane has its
+own flag: `SP_WORKFLOW_RESULT_ENABLED`, `SP_WORKFLOW_OUTCOME_ENABLED` and
+`SP_WEBHOOK_OUTCOME_ENABLED`. `SAMURAIPERSISTOR_CE_MODE=false` is deprecated;
+it turns on every lane whose flag is not set. See
+[Feature flags](docs/ce-feature-flags.md).
 
 Transcript messages **must be keyed by `session_id`** (session business key / `sessions.session_key`).
 
@@ -173,10 +175,10 @@ For local development and tests, prefer **Testcontainers** (see tests below) and
 | Kafka | `SP_KAFKA_TOPIC_WORKFLOW_OUTCOME` | Workflow outcome topic | `workflow.outcome` |
 | Kafka | `SP_KAFKA_WORKFLOW_RESULT_BUFFER_SIZE` | Workflow result queue size | `2000` |
 | Kafka | `SP_KAFKA_WORKFLOW_OUTCOME_BUFFER_SIZE` | Workflow outcome queue size | `2000` |
-| Feature flag | `SAMURAIPERSISTOR_CE_MODE` | Community Edition mode; disables workflow/webhook consumers when true | `true` |
-| Feature flag | `SP_WEBHOOK_OUTCOME_ENABLED` | Enable webhook outcome consumer outside CE mode | effectively `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
-| Feature flag | `SP_WORKFLOW_RESULT_ENABLED` | Enable workflow result consumer outside CE mode | effectively `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
-| Feature flag | `SP_WORKFLOW_OUTCOME_ENABLED` | Enable workflow outcome consumer outside CE mode | effectively `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
+| Feature flag | `SP_WORKFLOW_RESULT_ENABLED` | Start the workflow result consumer (needed for on-demand and automatic workflow runs) | `false`; `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
+| Feature flag | `SP_WORKFLOW_OUTCOME_ENABLED` | Start the workflow outcome consumer | `false`; `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
+| Feature flag | `SP_WEBHOOK_OUTCOME_ENABLED` | Start the webhook outcome consumer | `false`; `true` when `SAMURAIPERSISTOR_CE_MODE=false` |
+| Feature flag | `SAMURAIPERSISTOR_CE_MODE` | Deprecated. `false` turns on every lane flag that is not set | `true` |
 
 ## Running
 
