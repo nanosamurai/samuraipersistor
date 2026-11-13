@@ -18,10 +18,10 @@ Postgres/Kafka test ports bind only to localhost. Retry logs contain exception
 class and SQL state rather than PostgreSQL's potentially sensitive failing row.
 Build contexts exclude credentials and scratch files.
 
-Migrations are owned by Nanodeploy and Nanosamurai; historical Migratus files
+Migrations are owned by Nanosamurai; historical Migratus files
 here are not the deployment ledger. Keep their migration 017/018 SQL copies in
 sync. The repeatable overlay and smoke runbook are in Nanosamurai's
-`docs/final-tracks-spike.md`, mirrored in Nanodeploy.
+`docs/smoke-tests.md`.
 
 The rollout and full smoke now target the original Compose project `nanosamurai`
 and its Postgres 18 database. Migrations 017/018 were applied there, and obsolete
