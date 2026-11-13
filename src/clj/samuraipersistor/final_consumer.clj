@@ -16,7 +16,7 @@
    "client.id" (or client-id "samuraipersistor")
    "group.id" final-consumer-group-id
    ;; TLS / security
-   ;; For MSK TLS-only (port 9094), set to "SSL".
+   ;; For a TLS-only Kafka listener, set to "SSL".
    "security.protocol" (or security-protocol "PLAINTEXT")
    "enable.auto.commit" "false"
    "auto.offset.reset" "earliest"

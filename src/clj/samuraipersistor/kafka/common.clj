@@ -18,7 +18,7 @@
   {"bootstrap.servers" bootstrap-servers
    "client.id" (or client-id "samuraipersistor")
    ;; TLS / security
-   ;; For MSK TLS-only (port 9094), set to "SSL".
+   ;; For a TLS-only Kafka listener, set to "SSL".
    "security.protocol" (or security-protocol "PLAINTEXT")
    "acks" "all"
    "compression.type" "zstd"

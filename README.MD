@@ -318,8 +318,8 @@ Refinement tracks add only `RefinedEvent.track_id = 16`; an empty ID means
 
 
 Apply deployment migration `019-add-refinement-track-identity.up.sql` before
-running this version. It is owned by Nanosamurai and Nanodeploy, not this
-repository's historical Migratus migrations. Keep their SQL copies identical.
+running this version. It is owned by Nanosamurai (`docker/postgres/migrations/`),
+not this repository's historical Migratus migrations. Keep their SQL copies identical.
 
 Refined rows use the existing `track_id` column and `type='refined'`. Empty
 protobuf IDs map to WhisperX; historical NULL rows stay untouched. The first
