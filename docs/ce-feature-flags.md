@@ -1,66 +1,61 @@
-# Community Edition feature flags
+# Feature flags
 
 Status: implemented
 
-Last updated: 2026-07-10
+Last updated: 2026-11-13
 
 ## Decision
 
-Community Edition should persist the STT data path by default and avoid starting
-workflow/webhook persistence consumers unless the deployment explicitly opts
-into the full commercial feature set.
+The persistor always stores the STT data path (sessions, refined and final
+transcripts). Each optional Kafka lane has its own flag, so a deployment turns
+on the lanes it runs instead of choosing an edition:
 
-Use a single edition flag first:
-
-| Environment variable | Default | Meaning |
+| Environment variable | Default | Starts |
 | --- | --- | --- |
-| `SAMURAIPERSISTOR_CE_MODE` | `true` | When true, do not start workflow/webhook outcome consumers. |
+| `SP_WORKFLOW_RESULT_ENABLED` | `false` | `:samuraipersistor/workflow-result-consumer`: stores `workflow.result` into `workflow_results_latest`. Needed for on-demand and automatic workflow runs. |
+| `SP_WORKFLOW_OUTCOME_ENABLED` | `false` | `:samuraipersistor/workflow-outcome-consumer`: stores the `workflow.outcome` audit lane. |
+| `SP_WEBHOOK_OUTCOME_ENABLED` | `false` | `:samuraipersistor/webhook-outcome-consumer`: stores `webhook.delivery_outcome` from a webhook delivery service. |
+| `SAMURAIPERSISTOR_CE_MODE` | `true` | Deprecated. When `false`, every lane flag above that is not set defaults to `true`. |
 
-This keeps OSS easy to run: the `nanosamurai` Compose stack can omit the flag
-and get CE behavior. A deployment that intentionally enables the non-CE
-integration contracts must set `SAMURAIPERSISTOR_CE_MODE=false`.
+`1`, `true`, `yes` and `on` (also upper case) turn a flag on. Any other
+non-blank value turns it off.
 
-`SP_WEBHOOK_OUTCOME_ENABLED` already exists. Keep it as a per-feature override,
-but make CE mode the higher-level default so OSS does not need to know about
-commercial-only topics.
+An explicit lane flag always wins over `SAMURAIPERSISTOR_CE_MODE`. For example,
+a Community Edition stack with on-demand workflows sets
+`SP_WORKFLOW_RESULT_ENABLED=true` and `SP_WORKFLOW_OUTCOME_ENABLED=true` and
+leaves webhooks off; it no longer needs `SAMURAIPERSISTOR_CE_MODE=false`.
 
-## What CE mode should affect
+## Upgrading from `SAMURAIPERSISTOR_CE_MODE`
 
-- Consumers:
-  - do not start `:samuraipersistor/webhook-outcome-consumer`
-  - do not start `:samuraipersistor/workflow-result-consumer`
-  - do not start `:samuraipersistor/workflow-outcome-consumer`
-- Kafka config:
-  - do not require `webhook.delivery_outcome`, `workflow.result`, or
-    `workflow.outcome` topics in CE
-  - avoid noisy warnings when those topics are absent in the OSS stack
-- Persistence:
-  - leave workflow/webhook tables and functions in source; contract visibility
-    is acceptable
-  - do not write workflow/webhook outcome rows in CE because the consumers are
-    not running
-- STT path:
-  - keep existing transcript/session persistence behavior unchanged
+* Nothing set: every lane stays off, as before.
+* `SAMURAIPERSISTOR_CE_MODE=false`: every lane stays on unless its flag is
+  set to off, as before. Replace the switch with the lane flags set to `true`
+  when convenient; it will be removed in a later release.
+* A lane flag set to `true` with CE mode on: before, the persistor ignored it;
+  now it starts that consumer.
 
-## Implementation plan
+## What a disabled lane does
 
-1. Add config parsing for `SAMURAIPERSISTOR_CE_MODE`, defaulting to true.
-2. Define effective consumer flags:
-   - webhook outcome enabled only when CE mode is false and
-     `SP_WEBHOOK_OUTCOME_ENABLED` is not false
-   - add equivalent `SP_WORKFLOW_RESULT_ENABLED` and
-     `SP_WORKFLOW_OUTCOME_ENABLED` flags, defaulting to true only outside CE
-3. Make disabled consumers return a small no-op state during Integrant init and
-   log one concise message.
-4. Ensure disabled consumers do not validate or require their Kafka topics.
-5. Add focused tests for default CE startup and full-mode startup.
-6. After code lands, update `nanosamurai` docs to rely on the default CE mode
-   and document `SAMURAIPERSISTOR_CE_MODE=false` only in the deployment
-   configuration that owns the non-CE integrations.
+- Its consumer returns a small no-op state during Integrant init and logs one
+  concise message.
+- It does not validate or require its Kafka topic, so a stack without that
+  topic starts cleanly.
+- Workflow/webhook tables and functions stay in source; nothing writes to them
+  while the lane is off.
+- The STT path is unchanged.
+
+## Implementation notes
+
+- Flags are parsed into `[:kafka :workflow-result-enabled?]`,
+  `[:kafka :workflow-outcome-enabled?]`, `[:kafka :webhook-outcome-enabled?]`
+  and the deprecated `[:kafka :ce-mode?]` (default `true`).
+- `samuraipersistor.features/lane-enabled?` is the only place that resolves
+  them.
 
 ## Security note
 
-This flag is primarily for product boundary, UX clarity, and dependency
-simplification. It does not need to hide schemas or persistence code. The
-important behavior is that CE does not subscribe to workflow/webhook topics or
-require those services by default.
+The flags set the product boundary and keep unused dependencies off. They do
+not hide schemas or persistence code. Every lane is off unless set, so a
+missing or misspelled value fails closed. A consumer stores what arrives on its
+topic, so turn a lane on only when a trusted producer writes to that topic and
+Kafka ACLs restrict who may write.

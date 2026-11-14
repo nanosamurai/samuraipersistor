@@ -3,6 +3,7 @@
             [clojure.string :as string]
             [jsonista.core :as j]
             [org.corfield.logging4j2 :as log]
+            [samuraipersistor.features :as features]
             [samuraipersistor.kafka.consumer-loop :as loop]
             [samuraipersistor.otel.traceparent :as tp]
             [samuraipersistor.persist :as persist])
@@ -32,8 +33,7 @@
 
 (defn- enabled?
   [kcfg]
-  (and (false? (:ce-mode? kcfg))
-       (not= false (:webhook-outcome-enabled? kcfg))))
+  (features/lane-enabled? kcfg :webhook-outcome-enabled?))
 
 (defn- bytes->string ^String [^bytes b]
   (String. b StandardCharsets/UTF_8))

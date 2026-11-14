@@ -76,7 +76,7 @@
                           :workflow-result-buffer-size (env-value "SP_KAFKA_WORKFLOW_RESULT_BUFFER_SIZE" parse-int)
                           :workflow-outcome-buffer-size (env-value "SP_KAFKA_WORKFLOW_OUTCOME_BUFFER_SIZE" parse-int)
 
-                         ;; Optional kill switches for commercial workflow/webhook lanes.
+                         ;; Optional lanes; see samuraipersistor.features.
                          :webhook-outcome-enabled? (env-value "SP_WEBHOOK_OUTCOME_ENABLED" parse-bool)
                          :workflow-result-enabled? (env-value "SP_WORKFLOW_RESULT_ENABLED" parse-bool)
                          :workflow-outcome-enabled? (env-value "SP_WORKFLOW_OUTCOME_ENABLED" parse-bool)}}
