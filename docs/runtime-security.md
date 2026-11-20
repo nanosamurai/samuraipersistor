@@ -12,12 +12,28 @@ Adding actual gRPC networking requires selecting and qualifying a transport;
 do not assume the generated protocol classes supply one.
 
 The Docker runtime pins the supported Ubuntu Noble Temurin image by digest.
-Until the matching official image is available, its JRE is replaced with the
-official Temurin 21.0.13+9 archive, verified against fixed architecture-specific
-SHA-256 checksums. CA support, native libraries, timezone handling and UID 10001
+Until the matching official images are available, both the builder JDK and
+runtime JRE are replaced with official archives verified against fixed
+architecture-specific SHA-256 checksums. Linux x64 uses Temurin **21.0.13.1+2**,
+which fixes the accelerated Base64 decoder. Linux ARM64 retains verified
+**21.0.13+9** while its glibc rebuild is pending; the affected intrinsic is
+x86-only. Architecture-specific stages keep `JAVA_VERSION` metadata aligned
+with the installed build and reject unsupported architectures.
+CA support, native libraries, timezone handling and UID 10001
 remain intact. The selected base has no unused Pebble executable. Replace this
 temporary bridge with a scanned immutable official image when available;
 updating the base alone must not downgrade the JRE.
+
+Clojure remains at the existing version in `deps.edn`; no language upgrade is
+needed for this JVM patch. Linux CI installs the same checksum-verified x64 JDK
+through `.github/actions/setup-java21` before running the full test suite.
+The runtime retains `-XX:-UseBASE64Intrinsics` in `JAVA_TOOL_OPTIONS` during
+rollout. Deployments that override this variable, including Java-agent injection,
+must preserve the mitigation alongside their existing memory and agent options.
+Verify actual application flags when relying on mitigation; a separate Java
+process does not report the running application's settings. See the
+[vendor advisory](https://access.redhat.com/security/vulnerabilities/RHSB-2026-018)
+and [Temurin release](https://github.com/adoptium/temurin21-binaries/releases/tag/jdk-21.0.13.1%2B2).
 
 These updates do not change application environment variables, database schemas,
 topic names or protobuf/JSON message contracts. Health endpoints remain the only
@@ -25,7 +41,7 @@ HTTP routes and still need network restrictions.
 
 
 The bundled default Java truststore follows [Oracle's eMudhra root-removal
-advice](https://ops.java/emudhra). The remaining emSign G1 alias is deleted only
+advice](https://ops.java/emudhra). If present, the emSign G1 alias is deleted only
 after its exact SHA-256 fingerprint matches; the build then checks that all four
 listed root subjects are absent. TLS certificates chaining only to these roots
 are deliberately rejected. Application-provided truststores and explicit
@@ -34,7 +50,8 @@ audited separately; this image change does not sanitize a mounted truststore.
 
 The builder stage is pinned to `clojure:temurin-21-tools-deps-<tools version>-noble`
 by its multi-arch index digest, because its JDK downloads dependencies over TLS.
-The pinned image carries Temurin 21.0.13+9, and the build fails if its default
+The bundled JDK is replaced before resolving dependencies or compiling Java.
+The build fails if the replacement JDK's default
 truststore still contains emSign ECC Root CA - G3, emSign Root CA - G2 or AAA
 Certificate Services. To bump it, pick a current `-noble` tag and keep tag and
 digest together in the `FROM` line:
@@ -45,8 +62,9 @@ docker run --rm clojure:temurin-21-tools-deps-<version>-noble@sha256:<index dige
   sh -c 'java -version; keytool -list -v -cacerts -storepass changeit | grep -E "Owner: CN=(emSign|AAA)"'
 ```
 
-Use the index `Digest`, not a per-platform manifest digest. Confirm the JDK is
-at least 21.0.13 before updating, then build the image.
+Use the index `Digest`, not a per-platform manifest digest. Verify the full
+vendor/build for every supported architecture before updating. Remove the archive
+replacement only after proving the pinned base supplies the required fixed JVM.
 
 ## Release validation
 
