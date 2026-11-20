@@ -25,8 +25,12 @@ temporary bridge with a scanned immutable official image when available;
 updating the base alone must not downgrade the JRE.
 
 Clojure remains at the existing version in `deps.edn`; no language upgrade is
-needed for this JVM patch. Linux CI installs the same checksum-verified x64 JDK
-through `.github/actions/setup-java21` before running the full test suite.
+needed for this JVM patch. Linux CI selects Temurin directly with
+`actions/setup-java@v4` and exact `java-version: '21.0.13+100000002.0.LTS'` before
+running the full test suite. This is Adoptium's SemVer representation of
+21.0.13.1+2-LTS; setup-java includes build metadata when matching this exact version
+against its cache or vendor release list. CI also verifies that `java --version`
+reports `21.0.13.1+2`. Docker retains its separate SHA-256 archive verification.
 The runtime retains `-XX:-UseBASE64Intrinsics` in `JAVA_TOOL_OPTIONS` during
 rollout. Deployments that override this variable, including Java-agent injection,
 must preserve the mitigation alongside their existing memory and agent options.
